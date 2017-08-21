@@ -25,16 +25,9 @@ public class AdminBornInfo {
     @Column(name = "city_id", insertable = false, updatable = false)
     private long cityId;
 
-    @Column(name = "admin_id", insertable = false, updatable = false)
-    private long adminId;
-
     @ManyToOne
     @JoinColumn(name = "city_id", insertable = false, updatable = false)
     private City city;
-
-    @OneToOne
-    @JoinColumn(name = "admin_id", insertable = false, updatable = false)
-    private Admin admin;
 
     public AdminBornInfo() {
     }
@@ -63,27 +56,11 @@ public class AdminBornInfo {
         this.cityId = cityId;
     }
 
-    public long getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(long adminId) {
-        this.adminId = adminId;
-    }
-
     public City getCity() {
         return city;
     }
 
     public void setCity(City city) {
         this.city = city;
-    }
-
-    public Admin getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
     }
 }

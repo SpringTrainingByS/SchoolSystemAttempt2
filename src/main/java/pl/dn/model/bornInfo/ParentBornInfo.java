@@ -24,16 +24,11 @@ public class ParentBornInfo {
     @Column(name = "city_id", insertable = false, updatable = false)
     private long cityId;
 
-    @Column(name = "parent_id", insertable = false, updatable = false)
-    private long parentId;
 
     @ManyToOne
     @JoinColumn(name = "city_id", insertable = false, updatable = false)
     private City city;
 
-    @OneToOne
-    @JoinColumn(name = "parent_id", insertable = false, updatable = false)
-    private User parent;
 
     public ParentBornInfo() {
     }
@@ -62,27 +57,11 @@ public class ParentBornInfo {
         this.cityId = cityId;
     }
 
-    public long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(long parentId) {
-        this.parentId = parentId;
-    }
-
     public City getCity() {
         return city;
     }
 
     public void setCity(City city) {
         this.city = city;
-    }
-
-    public User getParent() {
-        return parent;
-    }
-
-    public void setParent(User parent) {
-        this.parent = parent;
     }
 }

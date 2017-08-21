@@ -18,18 +18,11 @@ public class StudentContactInfo {
 
     private String email;
 
-    @Column(name = "student_id", insertable = false, updatable = false)
-    private long studentId;
-
     @Column(name = "phone_number")
     private String phoneNumber;
 
     @Embedded
     private Address address;
-
-    @OneToOne(optional = false)
-    @JoinColumn(name = "student_id")
-    private Student student;
 
     public StudentContactInfo() {
     }
@@ -50,14 +43,6 @@ public class StudentContactInfo {
         this.email = email;
     }
 
-    public long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(long studentId) {
-        this.studentId = studentId;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -72,13 +57,5 @@ public class StudentContactInfo {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
     }
 }

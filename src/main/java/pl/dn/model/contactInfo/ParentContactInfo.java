@@ -18,18 +18,11 @@ public class ParentContactInfo {
 
     private String email;
 
-    @Column(name = "parent_id", insertable = false, updatable = false)
-    private long parent_id;
-
     @Column(name = "phone_number")
     private String phoneNumber;
 
     @Embedded
     private Address address;
-
-    @OneToOne
-    @JoinColumn(name = "parent_id")
-    private Parent parent;
 
     public ParentContactInfo() {
     }
@@ -50,14 +43,6 @@ public class ParentContactInfo {
         this.email = email;
     }
 
-    public long getParent_id() {
-        return parent_id;
-    }
-
-    public void setParent_id(long parent_id) {
-        this.parent_id = parent_id;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -74,11 +59,4 @@ public class ParentContactInfo {
         this.address = address;
     }
 
-    public Parent getParent() {
-        return parent;
-    }
-
-    public void setParent(Parent parent) {
-        this.parent = parent;
-    }
 }

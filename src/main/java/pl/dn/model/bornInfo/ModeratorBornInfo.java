@@ -24,16 +24,9 @@ public class ModeratorBornInfo  {
     @Column(name = "city_id", insertable = false, updatable = false)
     private long cityId;
 
-    @Column(name = "moderator_id", insertable = false, updatable = false)
-    private long moderatorId;
-
     @ManyToOne
     @JoinColumn(name = "city_id", insertable = false, updatable = false)
     private City city;
-
-    @OneToOne
-    @JoinColumn(name = "moderator_id", insertable = false, updatable = false)
-    private Moderator moderator;
 
     public ModeratorBornInfo() {
     }
@@ -62,14 +55,6 @@ public class ModeratorBornInfo  {
         this.cityId = cityId;
     }
 
-    public long getModeratorId() {
-        return moderatorId;
-    }
-
-    public void setModeratorId(long moderatorId) {
-        this.moderatorId = moderatorId;
-    }
-
     public City getCity() {
         return city;
     }
@@ -78,11 +63,5 @@ public class ModeratorBornInfo  {
         this.city = city;
     }
 
-    public Moderator getModerator() {
-        return moderator;
-    }
 
-    public void setModerator(Moderator moderator) {
-        this.moderator = moderator;
-    }
 }

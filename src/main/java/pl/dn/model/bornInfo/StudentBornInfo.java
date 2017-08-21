@@ -25,16 +25,9 @@ public class StudentBornInfo {
     @Column(name = "city_id", insertable = false, updatable = false)
     private long cityId;
 
-    @Column(name = "student_id", insertable = false, updatable = false)
-    private long studentId;
-
     @ManyToOne
     @JoinColumn(name = "city_id", insertable = false, updatable = false)
     private City city;
-
-    @OneToOne
-    @JoinColumn(name = "student_id", insertable = false, updatable = false)
-    private Student student;
 
     public StudentBornInfo() {
     }
@@ -63,14 +56,6 @@ public class StudentBornInfo {
         this.cityId = cityId;
     }
 
-    public long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(long studentId) {
-        this.studentId = studentId;
-    }
-
     public City getCity() {
         return city;
     }
@@ -79,11 +64,4 @@ public class StudentBornInfo {
         this.city = city;
     }
 
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
 }

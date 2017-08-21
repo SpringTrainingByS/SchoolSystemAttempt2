@@ -19,11 +19,14 @@ public class Teacher extends User {
     @Embedded
     private BasicInfo basicInfo;
 
-    @OneToOne(mappedBy = "teacher")
+    @OneToOne
+    @JoinColumn(name = "teacher_contact_info_id")
     private TeacherContactInfo teacherContactInfo;
 
-    @OneToOne(mappedBy = "teacher")
+    @OneToOne
+    @JoinColumn(name = "teacher_born_info_id")
     private TeacherBornInfo bornInfo;
+
 
     public Teacher() {
     }

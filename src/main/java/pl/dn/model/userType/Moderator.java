@@ -19,10 +19,12 @@ public class Moderator {
     @Embedded
     private BasicInfo basicInfo;
 
-    @OneToOne(mappedBy = "moderator")
+    @OneToOne
+    @JoinColumn(name = "moderator_contact_info_id")
     private ModeratorContactInfo contactInfo;
 
-    @OneToOne(mappedBy = "moderator")
+    @OneToOne
+    @JoinColumn(name = "moderator_born_info_id")
     private ModeratorBornInfo bornInfo;
 
     public Moderator() {
@@ -59,4 +61,5 @@ public class Moderator {
     public void setBornInfo(ModeratorBornInfo bornInfo) {
         this.bornInfo = bornInfo;
     }
+
 }

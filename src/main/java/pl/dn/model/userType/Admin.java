@@ -19,10 +19,12 @@ public class Admin {
     @Embedded
     private BasicInfo basicInfo;
 
-    @OneToOne(mappedBy = "admin")
+    @OneToOne
+    @JoinColumn(name = "admin_contact_info_id")
     private AdminContactInfo contactInfo;
 
-    @OneToOne(mappedBy = "admin")
+    @OneToOne
+    @JoinColumn(name = "admin_born_info_id")
     private AdminBornInfo adminBornInfo;
 
     public Admin() {
@@ -59,4 +61,7 @@ public class Admin {
     public void setAdminBornInfo(AdminBornInfo adminBornInfo) {
         this.adminBornInfo = adminBornInfo;
     }
+
+
+
 }

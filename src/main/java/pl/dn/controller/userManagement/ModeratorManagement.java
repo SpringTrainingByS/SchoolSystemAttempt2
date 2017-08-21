@@ -1,5 +1,6 @@
 package pl.dn.controller.userManagement;
 
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -7,5 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class ModeratorManagement {
-    
+
+    @RequestMapping("moderators/add")
+    public String addModerator() {
+        return "Hello";
+    }
+
 }

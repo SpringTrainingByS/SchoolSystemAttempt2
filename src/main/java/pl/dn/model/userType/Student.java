@@ -1,5 +1,6 @@
 package pl.dn.model.userType;
 
+import pl.dn.model.bornInfo.StudentBornInfo;
 import pl.dn.model.contactInfo.StudentContactInfo;
 import pl.dn.model.generalInfo.BasicInfo;
 
@@ -18,8 +19,14 @@ public class Student extends User{
     @Embedded
     private BasicInfo basicInfo;
 
-    @OneToOne(mappedBy = "student")
+
+    @OneToOne
+    @JoinColumn(name = "student_contact_info_id")
     private StudentContactInfo contactInfo;
+
+    @OneToOne
+    @JoinColumn(name = "student_born_info_id")
+    private StudentBornInfo bornInfo;
 
     public Student() {
     }
@@ -46,5 +53,13 @@ public class Student extends User{
 
     public void setContactInfo(StudentContactInfo contactInfo) {
         this.contactInfo = contactInfo;
+    }
+
+    public StudentBornInfo getBornInfo() {
+        return bornInfo;
+    }
+
+    public void setBornInfo(StudentBornInfo bornInfo) {
+        this.bornInfo = bornInfo;
     }
 }

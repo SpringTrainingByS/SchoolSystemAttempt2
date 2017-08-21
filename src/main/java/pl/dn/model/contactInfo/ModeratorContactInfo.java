@@ -19,18 +19,11 @@ public class ModeratorContactInfo {
 
     private String email;
 
-    @Column(name = "moderator_id", insertable = false, updatable = false)
-    private long moderatorId;
-
     @Column(name = "phone_number")
     private String phoneNumber;
 
     @Embedded
     private Address address;
-
-    @OneToOne
-    @JoinColumn(name = "moderator_id")
-    private Moderator moderator;
 
     public ModeratorContactInfo() {
     }
@@ -51,14 +44,6 @@ public class ModeratorContactInfo {
         this.email = email;
     }
 
-    public long getModeratorId() {
-        return moderatorId;
-    }
-
-    public void setModeratorId(long moderatorId) {
-        this.moderatorId = moderatorId;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -75,11 +60,4 @@ public class ModeratorContactInfo {
         this.address = address;
     }
 
-    public Moderator getModerator() {
-        return moderator;
-    }
-
-    public void setModerator(Moderator moderator) {
-        this.moderator = moderator;
-    }
 }

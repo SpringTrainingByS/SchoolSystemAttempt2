@@ -20,10 +20,12 @@ public class Parent {
     @Embedded
     private BasicInfo basicInfo;
 
-    @OneToOne(mappedBy = "parent")
+    @OneToOne
+    @JoinColumn(name = "parent_contact_info_id")
     ParentContactInfo contactInfo;
 
-    @OneToOne(mappedBy = "parent")
+    @OneToOne
+    @JoinColumn(name = "parent_born_info_id")
     ParentBornInfo parentBornInfo;
 
     public Parent() {

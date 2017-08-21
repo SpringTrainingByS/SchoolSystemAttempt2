@@ -19,18 +19,12 @@ public class AdminContactInfo {
 
     private String email;
 
-    @Column(name = "admin_id", insertable = false, updatable = false)
-    private long adminId;
-
     @Column(name = "phone_number")
     private String phoneNumber;
 
     @Embedded
     private Address address;
 
-    @OneToOne
-    @JoinColumn(name = "admin_id")
-    private Admin admin;
 
     public AdminContactInfo() {
     }
@@ -51,13 +45,6 @@ public class AdminContactInfo {
         this.email = email;
     }
 
-    public long getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(long adminId) {
-        this.adminId = adminId;
-    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -75,11 +62,4 @@ public class AdminContactInfo {
         this.address = address;
     }
 
-    public Admin getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
-    }
 }
