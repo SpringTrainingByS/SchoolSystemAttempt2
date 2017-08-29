@@ -8,7 +8,6 @@ import javax.persistence.Id;
 /**
  * Created by User on 10.08.2017.
  */
-@Entity
 public class ZipCode {
 
     @Id

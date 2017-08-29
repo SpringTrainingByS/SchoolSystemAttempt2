@@ -14,12 +14,12 @@ public class City {
 
     private String name;
 
-    @Column(name = "voivodeship_id", insertable = false, updatable = false)
-    private long voivodeshipId;
-
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "voivodeship_id")
     private Voivodeship voivodeship;
+
+    @Column(name = "zip_code", length = 6)
+    private String zipCode;
 
     public City() {}
 
@@ -40,19 +40,29 @@ public class City {
         this.name = name;
     }
 
-    public long getVoivodeshipId() {
-        return voivodeshipId;
-    }
-
-    public void setVoivodeshipId(long voivodeshipId) {
-        this.voivodeshipId = voivodeshipId;
-    }
-
     public Voivodeship getVoivodeship() {
         return voivodeship;
     }
 
     public void setVoivodeship(Voivodeship voivodeship) {
         this.voivodeship = voivodeship;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", voivodeship=" + voivodeship +
+                ", zipCode='" + zipCode + '\'' +
+                '}';
     }
 }

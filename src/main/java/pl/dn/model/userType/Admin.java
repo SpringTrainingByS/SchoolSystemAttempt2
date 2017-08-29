@@ -20,11 +20,11 @@ public class Admin {
     private BasicInfo basicInfo;
 
     @OneToOne
-    @JoinColumn(name = "admin_contact_info_id")
+    @JoinColumn(name = "contact_info_id")
     private AdminContactInfo contactInfo;
 
     @OneToOne
-    @JoinColumn(name = "admin_born_info_id")
+    @JoinColumn(name = "born_info_id")
     private AdminBornInfo adminBornInfo;
 
     public Admin() {

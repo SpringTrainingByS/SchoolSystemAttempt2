@@ -19,12 +19,12 @@ public class Moderator {
     @Embedded
     private BasicInfo basicInfo;
 
-    @OneToOne
-    @JoinColumn(name = "moderator_contact_info_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contact_info_id")
     private ModeratorContactInfo contactInfo;
 
-    @OneToOne
-    @JoinColumn(name = "moderator_born_info_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "born_info_id")
     private ModeratorBornInfo bornInfo;
 
     public Moderator() {
@@ -62,4 +62,14 @@ public class Moderator {
         this.bornInfo = bornInfo;
     }
 
+
+    @Override
+    public String toString() {
+        return "Moderator{" +
+                "id=" + id +
+                ", basicInfo=" + basicInfo +
+                ", contactInfo=" + contactInfo +
+                ", bornInfo=" + bornInfo +
+                '}';
+    }
 }

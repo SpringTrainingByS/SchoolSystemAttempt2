@@ -21,11 +21,8 @@ public class ModeratorBornInfo  {
     @Column(name = "born_date")
     private Date bornDate;
 
-    @Column(name = "city_id", insertable = false, updatable = false)
-    private long cityId;
-
-    @ManyToOne
-    @JoinColumn(name = "city_id", insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "city_id")
     private City city;
 
     public ModeratorBornInfo() {
@@ -47,14 +44,6 @@ public class ModeratorBornInfo  {
         this.bornDate = bornDate;
     }
 
-    public long getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(long cityId) {
-        this.cityId = cityId;
-    }
-
     public City getCity() {
         return city;
     }
@@ -63,5 +52,12 @@ public class ModeratorBornInfo  {
         this.city = city;
     }
 
-
+    @Override
+    public String toString() {
+        return "ModeratorBornInfo{" +
+                "id=" + id +
+                ", bornDate=" + bornDate +
+                ", city=" + city +
+                '}';
+    }
 }

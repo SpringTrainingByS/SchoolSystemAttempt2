@@ -1,9 +1,6 @@
 package pl.dn.model.placeInfo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by User on 10.08.2017.
@@ -16,6 +13,8 @@ public class Voivodeship {
     private long id;
 
     private String name;
+
+
 
     public Voivodeship() {
     }
@@ -34,5 +33,13 @@ public class Voivodeship {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Voivodeship{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

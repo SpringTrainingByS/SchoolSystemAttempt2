@@ -18,7 +18,7 @@ public class BasicInfo {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "pesel", length = 11, insertable = false, updatable = false)
+    @Column(name = "pesel", length = 11)
     private String pesel;
 
     @Temporal(TemporalType.DATE)

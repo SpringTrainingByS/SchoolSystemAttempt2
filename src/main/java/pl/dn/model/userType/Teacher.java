@@ -20,11 +20,11 @@ public class Teacher extends User {
     private BasicInfo basicInfo;
 
     @OneToOne
-    @JoinColumn(name = "teacher_contact_info_id")
+    @JoinColumn(name = "contact_info_id")
     private TeacherContactInfo teacherContactInfo;
 
     @OneToOne
-    @JoinColumn(name = "teacher_born_info_id")
+    @JoinColumn(name = "born_info_id")
     private TeacherBornInfo bornInfo;
 
 

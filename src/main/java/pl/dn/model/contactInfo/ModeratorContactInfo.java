@@ -60,4 +60,13 @@ public class ModeratorContactInfo {
         this.address = address;
     }
 
+    @Override
+    public String toString() {
+        return "ModeratorContactInfo{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address=" + address +
+                '}';
+    }
 }

@@ -14,8 +14,6 @@ public class User {
 
     private String username;
 
-    private String pesel;
-
     private String password;
 
     private boolean enabled = true;
@@ -37,14 +35,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPesel() {
-        return pesel;
-    }
-
-    public void setPesel(String pesel) {
-        this.pesel = pesel;
     }
 
     public String getPassword() {

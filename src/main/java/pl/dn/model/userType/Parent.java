@@ -21,11 +21,11 @@ public class Parent {
     private BasicInfo basicInfo;
 
     @OneToOne
-    @JoinColumn(name = "parent_contact_info_id")
+    @JoinColumn(name = "contact_info_id")
     ParentContactInfo contactInfo;
 
     @OneToOne
-    @JoinColumn(name = "parent_born_info_id")
+    @JoinColumn(name = "born_info_id")
     ParentBornInfo parentBornInfo;
 
     public Parent() {

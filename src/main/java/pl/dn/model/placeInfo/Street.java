@@ -1,9 +1,6 @@
 package pl.dn.model.placeInfo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by User on 10.08.2017.
@@ -15,6 +12,10 @@ public class Street {
     private long id;
 
     private String name;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "city_id")
+    private City city;
 
     public Street() {
     }
@@ -33,5 +34,22 @@ public class Street {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    @Override
+    public String toString() {
+        return "Street{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", city=" + city +
+                '}';
     }
 }

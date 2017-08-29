@@ -10,7 +10,7 @@ import javax.persistence.*;
  * Created by User on 11.08.2017.
  */
 @Entity
-public class Student extends User{
+public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,11 +21,11 @@ public class Student extends User{
 
 
     @OneToOne
-    @JoinColumn(name = "student_contact_info_id")
+    @JoinColumn(name = "contact_info_id")
     private StudentContactInfo contactInfo;
 
     @OneToOne
-    @JoinColumn(name = "student_born_info_id")
+    @JoinColumn(name = "born_info_id")
     private StudentBornInfo bornInfo;
 
     public Student() {
