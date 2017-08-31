@@ -7,15 +7,12 @@ import javax.persistence.*;
  */
 @Entity
 public class Street {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "city_id")
-    private City city;
 
     public Street() {
     }
@@ -36,20 +33,12 @@ public class Street {
         this.name = name;
     }
 
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
 
     @Override
     public String toString() {
         return "Street{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", city=" + city +
                 '}';
     }
 }

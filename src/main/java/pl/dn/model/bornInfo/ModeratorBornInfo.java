@@ -14,14 +14,14 @@ import java.util.Date;
 public class ModeratorBornInfo  {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "born_date")
     private Date bornDate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "city_id")
     private City city;
 

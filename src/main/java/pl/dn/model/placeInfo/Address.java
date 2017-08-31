@@ -1,6 +1,7 @@
 package pl.dn.model.placeInfo;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.engine.spi.CascadingAction;
 
 import javax.persistence.*;
 
@@ -17,10 +18,22 @@ public class Address {
     @Column(name = "apratment_number")
     private long apartmentNumber;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "city_id")
+    private City city;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "street_id")
     private Street street;
 
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "zip_code_id")
+    private ZipCode zipCode;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "voivodeship_id")
+    private Voivodeship voivodeship;
 
     public long getHouseNamber() {
         return houseNamber;
@@ -44,6 +57,30 @@ public class Address {
 
     public void setStreet(Street street) {
         this.street = street;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public ZipCode getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(ZipCode zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public Voivodeship getVoivodeship() {
+        return voivodeship;
+    }
+
+    public void setVoivodeship(Voivodeship voivodeship) {
+        this.voivodeship = voivodeship;
     }
 
     @Override
