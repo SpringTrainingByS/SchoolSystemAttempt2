@@ -1,5 +1,7 @@
 package pl.dn.model.generalInfo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
@@ -59,4 +61,33 @@ public class BasicInfo {
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
+
+    @JsonIgnore
+    public boolean isFirstNameEmpty() {
+        if (firstName == null || firstName.isEmpty()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    @JsonIgnore
+    public boolean isLastNameEmpty() {
+        if (lastName == null || lastName.isEmpty()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    @JsonIgnore
+    public boolean isPeselEmpty() {
+        if (pesel == null || pesel.isEmpty()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
 }

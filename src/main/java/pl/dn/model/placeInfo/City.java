@@ -7,13 +7,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "city")
-public class City {
+public class City extends Place{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    private String name;
 
 
     public City() {}
@@ -26,19 +24,12 @@ public class City {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public String toString() {
         return "City{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
                 '}';
     }
+
+
 }

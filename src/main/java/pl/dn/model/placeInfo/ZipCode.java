@@ -20,6 +20,15 @@ public class ZipCode {
     public ZipCode() {
     }
 
+    public boolean isValueEmpty() {
+
+        if (value == null || value.isEmpty()) {
+            return true;
+        }
+
+        return false;
+    }
+
     public long getId() {
         return id;
     }

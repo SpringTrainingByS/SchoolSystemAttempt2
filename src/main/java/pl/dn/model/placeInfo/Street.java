@@ -6,13 +6,11 @@ import javax.persistence.*;
  * Created by User on 10.08.2017.
  */
 @Entity
-public class Street {
+public class Street extends Place {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    private String name;
 
     public Street() {
     }
@@ -25,20 +23,11 @@ public class Street {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
 
     @Override
     public String toString() {
         return "Street{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
                 '}';
     }
 }
