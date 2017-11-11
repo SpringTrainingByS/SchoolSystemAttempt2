@@ -1,6 +1,17 @@
 package pl.dn.model.userType;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import pl.dn.model.bornInfo.UserBornInfo;
+import pl.dn.model.contactInfo.UserContactInfo;
+import pl.dn.model.generalInfo.BasicInfo;
 
 /**
  * Created by User on 10.08.2017.
@@ -11,12 +22,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+  
+    @Embedded
+    private BasicInfo basicInfo;
 
-    private String username;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contact_info_id")
+    private UserContactInfo contactInfo;
 
-    private String password;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "born_info_id")
+    private UserBornInfo bornInfo;
 
-    private boolean enabled = true;
 
     public User() {
     }
@@ -29,27 +46,30 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
-    }
+	public BasicInfo getBasicInfo() {
+		return basicInfo;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setBasicInfo(BasicInfo basicInfo) {
+		this.basicInfo = basicInfo;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public UserContactInfo getContactInfo() {
+		return contactInfo;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setContactInfo(UserContactInfo contactInfo) {
+		this.contactInfo = contactInfo;
+	}
 
-    public boolean isEnabled() {
-        return enabled;
-    }
+	public UserBornInfo getBornInfo() {
+		return bornInfo;
+	}
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+	public void setBornInfo(UserBornInfo bornInfo) {
+		this.bornInfo = bornInfo;
+	}
+    
+    
+
 }
