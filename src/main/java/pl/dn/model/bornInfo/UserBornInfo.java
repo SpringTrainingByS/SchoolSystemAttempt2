@@ -21,7 +21,7 @@ import pl.dn.model.placeInfo.Voivodeship;
 @Table(name = "user_born_info")
 public class UserBornInfo {
 	
-	 @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 

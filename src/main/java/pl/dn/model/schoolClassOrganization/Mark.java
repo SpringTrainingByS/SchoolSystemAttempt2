@@ -17,8 +17,6 @@ public class Mark {
     @Column(name = "student_id")
     private long studentId;
 
-    @Column(name = "occupational_group_id")
-    private long occupationalGroupId;
 
     @Column(name = "credit_id")
     private long creditId;
@@ -44,14 +42,6 @@ public class Mark {
 
     public void setStudentId(long studentId) {
         this.studentId = studentId;
-    }
-
-    public long getOccupationalGroupId() {
-        return occupationalGroupId;
-    }
-
-    public void setOccupationalGroupId(long occupationalGroupId) {
-        this.occupationalGroupId = occupationalGroupId;
     }
 
     public long getCreditId() {

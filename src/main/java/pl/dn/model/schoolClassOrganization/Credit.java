@@ -19,6 +19,9 @@ public class Credit {
 
     @Column(name = "type_id")
     private int typeId;
+    
+    @Column(name = "occupational_group_id")
+    private long occupationalGroupId;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "creation_date")
