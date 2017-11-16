@@ -1,7 +1,21 @@
 package pl.dn.model.schoolClassOrganization;
 
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import pl.dn.model.schoolClassOrganization.details.ClassPrefix;
+import pl.dn.model.schoolClassOrganization.details.ClassSpecialization;
+import pl.dn.model.schoolClassOrganization.details.ClassType;
 
 /**
  * Created by User on 14.08.2017.
@@ -18,55 +32,60 @@ public class SchoolClass {
     @Column(name = "start_date")
     private Date startDate;
 
-    @Column(name = "specialization_id")
-    private long specializationId;
+    @ManyToOne
+    @JoinColumn(name = "specialization_id")
+    private ClassSpecialization specialization;
 
-    @Column(name = "type_id")
-    private long typeId;
+    @ManyToOne
+    @JoinColumn(name = "type_id")
+    private ClassType type;
 
-    @Column(name = "prefix_id")
-    private long prefix_id;
+    @ManyToOne
+    @JoinColumn(name = "prefix_id")
+    private ClassPrefix prefix;
 
     public SchoolClass() {
     }
 
-    public long getId() {
-        return id;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public Date getStartDate() {
-        return startDate;
-    }
+	public Date getStartDate() {
+		return startDate;
+	}
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
 
-    public long getSpecializationId() {
-        return specializationId;
-    }
+	public ClassSpecialization getSpecialization() {
+		return specialization;
+	}
 
-    public void setSpecializationId(long specializationId) {
-        this.specializationId = specializationId;
-    }
+	public void setSpecialization(ClassSpecialization specialization) {
+		this.specialization = specialization;
+	}
 
-    public long getTypeId() {
-        return typeId;
-    }
+	public ClassType getType() {
+		return type;
+	}
 
-    public void setTypeId(long typeId) {
-        this.typeId = typeId;
-    }
+	public void setType(ClassType type) {
+		this.type = type;
+	}
 
-    public long getPrefix_id() {
-        return prefix_id;
-    }
+	public ClassPrefix getPrefix() {
+		return prefix;
+	}
 
-    public void setPrefix_id(long prefix_id) {
-        this.prefix_id = prefix_id;
-    }
+	public void setPrefix(ClassPrefix prefix) {
+		this.prefix = prefix;
+	}
+
+    
 }

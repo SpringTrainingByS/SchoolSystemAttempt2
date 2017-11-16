@@ -1,7 +1,18 @@
 package pl.dn.model.schoolClassOrganization;
 
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import pl.dn.model.userType.User;
 
 /**
  * Created by User on 17.08.2017.
@@ -14,12 +25,13 @@ public class Mark {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "student_id")
-    private long studentId;
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private User student;
 
-
-    @Column(name = "credit_id")
-    private long creditId;
+    @ManyToOne
+    @JoinColumn(name = "credit_id")
+    private Credit credit;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "insert_date")
@@ -28,35 +40,37 @@ public class Mark {
     public Mark() {
     }
 
-    public long getId() {
-        return id;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public long getStudentId() {
-        return studentId;
-    }
+	public User getStudent() {
+		return student;
+	}
 
-    public void setStudentId(long studentId) {
-        this.studentId = studentId;
-    }
+	public void setStudent(User student) {
+		this.student = student;
+	}
 
-    public long getCreditId() {
-        return creditId;
-    }
+	public Credit getCredit() {
+		return credit;
+	}
 
-    public void setCreditId(long creditId) {
-        this.creditId = creditId;
-    }
+	public void setCredit(Credit credit) {
+		this.credit = credit;
+	}
 
-    public Date getInsertDate() {
-        return insertDate;
-    }
+	public Date getInsertDate() {
+		return insertDate;
+	}
 
-    public void setInsertDate(Date insertDate) {
-        this.insertDate = insertDate;
-    }
+	public void setInsertDate(Date insertDate) {
+		this.insertDate = insertDate;
+	}
+
+   
 }

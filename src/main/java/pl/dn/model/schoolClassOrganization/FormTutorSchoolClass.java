@@ -1,42 +1,60 @@
 package pl.dn.model.schoolClassOrganization;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.io.Serializable;
+
+import pl.dn.model.userType.User;
 
 /**
  * Created by User on 14.08.2017.
  */
 @Entity
 @Table(name = "form_tutor_shool_class")
-public class FormTutorSchoolClass implements Serializable{
+public class FormTutorSchoolClass {
 
-    @Id
-    @Column(name = "teacher_id")
-    private long teacherId;
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+	
+    @OneToOne
+    @JoinColumn(name = "teacher_id")
+    private User teacher;
 
-    @Id
-    @Column(name = "class_id")
-    private long classId;
+    @OneToOne
+    @JoinColumn(name = "class_id")
+    private SchoolClass school;
 
     public FormTutorSchoolClass() {
     }
 
-    public long getTeacherId() {
-        return teacherId;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public void setTeacherId(long teacherId) {
-        this.teacherId = teacherId;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public long getClassId() {
-        return classId;
-    }
+	public User getTeacher() {
+		return teacher;
+	}
 
-    public void setClassId(long classId) {
-        this.classId = classId;
-    }
+	public void setTeacher(User teacher) {
+		this.teacher = teacher;
+	}
+
+	public SchoolClass getSchool() {
+		return school;
+	}
+
+	public void setSchool(SchoolClass school) {
+		this.school = school;
+	}
+
+    
 }

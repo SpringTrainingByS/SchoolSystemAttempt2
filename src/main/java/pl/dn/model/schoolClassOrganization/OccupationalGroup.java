@@ -1,7 +1,20 @@
 package pl.dn.model.schoolClassOrganization;
 
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import pl.dn.model.userType.User;
 
 /**
  * Created by User on 17.08.2017.
@@ -13,15 +26,18 @@ public class OccupationalGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "teacher_id")
+    private User teacher;
 
-    @Column(name = "teacher_id")
-    private long teacherId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "school_class_id")
+    private SchoolClass schoolClass;
 
-    @Column(name = "school_class_id")
-    private long schoolClassId;
-
-    @Column(name = "school_subject_id")
-    private long schoolSubjectId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "school_subject_id")
+    private SchoolSubject schoolSubject;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "create_date")
@@ -30,43 +46,44 @@ public class OccupationalGroup {
     public OccupationalGroup() {
     }
 
-    public long getId() {
-        return id;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public long getTeacherId() {
-        return teacherId;
-    }
+	public User getTeacher() {
+		return teacher;
+	}
 
-    public void setTeacherId(long teacherId) {
-        this.teacherId = teacherId;
-    }
+	public void setTeacher(User teacher) {
+		this.teacher = teacher;
+	}
 
-    public long getSchoolClassId() {
-        return schoolClassId;
-    }
+	public SchoolClass getSchoolClass() {
+		return schoolClass;
+	}
 
-    public void setSchoolClassId(long schoolClassId) {
-        this.schoolClassId = schoolClassId;
-    }
+	public void setSchoolClass(SchoolClass schoolClass) {
+		this.schoolClass = schoolClass;
+	}
 
-    public long getSchoolSubjectId() {
-        return schoolSubjectId;
-    }
+	public SchoolSubject getSchoolSubject() {
+		return schoolSubject;
+	}
 
-    public void setSchoolSubjectId(long schoolSubjectId) {
-        this.schoolSubjectId = schoolSubjectId;
-    }
+	public void setSchoolSubject(SchoolSubject schoolSubject) {
+		this.schoolSubject = schoolSubject;
+	}
 
-    public Date getCreateDate() {
-        return createDate;
-    }
+	public Date getCreateDate() {
+		return createDate;
+	}
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
 }
