@@ -1,18 +1,22 @@
 package pl.dn.model.inventory;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class ClassroomType {
-
+@Table(name = "school_hour")
+public class SchoolHour {
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 	
-	private String name;
+	@Column(name = "range_desc")
+	private String rangeDesc;
 
 	public long getId() {
 		return id;
@@ -22,14 +26,15 @@ public class ClassroomType {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getRangeDesc() {
+		return rangeDesc;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setRangeDesc(String rangeDesc) {
+		this.rangeDesc = rangeDesc;
 	}
 	
 	
+
 	
 }

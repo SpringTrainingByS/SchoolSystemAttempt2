@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Classroom {
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
