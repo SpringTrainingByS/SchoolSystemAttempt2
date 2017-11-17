@@ -23,11 +23,11 @@ public class Absence {
     private long id;
 
 	@ManyToOne
-	@JoinColumn(name = "stduent_id")
+	@JoinColumn(name = "student_id")
 	private User student;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "date_of_occuernce")
+	@Column(name = "date_of_occuerence")
 	private Date dateOfOccurence;
 	
 	@Temporal(TemporalType.DATE)

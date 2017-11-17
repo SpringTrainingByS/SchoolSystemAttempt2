@@ -33,8 +33,4 @@ public class SchoolHour {
 	public void setRangeDesc(String rangeDesc) {
 		this.rangeDesc = rangeDesc;
 	}
-	
-	
-
-	
 }
