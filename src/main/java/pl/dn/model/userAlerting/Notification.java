@@ -1,4 +1,4 @@
-package pl.dn.model.timeOrganization;
+package pl.dn.model.userAlerting;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package pl.dn.model.timeOrganization;
+package pl.dn.model.userAlerting;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
