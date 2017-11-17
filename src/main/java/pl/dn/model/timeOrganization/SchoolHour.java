@@ -1,4 +1,4 @@
-package pl.dn.model.inventory;
+package pl.dn.model.timeOrganization;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
