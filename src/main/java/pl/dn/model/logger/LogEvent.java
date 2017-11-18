@@ -18,9 +18,6 @@ public class LogEvent {
     @Column(name = "creation_date")
     private Date creationDate;
 
-    @Column(name = "user_id")
-    private long userId;
-
     private String description;
 
 
@@ -41,14 +38,6 @@ public class LogEvent {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
     }
 
     public String getDescription() {
