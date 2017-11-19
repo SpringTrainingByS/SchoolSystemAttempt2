@@ -8,10 +8,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import pl.dn.model.placeInfo.Address;
 
 @Entity
 @Table(name = "user_contact_info")
+@DynamicUpdate(true)
 public class UserContactInfo {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)

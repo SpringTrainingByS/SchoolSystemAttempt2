@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import pl.dn.model.bornInfo.UserBornInfo;
 import pl.dn.model.contactInfo.UserContactInfo;
 import pl.dn.model.generalInfo.BasicInfo;
@@ -17,6 +19,7 @@ import pl.dn.model.generalInfo.BasicInfo;
  * Created by User on 10.08.2017.
  */
 @Entity
+@DynamicUpdate(true)
 public class User {
 
     @Id

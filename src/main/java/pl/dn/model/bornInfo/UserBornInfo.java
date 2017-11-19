@@ -14,11 +14,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import pl.dn.model.placeInfo.City;
 import pl.dn.model.placeInfo.Voivodeship;
 
 @Entity
 @Table(name = "user_born_info")
+@DynamicUpdate(true)
 public class UserBornInfo {
 	
 	@Id
