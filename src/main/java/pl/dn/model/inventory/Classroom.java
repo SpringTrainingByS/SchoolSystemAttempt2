@@ -7,7 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 @Entity
+@DynamicUpdate(true)
 public class Classroom {
 	
 	@Id
@@ -18,6 +21,16 @@ public class Classroom {
 	@JoinColumn(name = "type_id")
 	private ClassroomType type;
 	
+	private int number;
+	
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
 	private int numberOfPeople;
 
 	public long getId() {
