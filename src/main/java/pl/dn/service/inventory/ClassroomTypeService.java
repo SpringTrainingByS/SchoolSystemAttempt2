@@ -19,16 +19,25 @@ public class ClassroomTypeService {
 	@Autowired
     private SessionFactory sessionFactory;
 	
-	private void add(ClassroomType classroomType) {
+	public void add(ClassroomType classroomType) {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(classroomType);
 	}
 	
-	private ClassroomType get(long id) {
+	public ClassroomType get(long id) {
 		return classroomTypeDao.findById(id);
 	}
 	
-	private List<ClassroomType> getAll() {
+	public List<ClassroomType> getAll() {
 		return classroomTypeDao.findAll();
+	}
+	
+	public void udpate(ClassroomType classroomType) {
+		Session session = sessionFactory.getCurrentSession();
+		session.update(classroomType);
+	}
+	
+	public void delete(long id) {
+		classroomTypeDao.delete(id);
 	}
 }
