@@ -2,6 +2,8 @@ package pl.dn.service.inventory;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import pl.dn.dao.inventory.ClassroomTypeDao;
 import pl.dn.model.inventory.ClassroomType;
 
 @Service
+@Transactional
 public class ClassroomTypeService {
 	
 	@Autowired 
@@ -18,6 +21,7 @@ public class ClassroomTypeService {
 	
 	@Autowired
     private SessionFactory sessionFactory;
+	
 	
 	public void add(ClassroomType classroomType) {
 		Session session = sessionFactory.getCurrentSession();

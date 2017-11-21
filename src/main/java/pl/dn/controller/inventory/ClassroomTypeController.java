@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pl.dn.model.inventory.ClassroomType;
 import pl.dn.service.inventory.ClassroomTypeService;
-
+	
 @RestController
 @RequestMapping(value = "classroomtypes")
 public class ClassroomTypeController {
