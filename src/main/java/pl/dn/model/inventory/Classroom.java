@@ -7,10 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @DynamicUpdate(true)
+@DynamicInsert(true)
 public class Classroom {
 	
 	@Id
@@ -18,10 +20,12 @@ public class Classroom {
     private long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "type_id")
+	@JoinColumn(name = "classroomtype_id")
 	private ClassroomType type;
 	
 	private int number;
+	
+	private int numberOfPeople;
 	
 	public int getNumber() {
 		return number;
@@ -30,8 +34,6 @@ public class Classroom {
 	public void setNumber(int number) {
 		this.number = number;
 	}
-
-	private int numberOfPeople;
 
 	public long getId() {
 		return id;
