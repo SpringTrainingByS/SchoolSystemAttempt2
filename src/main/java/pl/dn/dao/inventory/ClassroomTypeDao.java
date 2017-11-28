@@ -11,6 +11,7 @@ import pl.dn.model.inventory.ClassroomType;
 @Repository
 public interface ClassroomTypeDao extends CrudRepository<ClassroomType, Long>{
 	public ClassroomType findById(long id);
+	public ClassroomType findByName(String name);
 	public List<ClassroomType> findAll();
 	public void delete(long id);
 }
