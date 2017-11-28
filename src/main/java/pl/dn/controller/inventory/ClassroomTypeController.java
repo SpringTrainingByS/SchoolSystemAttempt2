@@ -20,6 +20,7 @@ public class ClassroomTypeController {
 	@Autowired
 	private ClassroomTypeService classroomTypeService;
 	
+	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody ClassroomType classroomType) throws ValidationException {
 		classroomTypeService.add(classroomType);
