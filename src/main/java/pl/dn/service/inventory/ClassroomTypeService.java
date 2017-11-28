@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pl.dn.dao.inventory.ClassroomTypeDao;
+import pl.dn.exception.ValidationException;
 import pl.dn.model.inventory.ClassroomType;
+import pl.dn.validation.inventory.ClassroomTypeValidatior;
 
 @Service
 @Transactional
@@ -22,9 +24,13 @@ public class ClassroomTypeService {
 	@Autowired
     private SessionFactory sessionFactory;
 	
+	@Autowired
+	private ClassroomTypeValidatior validatior;
 	
-	public void add(ClassroomType classroomType) {
+	
+	public void add(ClassroomType classroomType) throws ValidationException {
 		Session session = sessionFactory.getCurrentSession();
+		validatior.validateBeforeAdd(classroomType);
 		session.save(classroomType);
 	}
 	

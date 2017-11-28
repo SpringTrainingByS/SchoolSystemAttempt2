@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import pl.dn.exception.ValidationException;
 import pl.dn.model.inventory.ClassroomType;
 import pl.dn.service.inventory.ClassroomTypeService;
 	
@@ -20,7 +21,7 @@ public class ClassroomTypeController {
 	private ClassroomTypeService classroomTypeService;
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public void add(@RequestBody ClassroomType classroomType) {
+	public void add(@RequestBody ClassroomType classroomType) throws ValidationException {
 		classroomTypeService.add(classroomType);
 	}
 	
