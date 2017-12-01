@@ -3,6 +3,7 @@ package pl.dn.controller.inventory;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,8 @@ public class ClassroomTypeController {
 	
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public void add(@RequestBody ClassroomType classroomType) throws ValidationException {
+	public void add(@RequestBody ClassroomType classroomType) throws ValidationException, Exception {
+		//throw new Exception("Testujemy dalej");
 		classroomTypeService.add(classroomType);
 	}
 	
