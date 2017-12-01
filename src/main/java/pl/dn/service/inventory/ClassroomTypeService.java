@@ -29,8 +29,8 @@ public class ClassroomTypeService {
 	
 	
 	public void add(ClassroomType classroomType) throws ValidationException {
-		Session session = sessionFactory.getCurrentSession();
 		validatior.validateBeforeAdd(classroomType);
+		Session session = sessionFactory.getCurrentSession();
 		session.save(classroomType);
 	}
 	
@@ -42,7 +42,8 @@ public class ClassroomTypeService {
 		return classroomTypeDao.findAll();
 	}
 	
-	public void udpate(ClassroomType classroomType) {
+	public void udpate(ClassroomType classroomType) throws ValidationException {
+		validatior.validateBeforeUpdate(classroomType);
 		Session session = sessionFactory.getCurrentSession();
 		session.update(classroomType);
 	}

@@ -24,11 +24,10 @@ public class ClassroomTypeController {
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody ClassroomType classroomType) throws ValidationException, Exception {
-		//throw new Exception("Testujemy dalej");
 		classroomTypeService.add(classroomType);
 	}
 	
-	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "get/{id}", method = RequestMethod.GET) 
 	public ClassroomType get(@PathVariable long id) {
 		return classroomTypeService.get(id);
 	}
@@ -39,7 +38,7 @@ public class ClassroomTypeController {
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public void update(@RequestBody ClassroomType classroomType) {
+	public void update(@RequestBody ClassroomType classroomType) throws ValidationException {
 		classroomTypeService.udpate(classroomType);
 	}
 	

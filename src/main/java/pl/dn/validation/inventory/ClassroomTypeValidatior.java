@@ -22,6 +22,34 @@ public class ClassroomTypeValidatior {
 			messages += "Nieprawid³owe id.";
 		}
 		
+		messages += checkNameAndExistence(classroomType);
+		
+		if (messages != "") {
+			throw new ValidationException(messages);
+		}
+		
+	}
+	
+	public void validateBeforeUpdate(ClassroomType classroomType) throws ValidationException {
+		
+		String messages = "";
+		
+		if (classroomType.getId() == 0) {
+			messages += "Brak id.";
+		}
+		
+		messages += checkNameAndExistence(classroomType);
+		
+		if (messages != "") {
+			throw new ValidationException(messages);
+		}
+		
+	}
+	
+	
+	public String checkNameAndExistence(ClassroomType classroomType) {
+		String messages = "";
+		
 		String name = classroomType.getName().trim();
 		classroomType.setName(name);
 		
@@ -36,10 +64,8 @@ public class ClassroomTypeValidatior {
 			messages += "Typ klasy o podanej nazwie istnieje";
 		}
 		
-		if (messages != "") {
-			throw new ValidationException(messages);
-		}
-		
+		return messages;
 	}
+	
 	
 }
