@@ -23,15 +23,15 @@ public class Classroom {
 	@JoinColumn(name = "classroomtype_id")
 	private ClassroomType type;
 	
-	private int number;
+	private String number;
 	
 	private int numberOfPeople;
 	
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
 
-	public void setNumber(int number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 

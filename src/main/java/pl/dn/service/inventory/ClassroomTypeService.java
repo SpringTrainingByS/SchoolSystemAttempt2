@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import pl.dn.dao.inventory.ClassroomTypeDao;
 import pl.dn.exception.ValidationException;
 import pl.dn.model.inventory.ClassroomType;
-import pl.dn.validation.inventory.ClassroomTypeValidatior;
+import pl.dn.validation.inventory.ClassroomTypeValidator;
 
 @Service
 @Transactional
@@ -25,7 +25,7 @@ public class ClassroomTypeService {
     private SessionFactory sessionFactory;
 	
 	@Autowired
-	private ClassroomTypeValidatior validatior;
+	private ClassroomTypeValidator validatior;
 	
 	
 	public void add(ClassroomType classroomType) throws ValidationException {

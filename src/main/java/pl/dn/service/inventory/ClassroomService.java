@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pl.dn.dao.inventory.ClassroomDao;
+import pl.dn.exception.ValidationException;
 import pl.dn.model.inventory.Classroom;
+import pl.dn.validation.inventory.ClassroomValidator;
+
 
 @Service
 @Transactional
@@ -22,19 +25,20 @@ public class ClassroomService {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	public void add(Classroom classroom) {
-		System.out.println("Próba zapisu");
+	@Autowired
+	private ClassroomValidator classroomValidator;
+	
+	public void add(Classroom classroom) throws ValidationException {
+		classroomValidator.validateBeforeAdd(classroom);
 		Session session = sessionFactory.getCurrentSession();
-		System.out.println("Pobranie sesji zakoñczenie powodzeniem");
 		session.saveOrUpdate(classroom);
-		System.out.println("Zapisanie u¿ytkownika zakoñczone powodzeniem");
 	}
 	
 	public Classroom getById(long id) {
 		return classroomDao.findById(id);
 	}
 	
-	public Classroom getByNumber(int number) {
+	public Classroom getByNumber(String number) {
 		return classroomDao.findByNumber(number);
 	}
 	
@@ -46,7 +50,8 @@ public class ClassroomService {
 		return classroomDao.findAll();
 	}
 	
-	public void update(Classroom classroom) {
+	public void update(Classroom classroom) throws ValidationException {
+		classroomValidator.validateBeforeUpdate(classroom);
 		Session session = sessionFactory.getCurrentSession();
 		session.update(classroom);
 	}

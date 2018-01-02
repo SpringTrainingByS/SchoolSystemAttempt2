@@ -12,7 +12,6 @@ import pl.dn.exception.ValidationException;
 
 
 @RestControllerAdvice
-
 public class HandlerException extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler({ValidationException.class})
@@ -20,7 +19,7 @@ public class HandlerException extends ResponseEntityExceptionHandler {
 	public 	ResponseEntity<String> handleValidationException(ValidationException ex) {
 		
 		ResponseEntity<String> response = new ResponseEntity<String>(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
-		System.out.println("Przeje³em wyjatkêk: " + ex.getMessage());
+		System.out.println("Przeje³em wyjatêk: " + ex.getMessage());
 		
 		return response;
 	}

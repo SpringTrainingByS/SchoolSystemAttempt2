@@ -14,7 +14,7 @@ public interface ClassroomDao extends CrudRepository<Classroom, Long> {
 	public void delete(Classroom classroom);
 	public Classroom findById(Long id);
 	public List<Classroom> findAll();
-	public Classroom findByNumber(int number);
+	public Classroom findByNumber(String number);
 	
 	@Query(value = "SELECT * FROM classroom LIMIT :limitValue OFFSET :offsetValue", nativeQuery = true)
 	public List<Classroom> findByPagination

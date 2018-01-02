@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import pl.dn.exception.ValidationException;
 import pl.dn.model.inventory.Classroom;
 import pl.dn.service.inventory.ClassroomService;
 
@@ -21,7 +22,7 @@ public class ClassroomController {
 	private ClassroomService classroomService;
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public void add(@RequestBody Classroom classroom) {
+	public void add(@RequestBody Classroom classroom) throws ValidationException {
 		classroomService.add(classroom);
 	}
 	
@@ -31,7 +32,7 @@ public class ClassroomController {
 	}
 	
 	@RequestMapping(value = "get", params="number", method = RequestMethod.GET)
-	public Classroom getByNumer(@RequestParam int number) {
+	public Classroom getByNumer(@RequestParam String number) {
 		return classroomService.getByNumber(number);
 	}
 	
@@ -46,7 +47,7 @@ public class ClassroomController {
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public void update(@RequestBody Classroom classroom) {
+	public void update(@RequestBody Classroom classroom) throws ValidationException {
 		classroomService.update(classroom);
 	}
 	
