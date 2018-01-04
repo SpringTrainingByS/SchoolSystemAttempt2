@@ -26,7 +26,7 @@ public class ClassPrefixValidator {
 		else {
 			ClassPrefix classPrefix2 = classPrefixDao.findByName(classPrefix.getName());
 			if (classPrefix2 != null) {
-				messages += "Nazwa dla nowego prefiksu instnieje ju¿ w bazie.";
+				messages += "Nazwa dla nowego prefiksu instnieje ju¿ w bazie  (" + classPrefix.getName() + ").";
 			}
 		}
 		
@@ -34,6 +34,29 @@ public class ClassPrefixValidator {
 			throw new ValidationException(messages);
 		}
 		
+	}
+	
+	public void validateBeforeUpdate(ClassPrefix classPrefix) throws ValidationException {
+		String messages = "";
+		
+		if (classPrefix.getId() == 0) {
+			messages += "Id prefiksu dla klasy szkolnej jest nieprawid³owe";
+		}
+		
+		if (!classPrefix.getName().matches("^[a-z]+$")) {
+			messages += "Nazwa dla prefiksu klasy jest nieprawid³owa.";
+		}
+		else {
+			ClassPrefix classPrefix2 = classPrefixDao.findByName(classPrefix.getName());
+			if (classPrefix.getId() != classPrefix2.getId()) {
+				messages += "Nazwa dla nowego prefiksu instnieje ju¿ w bazie (" + classPrefix.getName() + ")";
+			}
+		}
+		
+		
+		if (!messages.isEmpty()) {
+			throw new ValidationException(messages);
+		}
 	}
 
 }

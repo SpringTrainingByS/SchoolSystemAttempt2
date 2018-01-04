@@ -1,6 +1,7 @@
 package pl.dn.controller.schoolClassOrganization.details;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,7 +25,10 @@ public class ClassPrefixController {
 	
 	public void addSet() {}
 	
-	public void get() {}
+	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
+	public ClassPrefix get(@PathVariable long id) {
+		return classPrefixService.getById(id);
+	}
 	
 	public void getAll() {}
 	
@@ -32,7 +36,10 @@ public class ClassPrefixController {
 	
 	public void update() {}
 	
-	public void delete() {}
+	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+	public void delete(@PathVariable long id) {
+		classPrefixService.deleteById(id);
+	}
 	
 	
 
