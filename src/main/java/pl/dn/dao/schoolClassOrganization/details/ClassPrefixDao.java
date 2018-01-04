@@ -13,6 +13,7 @@ public interface ClassPrefixDao extends CrudRepository<ClassPrefix, Long>{
 	public ClassPrefix findByName(String name);
 	public ClassPrefix findById(Long id);
 	public void deleteById(Long id);
+	public List<ClassPrefix> findAll();
 	
 	@Query(value = "SELECT * FROM class_prefix LIMIT :limitValue OFFSET :offsetValue", nativeQuery = true)
 	public List<ClassPrefix> findByPagination

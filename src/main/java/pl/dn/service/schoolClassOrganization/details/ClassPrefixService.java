@@ -43,6 +43,10 @@ public class ClassPrefixService {
 		return classPrefixes;
 	}
 	
+	public List<ClassPrefix> getAll() {
+		return classPrefixDao.findAll();
+	}
+ 	
 	public void update(ClassPrefix classPrefix) throws ValidationException {
 		classPrefixValidator.validateBeforeUpdate(classPrefix);
 		Session session = sessionFactory.getCurrentSession();

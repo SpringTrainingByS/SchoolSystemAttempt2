@@ -26,14 +26,19 @@ public class ClassPrefixController {
 		classPrefixService.add(classPrefix);
 	}
 	
-	public void addSet() {}
+	public void addSet() {
+		
+	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
 	public ClassPrefix get(@PathVariable long id) {
 		return classPrefixService.getById(id);
 	}
 	
-	public void getAll() {}
+	@RequestMapping(value = "get/all", method = RequestMethod.GET)
+	public List<ClassPrefix> getAll() {
+		return classPrefixService.getAll();
+	}
 	
 	@RequestMapping(value = "get", params = {"limit", "offset"}, method = RequestMethod.GET)
 	public List<ClassPrefix> getByPagination(@RequestParam("limit") int limit, @RequestParam("offset") int offset) {
