@@ -26,8 +26,9 @@ public class ClassPrefixController {
 		classPrefixService.add(classPrefix);
 	}
 	
-	public void addSet() {
-		
+	@RequestMapping(value = "add-set", method = RequestMethod.POST)
+	public void addSet(@RequestBody List<ClassPrefix> classPrefixGroup) throws ValidationException {
+		classPrefixService.addSet(classPrefixGroup);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)

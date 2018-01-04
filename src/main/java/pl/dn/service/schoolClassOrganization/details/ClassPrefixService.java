@@ -33,6 +33,27 @@ public class ClassPrefixService {
 		session.save(classPrefix);
 	}
 	
+	public void addSet(List<ClassPrefix> classPrefixGroup) throws ValidationException {
+		String message = "";
+		Session session = sessionFactory.getCurrentSession();
+		
+		for (ClassPrefix classPrefix : classPrefixGroup ) {
+			try {
+				classPrefixValidator.validateBeforeAdd(classPrefix);
+				session.save(classPrefix);
+			}
+			catch (ValidationException e) {
+				message += "Problem dla prefiksu " + classPrefix.getName() + ": ";
+				message += e.getMessage();
+				message += ";";
+			}
+		}
+		
+		if (!message.isEmpty()) {
+			throw new ValidationException(message);
+		}
+	}
+	
 	public ClassPrefix getById(Long id)  {
 		return classPrefixDao.findById(id);
 	}
