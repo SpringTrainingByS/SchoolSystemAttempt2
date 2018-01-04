@@ -48,8 +48,11 @@ public class ClassPrefixValidator {
 		}
 		else {
 			ClassPrefix classPrefix2 = classPrefixDao.findByName(classPrefix.getName());
-			if (classPrefix.getId() != classPrefix2.getId()) {
-				messages += "Nazwa dla nowego prefiksu instnieje ju¿ w bazie (" + classPrefix.getName() + ")";
+			if (classPrefix2 != null) {
+				
+				if (classPrefix.getId() != classPrefix2.getId()) {
+					messages += "Nazwa dla nowego prefiksu instnieje ju¿ w bazie (" + classPrefix.getName() + ")";
+				}
 			}
 		}
 		

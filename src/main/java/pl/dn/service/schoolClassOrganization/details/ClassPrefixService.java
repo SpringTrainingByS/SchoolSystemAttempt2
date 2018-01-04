@@ -35,6 +35,12 @@ public class ClassPrefixService {
 		return classPrefixDao.findById(id);
 	}
 	
+	public void update(ClassPrefix classPrefix) throws ValidationException {
+		classPrefixValidator.validateBeforeUpdate(classPrefix);
+		Session session = sessionFactory.getCurrentSession();
+		session.update(classPrefix);
+	}
+	
 	public void deleteById(long id)  {
 		classPrefixDao.deleteById(id);
 	}

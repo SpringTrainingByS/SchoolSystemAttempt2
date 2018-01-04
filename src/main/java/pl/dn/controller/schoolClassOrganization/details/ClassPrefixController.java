@@ -34,7 +34,11 @@ public class ClassPrefixController {
 	
 	public void getByPagination() {}
 	
-	public void update() {}
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public void update(@RequestBody ClassPrefix classPrefix) throws ValidationException{
+		System.out.println("Id dla prefiksu: " + classPrefix.getId());
+		classPrefixService.update(classPrefix);
+	}
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable long id) {
