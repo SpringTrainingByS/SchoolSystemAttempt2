@@ -1,5 +1,7 @@
 package pl.dn.service.schoolClassOrganization.details;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -33,6 +35,12 @@ public class ClassPrefixService {
 	
 	public ClassPrefix getById(Long id)  {
 		return classPrefixDao.findById(id);
+	}
+	
+	public List<ClassPrefix> getByPagination(int limit, int offset) {
+		List<ClassPrefix> classPrefixes = classPrefixDao.findByPagination(limit, offset);
+		
+		return classPrefixes;
 	}
 	
 	public void update(ClassPrefix classPrefix) throws ValidationException {
