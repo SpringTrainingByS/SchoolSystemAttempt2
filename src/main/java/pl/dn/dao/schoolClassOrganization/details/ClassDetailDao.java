@@ -2,19 +2,18 @@ package pl.dn.dao.schoolClassOrganization.details;
 
 import java.util.List;
 
-import javax.persistence.MappedSuperclass;
-
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 
 import pl.dn.model.schoolClassOrganization.details.ClassDetail;
 
-
-public interface ClassDetailDao extends CrudRepository<ClassDetail, Long> {
+@NoRepositoryBean
+public interface ClassDetailDao<T extends ClassDetail> extends CrudRepository<T, Long> {
 	
-	public ClassDetail findByName(String name);
-	public ClassDetail findById(Long id);
+	public T findByName(String name);
+	public T findById(Long id);
 	public void deleteById(Long id);
-	public List<ClassDetail> findAll();
-	public List<ClassDetail> findByPagination(int limit, int offset);
+	public List<T> findAll();
+	public List<T> findByPagination(int limit, int offset);
 	
 }

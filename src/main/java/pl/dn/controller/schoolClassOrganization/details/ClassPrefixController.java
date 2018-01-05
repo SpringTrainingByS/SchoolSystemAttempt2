@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.dn.dao.schoolClassOrganization.details.ClassDetailDao;
+import pl.dn.dao.schoolClassOrganization.details.ClassPrefixDao;
 import pl.dn.exception.ValidationException;
 import pl.dn.model.schoolClassOrganization.details.ClassDetail;
 import pl.dn.model.schoolClassOrganization.details.ClassPrefix;
@@ -23,7 +23,8 @@ public class ClassPrefixController {
 	@Autowired
 	private ClassDetailService classDetailService;
 	
-	@Autowired ClassDetailDao dao;
+	@Autowired
+	private ClassPrefixDao dao;
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody ClassPrefix classPrefix) throws ValidationException {
