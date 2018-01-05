@@ -7,30 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "")
-public class CreditType {
+public class CreditType extends ClassDetail {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    private String name;
-
-    public CreditType() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    
 }

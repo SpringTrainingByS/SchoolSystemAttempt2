@@ -10,51 +10,55 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import pl.dn.dao.schoolClassOrganization.details.ClassDetailDao;
 import pl.dn.exception.ValidationException;
+import pl.dn.model.schoolClassOrganization.details.ClassDetail;
 import pl.dn.model.schoolClassOrganization.details.ClassPrefix;
-import pl.dn.service.schoolClassOrganization.details.ClassPrefixService;
+import pl.dn.service.schoolClassOrganization.details.ClassDetailService;
 
 @RestController
 @RequestMapping(value = "class-prefixex")
 public class ClassPrefixController {
 	
 	@Autowired
-	private ClassPrefixService classPrefixService;
+	private ClassDetailService classDetailService;
+	
+	@Autowired ClassDetailDao dao;
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody ClassPrefix classPrefix) throws ValidationException {
-		classPrefixService.add(classPrefix);
+		classDetailService.add(classPrefix, dao);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST)
 	public void addSet(@RequestBody List<ClassPrefix> classPrefixGroup) throws ValidationException {
-		classPrefixService.addSet(classPrefixGroup);
+		classDetailService.addSet(classPrefixGroup, dao);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
 	public ClassPrefix get(@PathVariable long id) {
-		return classPrefixService.getById(id);
+		return (ClassPrefix) classDetailService.getById(id, dao);
 	}
 	
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
-	public List<ClassPrefix> getAll() {
-		return classPrefixService.getAll();
+	public List<ClassDetail> getAll() {
+		return classDetailService.getAll(dao);
 	}
 	
 	@RequestMapping(value = "get", params = {"limit", "offset"}, method = RequestMethod.GET)
-	public List<ClassPrefix> getByPagination(@RequestParam("limit") int limit, @RequestParam("offset") int offset) {
-		return classPrefixService.getByPagination(limit, offset);
+	public List<ClassDetail> getByPagination(@RequestParam("limit") int limit, @RequestParam("offset") int offset) {
+		return classDetailService.getByPagination(limit, offset, dao);
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public void update(@RequestBody ClassPrefix classPrefix) throws ValidationException{
 		System.out.println("Id dla prefiksu: " + classPrefix.getId());
-		classPrefixService.update(classPrefix);
+		classDetailService.update(classPrefix, dao);
 	}
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable long id) {
-		classPrefixService.deleteById(id);
+		classDetailService.deleteById(id, dao);
 	}
 	
 	
