@@ -16,9 +16,6 @@ public class ClassSpecialization {
 
     private String name;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "start_date")
-    private Date startDate;
 
     public ClassSpecialization() {
     }
@@ -37,13 +34,5 @@ public class ClassSpecialization {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
     }
 }
