@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import pl.dn.dao.schoolClassOrganization.details.ClassDetailDao;
 import pl.dn.exception.ValidationException;
-import pl.dn.model.schoolClassOrganization.details.ClassDetail;
+import pl.dn.model.schoolClassOrganization.details.BaseDetail;
 import pl.dn.validation.inventory.schoolClassOrganization.details.ClassDetailValidator;
 
 @Service
@@ -24,17 +24,17 @@ public class ClassDetailService {
 	@Autowired
 	private ClassDetailValidator classDetailValidator;
 	
-	public void add(ClassDetail classDetail, ClassDetailDao dao) throws ValidationException{
+	public void add(BaseDetail classDetail, ClassDetailDao<?> dao) throws ValidationException{
 		classDetailValidator.validateBeforeAdd(classDetail, dao);
 		Session session = sessionFactory.getCurrentSession();
 		session.save(classDetail);
 	}
 	
-	public void addSet(List<? extends ClassDetail> classDetailGroup, ClassDetailDao dao) throws ValidationException {
+	public void addSet(List<? extends BaseDetail> classDetailGroup, ClassDetailDao<?> dao) throws ValidationException {
 		String message = "";
 		Session session = sessionFactory.getCurrentSession();
 		
-		for (ClassDetail classDetail : classDetailGroup ) {
+		for (BaseDetail classDetail : classDetailGroup ) {
 			try {
 				classDetailValidator.validateBeforeAdd(classDetail, dao);
 				session.save(classDetail);
@@ -51,27 +51,27 @@ public class ClassDetailService {
 		}
 	}
 	
-	public ClassDetail getById(Long id, ClassDetailDao dao)  {
+	public BaseDetail getById(Long id, ClassDetailDao<?> dao)  {
 		return dao.findById(id);
 	}
 	
-	public List<ClassDetail> getByPagination(int limit, int offset, ClassDetailDao dao) {
-		List<ClassDetail> classDetails = dao.findByPagination(limit, offset);
+	public List<?> getByPagination(int limit, int offset, ClassDetailDao<?> dao) {
+		List<?> classDetails = dao.findByPagination(limit, offset);
 		
 		return classDetails;
 	}
 	
-	public List<ClassDetail> getAll(ClassDetailDao dao) {
+	public List<?> getAll(ClassDetailDao<?> dao) {
 		return dao.findAll();
 	}
  	
-	public void update(ClassDetail classDetail, ClassDetailDao dao) throws ValidationException {
+	public void update(BaseDetail classDetail, ClassDetailDao<?> dao) throws ValidationException {
 		classDetailValidator.validateBeforeUpdate(classDetail, dao);
 		Session session = sessionFactory.getCurrentSession();
 		session.update(classDetail);
 	}
 	
-	public void deleteById(long id, ClassDetailDao dao)  {
+	public void deleteById(long id, ClassDetailDao<?> dao)  {
 		dao.deleteById(id);
 	}
 }

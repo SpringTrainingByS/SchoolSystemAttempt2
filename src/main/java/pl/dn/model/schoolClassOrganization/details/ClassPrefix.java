@@ -11,6 +11,6 @@ import org.hibernate.annotations.DynamicUpdate;
 @Entity
 @Table(name = "class_prefix")
 @DynamicUpdate
-public class ClassPrefix extends ClassDetail {
+public class ClassPrefix extends BaseDetail {
 	
 }

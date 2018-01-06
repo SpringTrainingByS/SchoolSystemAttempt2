@@ -7,7 +7,6 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "")
-public class CreditType extends ClassDetail {
+public class CreditType extends BaseDetail {
 
-    
 }

@@ -8,6 +8,6 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "class_specialization")
-public class ClassSpecialization extends ClassDetail{
+public class ClassSpecialization extends BaseDetail{
  
 }

@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import pl.dn.model.schoolClassOrganization.details.ClassPrefix;
+import pl.dn.model.schoolClassOrganization.details.ClassType;
 
-@Repository
-public interface ClassPrefixDao extends ClassDetailDao<ClassPrefix> {
-	
-	@Query(value = "SELECT * FROM class_prefix LIMIT :limitValue OFFSET :offsetValue", nativeQuery = true)
-	public List<ClassPrefix> findByPagination
+public interface ClassTypeDao extends ClassDetailDao<ClassType> {
+
+	@Query(value = "SELECT * FROM class_type LIMIT :limitValue OFFSET :offsetValue", nativeQuery = true)
+	public List<ClassType> findByPagination
 	(@Param("limitValue") int limit, @Param("offsetValue") int offset);
+	
 }

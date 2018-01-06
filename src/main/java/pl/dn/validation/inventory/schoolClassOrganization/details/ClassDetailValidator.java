@@ -1,29 +1,34 @@
 package pl.dn.validation.inventory.schoolClassOrganization.details;
 
+import java.util.regex.Pattern;
+
 import org.springframework.stereotype.Service;
 
 import pl.dn.dao.schoolClassOrganization.details.ClassDetailDao;
 import pl.dn.exception.ValidationException;
-import pl.dn.model.schoolClassOrganization.details.ClassDetail;
+import pl.dn.model.schoolClassOrganization.details.BaseDetail;
 
 @Service
 public class ClassDetailValidator {
 	
+	private String[] namePatterns = {
+			"^[a-z]+$", 
+			"^[a-z]+[\\s]{1}[a-z]+$"};
 	
-	public void validateBeforeAdd(ClassDetail classDetail, ClassDetailDao dao) throws ValidationException{
+	public void validateBeforeAdd(BaseDetail classDetailNew, ClassDetailDao<?> dao) throws ValidationException{
 		String messages = "";
 		
-		if (classDetail.getId() != 0) {
+		if (classDetailNew.getId() != 0) {
 			messages += "Id jest niepoprawne.";
 		}
 		
-		if (!classDetail.getName().matches("^[a-z]+$")) {
+		if (!checkValueByRegex(classDetailNew.getName(), namePatterns)) {
 			messages += "Nazwa jest nieprawid³owa.";
 		}
 		else {
-			ClassDetail classDetail2 = dao.findByName(classDetail.getName());
-			if (classDetail2 != null) {
-				messages += "Nazwa instnieje ju¿ w bazie  (" + classDetail.getName() + ").";
+			BaseDetail classDetailOld = dao.findByName(classDetailNew.getName());
+			if (classDetailOld != null) {
+				messages += "Nazwa instnieje ju¿ w bazie  (" + classDetailNew.getName() + ").";
 			}
 		}
 		
@@ -33,18 +38,18 @@ public class ClassDetailValidator {
 		
 	}
 	
-	public void validateBeforeUpdate(ClassDetail classDetailNew, ClassDetailDao dao ) throws ValidationException {
+	public void validateBeforeUpdate(BaseDetail classDetailNew, ClassDetailDao<?> dao ) throws ValidationException {
 		String messages = "";
 		
 		if (classDetailNew.getId() == 0) {
 			messages += "Id jest nieprawid³owe";
 		}
 		
-		if (!classDetailNew.getName().matches("^[a-z]+$")) {
+		if (!checkValueByRegex(classDetailNew.getName(), namePatterns)) {
 			messages += "Nazwa jest nieprawid³owa.";
 		}
 		else {
-			ClassDetail classDetail = dao.findByName(classDetailNew.getName());
+			BaseDetail classDetail = dao.findByName(classDetailNew.getName());
 			if (classDetail != null) {
 				
 				if (classDetailNew.getId() != classDetail.getId()) {
@@ -56,6 +61,20 @@ public class ClassDetailValidator {
 		if (!messages.isEmpty()) {
 			throw new ValidationException(messages);
 		}
+	}
+	
+	public boolean checkValueByRegex(String value, String[] regexes) {
+		boolean isCorrect = false;
+		
+		for (String regex : regexes) {
+			//Pattern pattern = Pattern.compile(regex);
+			//isCorrect = pattern.matcher(value).matches();
+			isCorrect = value.matches(regex);
+			//System.out.println("Dla " + value + " wyra¿enie " + regex + " daje " + isCorrect);
+			if (isCorrect) break;
+		}
+		
+		return isCorrect;
 	}
 
 }

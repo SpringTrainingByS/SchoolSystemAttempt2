@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class ClassDetail {
+public class BaseDetail {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -14,7 +14,7 @@ public class ClassDetail {
     private String name;
    
     
-    public ClassDetail() {
+    public BaseDetail() {
 		super();
 	}
 
