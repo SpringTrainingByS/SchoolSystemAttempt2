@@ -10,53 +10,52 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.dn.dao.schoolClassOrganization.details.ClassPrefixDao;
+import pl.dn.dao.schoolClassOrganization.details.ClassTypeDao;
 import pl.dn.exception.ValidationException;
-import pl.dn.model.schoolClassOrganization.details.BaseDetail;
-import pl.dn.model.schoolClassOrganization.details.ClassPrefix;
+import pl.dn.model.schoolClassOrganization.details.ClassType;
 import pl.dn.service.schoolClassOrganization.details.ClassDetailService;
 
 @RestController
-@RequestMapping(value = "class-prefixex")
-public class ClassPrefixController {
-	
+@RequestMapping(value = "class-type")
+public class ClassTypeController {
+
 	@Autowired
 	private ClassDetailService classDetailService;
 	
 	@Autowired
-	private ClassPrefixDao dao;
+	private ClassTypeDao dao;
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public void add(@RequestBody ClassPrefix classPrefix) throws ValidationException {
-		classDetailService.add(classPrefix, dao);
+	public void add(@RequestBody ClassType classType) throws ValidationException {
+		classDetailService.add(classType, dao);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST)
-	public void addSet(@RequestBody List<ClassPrefix> classPrefixGroup) throws ValidationException {
-		classDetailService.addSet(classPrefixGroup, dao);
+	public void addSet(@RequestBody List<ClassType> classTypeGroup) throws ValidationException {
+		classDetailService.addSet(classTypeGroup, dao);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
-	public ClassPrefix get(@PathVariable long id) {
-		return (ClassPrefix) classDetailService.getById(id, dao);
+	public ClassType get(@PathVariable long id) {
+		return (ClassType) classDetailService.getById(id, dao);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
-	public List<ClassPrefix> getAll() {
-		return (List<ClassPrefix>) classDetailService.getAll(dao);
+	public List<ClassType> getAll() {
+		return (List<ClassType>) classDetailService.getAll(dao);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get", params = {"limit", "offset"}, method = RequestMethod.GET)
-	public List<ClassPrefix> getByPagination(@RequestParam("limit") int limit, @RequestParam("offset") int offset) {
-		return (List<ClassPrefix>) classDetailService.getByPagination(limit, offset, dao);
+	public List<ClassType> getByPagination(@RequestParam("limit") int limit, @RequestParam("offset") int offset) {
+		return (List<ClassType>) classDetailService.getByPagination(limit, offset, dao);
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public void update(@RequestBody ClassPrefix classPrefix) throws ValidationException{
-		System.out.println("Id dla prefiksu: " + classPrefix.getId());
-		classDetailService.update(classPrefix, dao);
+	public void update(@RequestBody ClassType classType) throws ValidationException{
+		System.out.println("Id dla prefiksu: " + classType.getId());
+		classDetailService.update(classType, dao);
 	}
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
@@ -64,6 +63,4 @@ public class ClassPrefixController {
 		classDetailService.deleteById(id, dao);
 	}
 	
-	
-
 }

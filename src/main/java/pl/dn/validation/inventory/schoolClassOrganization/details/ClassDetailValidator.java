@@ -12,8 +12,8 @@ import pl.dn.model.schoolClassOrganization.details.BaseDetail;
 public class ClassDetailValidator {
 	
 	private String[] namePatterns = {
-			"^[a-z]+$", 
-			"^[a-z]+[\\s]{1}[a-z]+$"};
+			"^[\\p{L}]+$", 
+			"^[\\p{L}]+[\\s]{1}[\\p{L}]+$"};
 	
 	public void validateBeforeAdd(BaseDetail classDetailNew, ClassDetailDao<?> dao) throws ValidationException{
 		String messages = "";

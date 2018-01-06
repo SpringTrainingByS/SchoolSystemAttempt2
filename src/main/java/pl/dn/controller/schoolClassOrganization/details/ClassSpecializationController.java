@@ -41,11 +41,13 @@ public class ClassSpecializationController {
 		return (ClassSpecialization) classDetailService.getById(id, dao);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
 	public List<ClassSpecialization> getAll() {
 		return (List<ClassSpecialization>) classDetailService.getAll(dao);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get", params = {"limit", "offset"}, method = RequestMethod.GET)
 	public List<ClassSpecialization> getByPagination(@RequestParam("limit") int limit, @RequestParam("offset") int offset) {
 		return (List<ClassSpecialization>) classDetailService.getByPagination(limit, offset, dao);
