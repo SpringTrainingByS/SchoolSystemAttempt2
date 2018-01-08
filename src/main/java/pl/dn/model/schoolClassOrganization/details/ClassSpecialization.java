@@ -1,6 +1,9 @@
 package pl.dn.model.schoolClassOrganization.details;
 
 import javax.persistence.*;
+
+import pl.dn.model.base.BaseDetail;
+
 import java.util.Date;
 
 /**

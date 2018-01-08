@@ -1,4 +1,4 @@
-package pl.dn.model.schoolClassOrganization.details;
+package pl.dn.model.base;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

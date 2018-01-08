@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
-import pl.dn.model.schoolClassOrganization.details.BaseDetail;
+import pl.dn.model.base.BaseDetail;
 
 @NoRepositoryBean
 public interface ClassDetailDao<T extends BaseDetail> extends CrudRepository<T, Long> {

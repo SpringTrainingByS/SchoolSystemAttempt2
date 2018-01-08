@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import pl.dn.dao.schoolClassOrganization.details.ClassDetailDao;
 import pl.dn.exception.ValidationException;
-import pl.dn.model.schoolClassOrganization.details.BaseDetail;
+import pl.dn.model.base.BaseDetail;
 
 @Service
 public class ClassDetailValidator {

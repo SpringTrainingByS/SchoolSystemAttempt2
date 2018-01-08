@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pl.dn.dao.schoolClassOrganization.details.ClassSpecializationDao;
 import pl.dn.exception.ValidationException;
-import pl.dn.model.schoolClassOrganization.details.BaseDetail;
+import pl.dn.model.base.BaseDetail;
 import pl.dn.model.schoolClassOrganization.details.ClassSpecialization;
 import pl.dn.service.schoolClassOrganization.details.ClassDetailService;
 

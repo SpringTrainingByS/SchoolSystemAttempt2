@@ -1,6 +1,7 @@
 package pl.dn.model.schoolClassOrganization;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -32,9 +35,18 @@ public class SchoolClass {
     @Column(name = "start_date")
     private Date startDate;
 
-    @ManyToOne
-    @JoinColumn(name = "specialization_id")
-    private ClassSpecialization specialization;
+    @ManyToMany
+    @JoinTable(
+    		name = "schoolclass_classspecialization",
+    		joinColumns = @JoinColumn(
+    				name = "schoolclass_id",
+    				referencedColumnName = "id"),
+    		inverseJoinColumns = @JoinColumn(
+    				name = "classspecialization_id",
+    				referencedColumnName = "id"
+    				)
+    		)
+    private List<ClassSpecialization> classSpecializationList;
 
     @ManyToOne
     @JoinColumn(name = "type_id")
@@ -63,12 +75,12 @@ public class SchoolClass {
 		this.startDate = startDate;
 	}
 
-	public ClassSpecialization getSpecialization() {
-		return specialization;
+	public List<ClassSpecialization> getClassSpecializationList() {
+		return classSpecializationList;
 	}
 
-	public void setSpecialization(ClassSpecialization specialization) {
-		this.specialization = specialization;
+	public void setClassSpecializationList(List<ClassSpecialization> classSpecializationList) {
+		this.classSpecializationList = classSpecializationList;
 	}
 
 	public ClassType getType() {
