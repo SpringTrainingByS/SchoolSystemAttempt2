@@ -1,4 +1,4 @@
-package pl.dn.validation.inventory;
+package pl.dn.validation.inventory.schoolClassOrganization.details;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

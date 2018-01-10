@@ -1,4 +1,4 @@
-package pl.dn.validation.inventory.schoolClassOrganization.details;
+package pl.dn.validation.inventory.schoolClassOrganization;
 
 import java.util.Calendar;
 import java.util.List;
@@ -48,7 +48,7 @@ public class SchoolClassValidator {
 				throw new ValidationException(message);
 			}
 			
-			message += validateIds(schoolClass);
+			message += validateIdsForAdd(schoolClass);
 			if (!message.isEmpty()) {
 				throw new ValidationException(message);
 			}
@@ -64,6 +64,37 @@ public class SchoolClassValidator {
 			}
 			
 			message += checkDuplicateEntityByPrefix(schoolClass);
+			if (!message.isEmpty()) {
+				throw new ValidationException(message);
+			}
+			
+		}
+	}
+	
+	public void validateBeforeUpdate(SchoolClass schoolClass) throws ValidationException {
+		String message = "";
+		
+		if (schoolClass == null) {
+			message = "Jednostka nie mo¿e byæ pusta.";
+		}
+		else {
+			
+			message += checkFieldsAreNull(schoolClass);
+			if (!message.isEmpty()) {
+				throw new ValidationException(message);
+			}
+			
+			message += validateIdsForUpdate(schoolClass);
+			if (!message.isEmpty()) {
+				throw new ValidationException(message);
+			}
+			
+			message += checkEntityFieldsValues(schoolClass);
+			if (!message.isEmpty()) {
+				throw new ValidationException(message);
+			}
+			
+			message += validateIntegrityDb(schoolClass);
 			if (!message.isEmpty()) {
 				throw new ValidationException(message);
 			}
@@ -89,10 +120,32 @@ public class SchoolClassValidator {
 		return message;
 	}
 	
-	private String validateIds(SchoolClass schoolClass) {
+	private String validateIdsForAdd(SchoolClass schoolClass) {
 		String message = "";
 		
 		if (schoolClass.getId() != 0) {
+			message += "Nieprawid³owe id dla klasy.";
+		}
+		if (schoolClass.getPrefix().getId() == 0) {
+			message += "Nieprawid³owe id dla prefiksu.";
+		}
+		if (schoolClass.getType().getId() == 0) {
+			message += "Nieprawid³owe id dla typu klasy.";
+		}
+		
+		for (ClassSpecialization specialization : schoolClass.getClassSpecializationList()) {
+			if (specialization.getId() == 0) {
+				message += "Nieprawid³owe id dla specjalizacji: " + specialization.getName() + ".";
+			}
+		}
+		
+		return message;
+	}
+	
+	public String validateIdsForUpdate(SchoolClass schoolClass) {
+		String message = "";
+		
+		if (schoolClass.getId() == 0) {
 			message += "Nieprawid³owe id dla klasy.";
 		}
 		if (schoolClass.getPrefix().getId() == 0) {
@@ -173,17 +226,23 @@ public class SchoolClassValidator {
 	}
 	
 	public String checkDuplicateEntityByPrefix(SchoolClass schoolClass) {
+		//System.out.println("Sprawdzam duplikaty");
 		String message = "";
 		
 		long prefixId = schoolClass.getPrefix().getId();
 		List<SchoolClass> schoolClassDbGroup = schoolClassDao.findByPrefixId(prefixId);
 		
 		int year = Calendar.getInstance().get(Calendar.YEAR);
+		int schoolClassYear = 0;
+		
 		for (SchoolClass schoolClassDb : schoolClassDbGroup) {
-			if (schoolClassDb.getStartDate().getYear() == year) {
+			
+			schoolClassYear = schoolClassDb.getStartDate().get(Calendar.YEAR); 
+			if (schoolClassYear == year) {
 				message += "Wykryto istniej¹c¹ klasê o takim samym roku rozpoczêcia i prefiksie";
 				break;
 			}
+			
 		}
 		
 		return message;

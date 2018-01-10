@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.dn.dao.schoolClassOrganization.SchoolClassDao;
 import pl.dn.exception.ValidationException;
 import pl.dn.model.schoolClassOrganization.SchoolClass;
 import pl.dn.service.schoolClassOrganization.SchoolClassService;
@@ -31,6 +31,20 @@ public class SchoolClassController {
 		return service.getById(id);
 	}
 	
+	@RequestMapping(value = "get", params = {"limit", "offset"}, method = RequestMethod.GET)
+	public List<SchoolClass> getByPagination(@RequestParam("limit") int limit, @RequestParam("offset") int offset) {
+		return service.getByPagination(limit, offset);
+	}
+	
+	@RequestMapping(value = "get/all", method = RequestMethod.GET)
+	public List<SchoolClass> getAll() {
+		return service.getAll();
+	}
+	
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public void update(@RequestBody SchoolClass schoolClass) throws ValidationException {
+		service.update(schoolClass);
+	}
 	
 	
 }

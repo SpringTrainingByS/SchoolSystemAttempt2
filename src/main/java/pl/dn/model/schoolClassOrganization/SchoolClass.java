@@ -1,6 +1,6 @@
 package pl.dn.model.schoolClassOrganization;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import pl.dn.model.schoolClassOrganization.details.ClassPrefix;
 import pl.dn.model.schoolClassOrganization.details.ClassSpecialization;
@@ -32,8 +34,9 @@ public class SchoolClass {
     private long id;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "start_date")
-    private Date startDate;
+    @Column(name = "start_date", updatable = false)
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Calendar startDate;
 
     @ManyToMany
     @JoinTable(
@@ -67,11 +70,11 @@ public class SchoolClass {
 		this.id = id;
 	}
 
-	public Date getStartDate() {
+	public Calendar getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(Calendar startDate) {
 		this.startDate = startDate;
 	}
 
