@@ -46,5 +46,10 @@ public class SchoolClassController {
 		service.update(schoolClass);
 	}
 	
+	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+	public void deleteById(@PathVariable long id) {
+		service.deleteById(id);
+	}
+	
 	
 }

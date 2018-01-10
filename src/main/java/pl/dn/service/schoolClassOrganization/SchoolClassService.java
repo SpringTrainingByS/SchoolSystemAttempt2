@@ -55,4 +55,8 @@ public class SchoolClassService {
 		session.update(schoolClass);
 	}
 	
+	public void deleteById(long id) {
+		schoolClassDao.deleteById(id);
+	}
+	
 }

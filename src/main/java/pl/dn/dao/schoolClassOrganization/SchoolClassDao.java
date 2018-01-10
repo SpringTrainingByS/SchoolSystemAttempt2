@@ -13,6 +13,7 @@ public interface SchoolClassDao extends CrudRepository<SchoolClass, Long> {
 	public SchoolClass findById(long id);
 	public List<SchoolClass> findByPrefixId(long id);
 	public List<SchoolClass> findAll();
+	public void deleteById(long id);
 	
 	@Query(value = "SELECT * FROM school_class LIMIT :limit OFFSET :offset", nativeQuery = true) 
 	public List<SchoolClass> findByPagination(@Param("limit") int limit, @Param("offset") int offset);
