@@ -13,26 +13,30 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.dn.dao.schoolClassOrganization.details.ClassTypeDao;
 import pl.dn.exception.ValidationException;
 import pl.dn.model.schoolClassOrganization.details.ClassType;
-import pl.dn.service.schoolClassOrganization.details.ClassDetailService;
+import pl.dn.service.base.BaseDetailService;
 
 @RestController
 @RequestMapping(value = "class-type")
 public class ClassTypeController {
 
 	@Autowired
-	private ClassDetailService classDetailService;
+	private BaseDetailService classDetailService;
 	
 	@Autowired
 	private ClassTypeDao dao;
 	
+	private String[] validationPatterns = {
+			"^[\\p{L}]+$", 
+			"^[\\p{L}]+[\\s]{1}[\\p{L}]+$"};
+	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody ClassType classType) throws ValidationException {
-		classDetailService.add(classType, dao);
+		classDetailService.add(classType, dao, validationPatterns);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST)
 	public void addSet(@RequestBody List<ClassType> classTypeGroup) throws ValidationException {
-		classDetailService.addSet(classTypeGroup, dao);
+		classDetailService.addSet(classTypeGroup, dao, validationPatterns);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
@@ -55,7 +59,7 @@ public class ClassTypeController {
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public void update(@RequestBody ClassType classType) throws ValidationException{
 		System.out.println("Id dla prefiksu: " + classType.getId());
-		classDetailService.update(classType, dao);
+		classDetailService.update(classType, dao, validationPatterns);
 	}
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)

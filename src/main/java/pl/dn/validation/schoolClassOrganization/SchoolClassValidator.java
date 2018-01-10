@@ -1,4 +1,4 @@
-package pl.dn.validation.inventory.schoolClassOrganization;
+package pl.dn.validation.schoolClassOrganization;
 
 import java.util.Calendar;
 import java.util.List;

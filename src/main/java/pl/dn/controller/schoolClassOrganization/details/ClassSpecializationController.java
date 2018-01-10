@@ -14,26 +14,30 @@ import pl.dn.dao.schoolClassOrganization.details.ClassSpecializationDao;
 import pl.dn.exception.ValidationException;
 import pl.dn.model.base.BaseDetail;
 import pl.dn.model.schoolClassOrganization.details.ClassSpecialization;
-import pl.dn.service.schoolClassOrganization.details.ClassDetailService;
+import pl.dn.service.base.BaseDetailService;
 
 @RestController
 @RequestMapping(value = "class-spec")
 public class ClassSpecializationController {
 	
 	@Autowired
-	private ClassDetailService classDetailService;
+	private BaseDetailService classDetailService;
 	
 	@Autowired
 	private ClassSpecializationDao dao;
 	
+	private String[] validationPatterns = {
+			"^[\\p{L}]+$", 
+			"^[\\p{L}]+[\\s]{1}[\\p{L}]+$"};
+	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody ClassSpecialization classSpecialization) throws ValidationException {
-		classDetailService.add(classSpecialization, dao);
+		classDetailService.add(classSpecialization, dao, validationPatterns);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST)
 	public void addSet(@RequestBody List<ClassSpecialization> classSpecializationGroup) throws ValidationException {
-		classDetailService.addSet(classSpecializationGroup, dao);
+		classDetailService.addSet(classSpecializationGroup, dao, validationPatterns);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
@@ -55,7 +59,7 @@ public class ClassSpecializationController {
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public void update(@RequestBody ClassSpecialization classSpecialization) throws ValidationException{
-		classDetailService.update(classSpecialization, dao);
+		classDetailService.update(classSpecialization, dao, validationPatterns);
 	}
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)

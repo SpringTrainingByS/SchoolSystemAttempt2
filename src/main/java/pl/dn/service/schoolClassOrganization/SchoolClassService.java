@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import pl.dn.dao.schoolClassOrganization.SchoolClassDao;
 import pl.dn.exception.ValidationException;
 import pl.dn.model.schoolClassOrganization.SchoolClass;
-import pl.dn.validation.inventory.schoolClassOrganization.SchoolClassValidator;
+import pl.dn.validation.schoolClassOrganization.SchoolClassValidator;
 
 @Service
 @Transactional

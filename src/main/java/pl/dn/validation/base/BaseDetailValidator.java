@@ -1,28 +1,25 @@
-package pl.dn.validation.inventory.schoolClassOrganization.details;
+package pl.dn.validation.base;
 
 import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
-import pl.dn.dao.schoolClassOrganization.details.ClassDetailDao;
+import pl.dn.dao.base.BaseDetailDao;
 import pl.dn.exception.ValidationException;
 import pl.dn.model.base.BaseDetail;
 
 @Service
-public class ClassDetailValidator {
+public class BaseDetailValidator {
 	
-	private String[] namePatterns = {
-			"^[\\p{L}]+$", 
-			"^[\\p{L}]+[\\s]{1}[\\p{L}]+$"};
 	
-	public void validateBeforeAdd(BaseDetail classDetailNew, ClassDetailDao<?> dao) throws ValidationException{
+	public void validateBeforeAdd(BaseDetail classDetailNew, BaseDetailDao<?> dao, String[] validationPatterns) throws ValidationException{
 		String messages = "";
 		
 		if (classDetailNew.getId() != 0) {
 			messages += "Id jest niepoprawne.";
 		}
 		
-		if (!checkValueByRegex(classDetailNew.getName(), namePatterns)) {
+		if (!checkValueByRegex(classDetailNew.getName(), validationPatterns)) {
 			messages += "Nazwa jest nieprawid³owa.";
 		}
 		else {
@@ -38,14 +35,14 @@ public class ClassDetailValidator {
 		
 	}
 	
-	public void validateBeforeUpdate(BaseDetail classDetailNew, ClassDetailDao<?> dao ) throws ValidationException {
+	public void validateBeforeUpdate(BaseDetail classDetailNew, BaseDetailDao<?> dao, String[] validationPatterns) throws ValidationException {
 		String messages = "";
 		
 		if (classDetailNew.getId() == 0) {
 			messages += "Id jest nieprawid³owe";
 		}
 		
-		if (!checkValueByRegex(classDetailNew.getName(), namePatterns)) {
+		if (!checkValueByRegex(classDetailNew.getName(), validationPatterns)) {
 			messages += "Nazwa jest nieprawid³owa.";
 		}
 		else {

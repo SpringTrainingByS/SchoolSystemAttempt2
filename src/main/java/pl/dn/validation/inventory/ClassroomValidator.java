@@ -1,4 +1,4 @@
-package pl.dn.validation.inventory.schoolClassOrganization;
+package pl.dn.validation.inventory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import pl.dn.dao.inventory.ClassroomDao;
 import pl.dn.exception.ValidationException;
 import pl.dn.model.inventory.Classroom;
-import pl.dn.validation.inventory.schoolClassOrganization.details.ClassroomTypeValidator;
 
 @Service
 public class ClassroomValidator {

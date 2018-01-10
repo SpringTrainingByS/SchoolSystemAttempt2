@@ -14,26 +14,29 @@ import pl.dn.dao.schoolClassOrganization.details.ClassPrefixDao;
 import pl.dn.exception.ValidationException;
 import pl.dn.model.base.BaseDetail;
 import pl.dn.model.schoolClassOrganization.details.ClassPrefix;
-import pl.dn.service.schoolClassOrganization.details.ClassDetailService;
+import pl.dn.service.base.BaseDetailService;
 
 @RestController
 @RequestMapping(value = "class-prefixex")
 public class ClassPrefixController {
 	
 	@Autowired
-	private ClassDetailService classDetailService;
+	private BaseDetailService classDetailService;
 	
 	@Autowired
 	private ClassPrefixDao dao;
 	
+	private String[] validationPatterns = {
+	"^[\\p{L}]+$"};
+	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody ClassPrefix classPrefix) throws ValidationException {
-		classDetailService.add(classPrefix, dao);
+		classDetailService.add(classPrefix, dao, validationPatterns);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST)
 	public void addSet(@RequestBody List<ClassPrefix> classPrefixGroup) throws ValidationException {
-		classDetailService.addSet(classPrefixGroup, dao);
+		classDetailService.addSet(classPrefixGroup, dao, validationPatterns);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
@@ -56,7 +59,7 @@ public class ClassPrefixController {
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public void update(@RequestBody ClassPrefix classPrefix) throws ValidationException{
 		System.out.println("Id dla prefiksu: " + classPrefix.getId());
-		classDetailService.update(classPrefix, dao);
+		classDetailService.update(classPrefix, dao, validationPatterns);
 	}
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)

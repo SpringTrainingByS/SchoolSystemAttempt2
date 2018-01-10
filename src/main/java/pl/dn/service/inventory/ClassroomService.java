@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import pl.dn.dao.inventory.ClassroomDao;
 import pl.dn.exception.ValidationException;
 import pl.dn.model.inventory.Classroom;
-import pl.dn.validation.inventory.schoolClassOrganization.ClassroomValidator;
+import pl.dn.validation.inventory.ClassroomValidator;
 
 
 @Service
