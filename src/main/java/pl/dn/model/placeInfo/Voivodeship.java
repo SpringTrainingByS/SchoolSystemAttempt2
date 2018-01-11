@@ -1,33 +1,13 @@
 package pl.dn.model.placeInfo;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+
+import pl.dn.model.base.BaseDetail;
 
 /**
  * Created by User on 10.08.2017.
  */
 @Entity
-public class Voivodeship extends Place {
+public class Voivodeship extends BaseDetail {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-
-    public Voivodeship() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Voivodeship{" +
-                "id=" + id +
-                '}';
-    }
 }
