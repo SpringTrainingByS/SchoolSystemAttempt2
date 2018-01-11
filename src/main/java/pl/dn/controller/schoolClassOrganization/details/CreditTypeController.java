@@ -1,0 +1,69 @@
+package pl.dn.controller.schoolClassOrganization.details;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import pl.dn.dao.schoolClassOrganization.details.CreditTypeDao;
+import pl.dn.exception.ValidationException;
+import pl.dn.model.schoolClassOrganization.details.CreditType;
+import pl.dn.service.base.BaseDetailService;
+
+@RestController
+@RequestMapping(value = "credit-type")
+public class CreditTypeController {
+
+	@Autowired
+	private BaseDetailService service;
+	
+	@Autowired
+	private CreditTypeDao dao;
+	
+	private String[] validationPatterns = {
+			"^[\\p{L}]+$", 
+			"^[\\p{L}]+[\\s]{1}[\\p{L}]+$"};
+	
+	@RequestMapping(value = "add", method = RequestMethod.POST)
+	public void add(@RequestBody CreditType creditType) throws ValidationException {
+		service.add(creditType, dao, validationPatterns);
+	}
+	
+	@RequestMapping(value = "add-set", method = RequestMethod.POST)
+	public void addSet(@RequestBody List<CreditType> creditType) throws ValidationException {
+		service.addSet(creditType, dao, validationPatterns);
+	}
+	
+	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
+	public CreditType get(@PathVariable long id) {
+		return (CreditType) service.getById(id, dao);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "get/all", method = RequestMethod.GET)
+	public List<CreditType> getAll() {
+		return (List<CreditType>) service.getAll(dao);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "get", params = {"limit", "offset"}, method = RequestMethod.GET)
+	public List<CreditType> getByPagination(@RequestParam("limit") int limit, @RequestParam("offset") int offset) {
+		return (List<CreditType>) service.getByPagination(limit, offset, dao);
+	}
+	
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public void update(@RequestBody CreditType creditType) throws ValidationException{
+		service.update(creditType, dao, validationPatterns);
+	}
+	
+	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+	public void delete(@PathVariable long id) {
+		service.deleteById(id, dao);
+	}
+	
+}
