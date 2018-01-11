@@ -42,19 +42,19 @@ public class ClassSpecializationController {
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
 	public ClassSpecialization get(@PathVariable long id) {
-		return (ClassSpecialization) classDetailService.getById(id, dao);
+		return (ClassSpecialization) dao.findById(id);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
 	public List<ClassSpecialization> getAll() {
-		return (List<ClassSpecialization>) classDetailService.getAll(dao);
+		return (List<ClassSpecialization>) dao.findAll();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get", params = {"limit", "offset"}, method = RequestMethod.GET)
 	public List<ClassSpecialization> getByPagination(@RequestParam("limit") int limit, @RequestParam("offset") int offset) {
-		return (List<ClassSpecialization>) classDetailService.getByPagination(limit, offset, dao);
+		return (List<ClassSpecialization>) dao.findByPagination(limit, offset);
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
@@ -64,7 +64,7 @@ public class ClassSpecializationController {
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable long id) {
-		classDetailService.deleteById(id, dao);
+		dao.deleteById(id);
 	}
 
 }

@@ -51,27 +51,10 @@ public class BaseDetailService {
 		}
 	}
 	
-	public BaseDetail getById(Long id, BaseDetailDao<?> dao)  {
-		return dao.findById(id);
-	}
-	
-	public List<?> getByPagination(int limit, int offset, BaseDetailDao<?> dao) {
-		List<?> classDetails = dao.findByPagination(limit, offset);
-		
-		return classDetails;
-	}
-	
-	public List<?> getAll(BaseDetailDao<?> dao) {
-		return dao.findAll();
-	}
- 	
 	public void update(BaseDetail classDetail, BaseDetailDao<?> dao, String[] validationPatterns) throws ValidationException {
 		classDetailValidator.validateBeforeUpdate(classDetail, dao, validationPatterns);
 		Session session = sessionFactory.getCurrentSession();
 		session.update(classDetail);
 	}
 	
-	public void deleteById(long id, BaseDetailDao<?> dao)  {
-		dao.deleteById(id);
-	}
 }

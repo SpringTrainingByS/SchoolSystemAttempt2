@@ -41,19 +41,19 @@ public class SchoolSubjectController {
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
 	public SchoolSubject get(@PathVariable long id) {
-		return (SchoolSubject) service.getById(id, dao);
+		return (SchoolSubject) dao.findById(id);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
 	public List<SchoolSubject> getAll() {
-		return (List<SchoolSubject>) service.getAll(dao);
+		return (List<SchoolSubject>) dao.findAll();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get", params = {"limit", "offset"}, method = RequestMethod.GET)
 	public List<SchoolSubject> getByPagination(@RequestParam("limit") int limit, @RequestParam("offset") int offset) {
-		return (List<SchoolSubject>) service.getByPagination(limit, offset, dao);
+		return (List<SchoolSubject>) dao.findByPagination(limit, offset);
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
@@ -63,6 +63,6 @@ public class SchoolSubjectController {
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable long id) {
-		service.deleteById(id, dao);
+		dao.findById(id);
 	}
 }

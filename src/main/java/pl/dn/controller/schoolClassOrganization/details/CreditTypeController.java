@@ -41,19 +41,19 @@ public class CreditTypeController {
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
 	public CreditType get(@PathVariable long id) {
-		return (CreditType) service.getById(id, dao);
+		return (CreditType) dao.findById(id);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
 	public List<CreditType> getAll() {
-		return (List<CreditType>) service.getAll(dao);
+		return (List<CreditType>) dao.findAll();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get", params = {"limit", "offset"}, method = RequestMethod.GET)
 	public List<CreditType> getByPagination(@RequestParam("limit") int limit, @RequestParam("offset") int offset) {
-		return (List<CreditType>) service.getByPagination(limit, offset, dao);
+		return (List<CreditType>) dao.findByPagination(limit, offset);
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
@@ -63,7 +63,7 @@ public class CreditTypeController {
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable long id) {
-		service.deleteById(id, dao);
+		dao.findById(id);
 	}
 	
 }

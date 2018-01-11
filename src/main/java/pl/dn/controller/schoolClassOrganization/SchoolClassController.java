@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import pl.dn.dao.schoolClassOrganization.SchoolClassDao;
 import pl.dn.exception.ValidationException;
 import pl.dn.model.schoolClassOrganization.SchoolClass;
 import pl.dn.service.schoolClassOrganization.SchoolClassService;
@@ -21,6 +22,9 @@ public class SchoolClassController {
 	@Autowired
 	private SchoolClassService service;
 	
+	@Autowired
+	private SchoolClassDao dao;
+	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody SchoolClass schoolClass) throws ValidationException {
 		service.add(schoolClass);
@@ -28,17 +32,17 @@ public class SchoolClassController {
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
 	public SchoolClass getById(@PathVariable long id) {
-		return service.getById(id);
+		return dao.findById(id);
 	}
 	
 	@RequestMapping(value = "get", params = {"limit", "offset"}, method = RequestMethod.GET)
 	public List<SchoolClass> getByPagination(@RequestParam("limit") int limit, @RequestParam("offset") int offset) {
-		return service.getByPagination(limit, offset);
+		return dao.findByPagination(limit, offset);
 	}
 	
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
 	public List<SchoolClass> getAll() {
-		return service.getAll();
+		return dao.findAll();
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
@@ -48,7 +52,7 @@ public class SchoolClassController {
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
 	public void deleteById(@PathVariable long id) {
-		service.deleteById(id);
+		dao.findById(id);
 	}
 	
 	

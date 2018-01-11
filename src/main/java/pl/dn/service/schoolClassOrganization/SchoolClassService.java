@@ -22,9 +22,7 @@ public class SchoolClassService {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
-	@Autowired
-	private SchoolClassDao schoolClassDao;
+
 	
 	@Autowired
 	private SchoolClassValidator validator;
@@ -37,26 +35,11 @@ public class SchoolClassService {
 		session.save(schoolClass);
 	}
 	
-	public SchoolClass getById(long id) {
-		return schoolClassDao.findById(id);
-	}
-	
-	public List<SchoolClass> getByPagination(int limit, int offset) {
-		return schoolClassDao.findByPagination(limit, offset);
-	}
-	
-	public List<SchoolClass> getAll() {
-		return schoolClassDao.findAll();
-	}
 	
 	public void update(SchoolClass schoolClass) throws ValidationException {
 		validator.validateBeforeUpdate(schoolClass);
 		Session session = sessionFactory.getCurrentSession();
 		session.update(schoolClass);
-	}
-	
-	public void deleteById(long id) {
-		schoolClassDao.deleteById(id);
 	}
 	
 }
