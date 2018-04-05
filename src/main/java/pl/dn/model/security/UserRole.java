@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import pl.dn.model.userType.User;
+import pl.dn.model.userType.UserLogin;
 
 @Entity
 @Table(name = "user_role")
@@ -23,8 +24,8 @@ public class UserRole {
 	private Role role;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User user;
+	@JoinColumn(name = "user_login_id")
+	private UserLogin userLogin;
 
 	public long getId() {
 		return id;
@@ -42,12 +43,12 @@ public class UserRole {
 		this.role = role;
 	}
 
-	public User getUser() {
-		return user;
+	public UserLogin getUserLogin() {
+		return userLogin;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserLogin(UserLogin userLogin) {
+		this.userLogin = userLogin;
 	}
 	
 }

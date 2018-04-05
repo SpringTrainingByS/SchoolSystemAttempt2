@@ -1,9 +1,15 @@
 package pl.dn.model.userType;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "user_login")
 public class UserLogin {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,6 +19,10 @@ public class UserLogin {
     private String password;
 
     private boolean enabled = true;
+    
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 	public long getId() {
 		return id;
@@ -44,6 +54,14 @@ public class UserLogin {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
     
     
