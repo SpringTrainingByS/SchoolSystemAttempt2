@@ -26,9 +26,9 @@ import pl.dn.service.jwt.jwt.JwtAuthenticationProvider;
 import pl.dn.service.jwt.jwt.JwtTokenAuthenticationProcessingFilter;
 import pl.dn.service.jwt.jwt.SkipPathRequestMatcher;
 
-@Configuration
+
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class  WebSecurityConfig {
 
 	public static final String AUTHENTICATION_HEADER_NAME = "Authorization";
     public static final String AUTHENTICATION_URL = "/api/auth/login";
@@ -36,75 +36,83 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String API_ROOT_URL = "/api/**";
 	
 	
-	@Autowired private RestAuthenticationEntryPoint authenticationEntryPoint;
-	@Autowired private AjaxAwareAuthenticationSuccessHandler successHandler;
-	@Autowired private AjaxAwareAuthenticationFailureHandler failureHandler;
-	@Autowired private AjaxAuthenticationProvider ajaxAuthenticationProvider;
-	@Autowired private JwtAuthenticationProvider jwtAuthenticationProvider;
+	@Autowired private static RestAuthenticationEntryPoint authenticationEntryPoint;
+	@Autowired private static AjaxAwareAuthenticationSuccessHandler successHandler;
+	@Autowired private static AjaxAwareAuthenticationFailureHandler failureHandler;
+	@Autowired private static AjaxAuthenticationProvider ajaxAuthenticationProvider;
+	@Autowired private static JwtAuthenticationProvider jwtAuthenticationProvider;
 	
-	@Autowired private AuthenticationManager authenticationManager;
-	@Autowired private ObjectMapper objectMapper;
+	@Autowired private static AuthenticationManager authenticationManager;
+	@Autowired private static ObjectMapper objectMapper;
 	
-	protected AjaxLoginProcessingFilter buildAjaxLoginProcessingFilter(String loginEntryPoint) throws Exception {
+	protected static AjaxLoginProcessingFilter buildAjaxLoginProcessingFilter(String loginEntryPoint) throws Exception {
 		AjaxLoginProcessingFilter filter = 
 				new AjaxLoginProcessingFilter(loginEntryPoint, successHandler, failureHandler, objectMapper);
 		filter.setAuthenticationManager(authenticationManager);
 		return filter;
 	}
 	
-	protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter(List<String> pathsToSkip, String pattern) {
+	protected static JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter(List<String> pathsToSkip, String pattern) {
 		SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, pattern);
 		JwtTokenAuthenticationProcessingFilter filter = 
 				new JwtTokenAuthenticationProcessingFilter(failureHandler, matcher);
-		filter.setAuthenticationManager(this.authenticationManager);
+		filter.setAuthenticationManager(authenticationManager);
 		return filter;
 	}
 
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
+	@Configuration
+	@Order(1)
+	public static class AjaxWebSecurityConfig extends WebSecurityConfigurerAdapter {
+		
+		@Override
+		protected void configure(HttpSecurity http) throws Exception {
+	
+				http.
+					csrf().disable()
+					.exceptionHandling()
+					.authenticationEntryPoint(authenticationEntryPoint)
+				
+				.and()
+					.sessionManagement()
+					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+					
+				.and()
+					.authorizeRequests()
+					.antMatchers(AUTHENTICATION_URL)
+					.permitAll()
+					
+					
+				.and()
+					.addFilterBefore(buildAjaxLoginProcessingFilter(AUTHENTICATION_URL), UsernamePasswordAuthenticationFilter.class)
+					.authenticationProvider(ajaxAuthenticationProvider);
+				
+		}
+		
 	}
 	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(ajaxAuthenticationProvider);
-		//auth.authenticationProvider(jwtAuthenticationProvider);
-	}
-
-	
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		List<String> permitAllEndpointsList = Arrays.asList(
-			AUTHENTICATION_URL,
-			REFRESH_TOKEN_URL,
-			"/console"
-		);
+	@Configuration
+	public static class JwtWebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
-		http.
-			csrf().disable()
-			.exceptionHandling()
-			.authenticationEntryPoint(this.authenticationEntryPoint)
-		
-		.and()
-			.sessionManagement()
-			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		@Override
+		protected void configure(HttpSecurity http) throws Exception {
+			List<String> permitAllEndpointsList = Arrays.asList(
+					AUTHENTICATION_URL,
+					REFRESH_TOKEN_URL,
+					"/console"
+				);
 			
-		.and()
-			.authorizeRequests()
-			.antMatchers(permitAllEndpointsList.toArray(new String[permitAllEndpointsList.size()]))
-			.permitAll()
-		.and()
-			.authorizeRequests()
-			.antMatchers(API_ROOT_URL).authenticated()
-		.and()
-			.addFilterBefore(buildAjaxLoginProcessingFilter(AUTHENTICATION_URL), UsernamePasswordAuthenticationFilter.class)
-			.authenticationProvider(ajaxAuthenticationProvider)
-			.addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(permitAllEndpointsList, API_ROOT_URL),
+			http
+				.csrf().disable()
+				.authorizeRequests()
+				.antMatchers("/**").authenticated()
+				
+				.and()
+				.addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(permitAllEndpointsList, API_ROOT_URL),
 					UsernamePasswordAuthenticationFilter.class)
-			.authenticationProvider(jwtAuthenticationProvider);
+				.authenticationProvider(jwtAuthenticationProvider);
+			
+		}
+		
 	}
-	
 	
 }
