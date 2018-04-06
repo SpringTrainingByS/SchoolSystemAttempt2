@@ -77,6 +77,7 @@ public class  WebSecurityConfig {
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 					
 				.and()
+					.antMatcher("/api/auth/**")
 					.authorizeRequests()
 					.antMatchers(AUTHENTICATION_URL)
 					.permitAll()
