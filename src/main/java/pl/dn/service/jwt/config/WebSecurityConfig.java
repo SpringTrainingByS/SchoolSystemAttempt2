@@ -36,34 +36,42 @@ public class  WebSecurityConfig {
     public static final String API_ROOT_URL = "/api/**";
 	
 	
-	@Autowired private static RestAuthenticationEntryPoint authenticationEntryPoint;
-	@Autowired private static AjaxAwareAuthenticationSuccessHandler successHandler;
-	@Autowired private static AjaxAwareAuthenticationFailureHandler failureHandler;
-	@Autowired private static AjaxAuthenticationProvider ajaxAuthenticationProvider;
-	@Autowired private static JwtAuthenticationProvider jwtAuthenticationProvider;
+	@Autowired private RestAuthenticationEntryPoint authenticationEntryPoint;
+	@Autowired private AjaxAwareAuthenticationSuccessHandler successHandler;
+	@Autowired private AjaxAwareAuthenticationFailureHandler failureHandler;
+	@Autowired private AjaxAuthenticationProvider ajaxAuthenticationProvider;
+	@Autowired private JwtAuthenticationProvider jwtAuthenticationProvider;
 	
-	@Autowired private static AuthenticationManager authenticationManager;
-	@Autowired private static ObjectMapper objectMapper;
+	@Autowired private AuthenticationManager authenticationManager;
+	@Autowired private ObjectMapper objectMapper;
 	
-	protected static AjaxLoginProcessingFilter buildAjaxLoginProcessingFilter(String loginEntryPoint) throws Exception {
+	protected  AjaxLoginProcessingFilter buildAjaxLoginProcessingFilter(String loginEntryPoint,
+			AuthenticationManager  authManager) throws Exception {
 		AjaxLoginProcessingFilter filter = 
 				new AjaxLoginProcessingFilter(loginEntryPoint, successHandler, failureHandler, objectMapper);
-		filter.setAuthenticationManager(authenticationManager);
+		filter.setAuthenticationManager(authManager);
 		return filter;
 	}
 	
-	protected static JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter(List<String> pathsToSkip, String pattern) {
+	protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter(List<String> pathsToSkip, String pattern,
+			AuthenticationManager authManager) {
 		SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, pattern);
 		JwtTokenAuthenticationProcessingFilter filter = 
 				new JwtTokenAuthenticationProcessingFilter(failureHandler, matcher);
-		filter.setAuthenticationManager(authenticationManager);
+		filter.setAuthenticationManager(authManager);
 		return filter;
 	}
 
 	@Configuration
 	@Order(1)
-	public static class AjaxWebSecurityConfig extends WebSecurityConfigurerAdapter {
+	public class AjaxWebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
+		@Override
+		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+			// TODO Auto-generated method stub
+			auth.authenticationProvider(ajaxAuthenticationProvider);
+		}
+
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 	
@@ -84,7 +92,7 @@ public class  WebSecurityConfig {
 					
 					
 				.and()
-					.addFilterBefore(buildAjaxLoginProcessingFilter(AUTHENTICATION_URL), UsernamePasswordAuthenticationFilter.class)
+					.addFilterBefore(buildAjaxLoginProcessingFilter(AUTHENTICATION_URL, super.authenticationManager()), UsernamePasswordAuthenticationFilter.class)
 					.authenticationProvider(ajaxAuthenticationProvider);
 				
 		}
@@ -92,7 +100,13 @@ public class  WebSecurityConfig {
 	}
 	
 	@Configuration
-	public static class JwtWebSecurityConfig extends WebSecurityConfigurerAdapter {
+	public class JwtWebSecurityConfig extends WebSecurityConfigurerAdapter {
+		
+		@Override
+		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+			// TODO Auto-generated method stub
+			auth.authenticationProvider(jwtAuthenticationProvider);
+		}
 		
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
@@ -108,7 +122,7 @@ public class  WebSecurityConfig {
 				.antMatchers("/**").authenticated()
 				
 				.and()
-				.addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(permitAllEndpointsList, API_ROOT_URL),
+				.addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(permitAllEndpointsList, API_ROOT_URL, super.authenticationManager()),
 					UsernamePasswordAuthenticationFilter.class)
 				.authenticationProvider(jwtAuthenticationProvider);
 			

@@ -50,6 +50,10 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
 			throw new AuthenticationServiceException("Authentication method not supported");
 		}
 		
+		if (objectMapper == null) {
+			System.out.println("objectMapper jest nullem");
+		}
+		
 		LoginRequest loginRequest = objectMapper.readValue(request.getReader(), LoginRequest.class);
 		
 		System.out.println("Pobranie usera: " + loginRequest.toString());
