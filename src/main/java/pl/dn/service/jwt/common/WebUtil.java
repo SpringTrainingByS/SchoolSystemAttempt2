@@ -23,9 +23,15 @@ public class WebUtil {
 		return headerValues.contains(XML_HTTP_REQUEST);
 	}
 	
-	public static boolean isContentTypeJson(SavedRequest request) {
-		ArrayList<String> headerValues = (ArrayList<String>) request.getHeaderValues(X_REQUESTED_WITH);
-		return headerValues.contains(CONTENT_TYPE_JSON);
+	public static boolean isContentTypeJson(HttpServletRequest request) {
+		
+		boolean isValid = false;
+		
+		if (request.getHeader(CONTENT_TYPE) != null && request.getHeader(CONTENT_TYPE).equals(CONTENT_TYPE_JSON)) {
+			isValid = true;
+		}
+		
+		return isValid;
 	}
 	
 }

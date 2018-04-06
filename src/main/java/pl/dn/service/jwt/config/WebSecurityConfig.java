@@ -6,13 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,7 +22,6 @@ import pl.dn.service.jwt.ajax.AjaxAuthenticationProvider;
 import pl.dn.service.jwt.ajax.AjaxAwareAuthenticationFailureHandler;
 import pl.dn.service.jwt.ajax.AjaxAwareAuthenticationSuccessHandler;
 import pl.dn.service.jwt.ajax.AjaxLoginProcessingFilter;
-import pl.dn.service.jwt.common.TokenExtractor;
 import pl.dn.service.jwt.jwt.JwtAuthenticationProvider;
 import pl.dn.service.jwt.jwt.JwtTokenAuthenticationProcessingFilter;
 import pl.dn.service.jwt.jwt.SkipPathRequestMatcher;
@@ -64,14 +63,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
-		// TODO Auto-generated method stub
 		return super.authenticationManagerBean();
 	}
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(ajaxAuthenticationProvider);
-		auth.authenticationProvider(jwtAuthenticationProvider);
+		//auth.authenticationProvider(jwtAuthenticationProvider);
 	}
 
 	
@@ -81,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		List<String> permitAllEndpointsList = Arrays.asList(
 			AUTHENTICATION_URL,
 			REFRESH_TOKEN_URL,
-			"console"
+			"/console"
 		);
 		
 		http.
@@ -102,8 +100,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(API_ROOT_URL).authenticated()
 		.and()
 			.addFilterBefore(buildAjaxLoginProcessingFilter(AUTHENTICATION_URL), UsernamePasswordAuthenticationFilter.class)
+			.authenticationProvider(ajaxAuthenticationProvider)
 			.addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(permitAllEndpointsList, API_ROOT_URL),
-					UsernamePasswordAuthenticationFilter.class);
+					UsernamePasswordAuthenticationFilter.class)
+			.authenticationProvider(jwtAuthenticationProvider);
 	}
+	
 	
 }

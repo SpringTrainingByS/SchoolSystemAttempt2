@@ -45,7 +45,7 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
 		System.out.println("AjaxLoginProcessingFilter: attemptAuthentication()");
 		
 		
-		if (!HttpMethod.POST.name().equals(request.getMethod()) || !WebUtil.isAjax(request)) {
+		if (!HttpMethod.POST.name().equals(request.getMethod()) || !WebUtil.isContentTypeJson(request)) {
 			System.out.println("This is not ajax Requests");
 			throw new AuthenticationServiceException("Authentication method not supported");
 		}
@@ -61,6 +61,7 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
 		
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
 		
+		System.out.println("przesy³am dane do authManagera: ");
 		return this.getAuthenticationManager().authenticate(token);
 	}
 

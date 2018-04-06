@@ -1,5 +1,6 @@
 package pl.dn.service.jwt.ajax;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import pl.dn.dao.security.UserRoleDao;
 import pl.dn.dao.userType.UserLoginDao;
+import pl.dn.model.security.Role;
+import pl.dn.model.security.UserRole;
 import pl.dn.model.security.UserRoleOnly;
 import pl.dn.service.jwt.common.UserLoginInfo;
 
@@ -47,12 +50,21 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 			throw new UsernameNotFoundException("User not found: " + username);
 		}
 		
-		if (!encoder.matches(password, userLoginInfo.getPassword())) {
+//		if (!encoder.matches(password, userLoginInfo.getPassword())) {
+//			throw new BadCredentialsException("Authentication Failed. Username or password not valid");
+//		}
+		
+		if (!password.equals(userLoginInfo.getPassword())) {
 			throw new BadCredentialsException("Authentication Failed. Username or password not valid");
 		}
 		
-		long userId = userLoginDao.findIdByUsername(username);
-		List<UserRoleOnly> roles = userRoleDao.findByUserLoginId(userId);
+		List<UserRole> userRoles = userRoleDao.findByUserLoginId(userLoginInfo.getId());
+		
+		List<Role> roles = new ArrayList<Role>();
+		
+		for (UserRole role : userRoles) {
+			roles.add(role.getRole());
+		}
 		
 		return new UsernamePasswordAuthenticationToken(username, null, (Collection<? extends GrantedAuthority>) roles);
 	}
