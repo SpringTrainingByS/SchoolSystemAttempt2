@@ -42,7 +42,6 @@ public class  WebSecurityConfig {
 	@Autowired private AjaxAuthenticationProvider ajaxAuthenticationProvider;
 	@Autowired private JwtAuthenticationProvider jwtAuthenticationProvider;
 	
-	@Autowired private AuthenticationManager authenticationManager;
 	@Autowired private ObjectMapper objectMapper;
 	
 	protected  AjaxLoginProcessingFilter buildAjaxLoginProcessingFilter(String loginEntryPoint,
@@ -53,11 +52,11 @@ public class  WebSecurityConfig {
 		return filter;
 	}
 	
-	protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter(List<String> pathsToSkip, String pattern,
+	protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter(String urlForFilter,
 			AuthenticationManager authManager) {
-		SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, pattern);
+		//SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, pattern);
 		JwtTokenAuthenticationProcessingFilter filter = 
-				new JwtTokenAuthenticationProcessingFilter(failureHandler, matcher);
+				new JwtTokenAuthenticationProcessingFilter(failureHandler, urlForFilter);
 		filter.setAuthenticationManager(authManager);
 		return filter;
 	}
@@ -110,19 +109,14 @@ public class  WebSecurityConfig {
 		
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			List<String> permitAllEndpointsList = Arrays.asList(
-					AUTHENTICATION_URL,
-					REFRESH_TOKEN_URL,
-					"/console"
-				);
-			
+		
 			http
 				.csrf().disable()
 				.authorizeRequests()
 				.antMatchers("/**").authenticated()
 				
 				.and()
-				.addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(permitAllEndpointsList, API_ROOT_URL, super.authenticationManager()),
+				.addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(API_ROOT_URL, super.authenticationManager()),
 					UsernamePasswordAuthenticationFilter.class)
 				.authenticationProvider(jwtAuthenticationProvider);
 			

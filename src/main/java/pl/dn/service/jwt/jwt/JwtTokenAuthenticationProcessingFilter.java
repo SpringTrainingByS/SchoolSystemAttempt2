@@ -23,12 +23,11 @@ public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticati
 	
 	private final AuthenticationFailureHandler failureHandler;
 	
-	public final String JWT_TOKEN_HEADER_PARAM = "X-Authorization";
+	public final String JWT_TOKEN_HEADER_PARAM = "Authorization";
 	
 	@Autowired
-	public JwtTokenAuthenticationProcessingFilter(AuthenticationFailureHandler failureHandler,
-			RequestMatcher requestMatcher) {
-		super(requestMatcher);
+	public JwtTokenAuthenticationProcessingFilter(AuthenticationFailureHandler failureHandler, String defaultUrl) {
+		super(defaultUrl);
 		this.failureHandler = failureHandler;
 	}
 
