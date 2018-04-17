@@ -24,17 +24,4 @@ public class HandlerException extends ResponseEntityExceptionHandler {
 		
 		return response;
 	}
-	
-	@ExceptionHandler({JwtException.class})
-	@ResponseBody
-	public 	ResponseEntity<String> handleAuthenticationException(JwtException ex) {
-		
-		ResponseEntity<String> response = new ResponseEntity<String>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
-		System.out.println("Przeje³em wyjatêk jwtException: " + ex.getMessage());
-		
-		return response;
-	}
-	
-	
-	
 }
