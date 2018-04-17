@@ -26,9 +26,9 @@ import pl.dn.service.security.jwt.JwtTokenAuthenticationProcessingFilter;
 public class  WebSecurityConfig {
 
 	public static final String AUTHENTICATION_HEADER_NAME = "Authorization";
-    public static final String AUTHENTICATION_URL = "/api/auth/login";
-    public static final String REFRESH_TOKEN_URL = "/api/auth/token";
-    public static final String API_ROOT_URL = "/api/**";
+    public static final String AUTHENTICATION_URL = "/auth/login";
+    public static final String REFRESH_TOKEN_URL = "/auth/token";
+    public static final String API_ROOT_URL = "/**";
 	
 	
 	@Autowired private RestAuthenticationEntryPoint authenticationEntryPoint;
@@ -78,7 +78,7 @@ public class  WebSecurityConfig {
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 					
 				.and()
-					.antMatcher("/api/auth/**")
+					.antMatcher("/auth/**")
 					.authorizeRequests()
 					.antMatchers(AUTHENTICATION_URL)
 					.permitAll()

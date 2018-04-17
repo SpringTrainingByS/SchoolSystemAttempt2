@@ -39,22 +39,24 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 		String username = "";
 		List<GrantedAuthority> authorities = null;
 		
-		Jws<Claims> jwsClaims = Jwts.parser().setSigningKey(jwtSettings.getTokenSigningKey()).parseClaimsJws(token);
-		username = jwsClaims.getBody().getSubject();
-		System.out.println("Token: " + token); 
-		List<String> scopes = jwsClaims.getBody().get("scopes", List.class); 
-	
-		authorities = scopes.stream()
-				.map(SimpleGrantedAuthority::new)
-				.collect(Collectors.toList());
+		try {
+			Jws<Claims> jwsClaims = Jwts.parser().setSigningKey(jwtSettings.getTokenSigningKey()).parseClaimsJws(token);
+			username = jwsClaims.getBody().getSubject();
+			System.out.println("Token: " + token); 
+			List<String> scopes = jwsClaims.getBody().get("scopes", List.class); 
 		
-		System.out.println("Prawa u¿ytkownika.");
-		for (GrantedAuthority gr : authorities) {
-			System.out.println(gr.getAuthority());
+			authorities = scopes.stream()
+					.map(SimpleGrantedAuthority::new)
+					.collect(Collectors.toList());
+			
+			System.out.println("Prawa u¿ytkownika.");
+			for (GrantedAuthority gr : authorities) {
+				System.out.println(gr.getAuthority());
+			}
 		}
-		
-		
-		
+		catch (Exception e) {
+			throw new JwtException(e.getMessage());
+		}
 		
 		return new UsernamePasswordAuthenticationToken(username, null, authorities);
 	}
