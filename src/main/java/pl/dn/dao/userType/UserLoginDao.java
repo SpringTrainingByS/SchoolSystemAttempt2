@@ -5,8 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import pl.dn.model.userType.UserLogin;
-import pl.dn.service.jwt.common.LoginRequest;
-import pl.dn.service.jwt.common.UserLoginInfo;
+import pl.dn.service.security.common.UserLoginInfo;
 
 public interface UserLoginDao extends CrudRepository<UserLogin, Long> {
 

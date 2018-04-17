@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import io.jsonwebtoken.JwtException;
 import pl.dn.exception.ValidationException;
 
 
@@ -23,5 +24,17 @@ public class HandlerException extends ResponseEntityExceptionHandler {
 		
 		return response;
 	}
+	
+	@ExceptionHandler({JwtException.class})
+	@ResponseBody
+	public 	ResponseEntity<String> handleAuthenticationException(JwtException ex) {
+		
+		ResponseEntity<String> response = new ResponseEntity<String>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+		System.out.println("Przeje³em wyjatêk jwtException: " + ex.getMessage());
+		
+		return response;
+	}
+	
+	
 	
 }
