@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import pl.dn.model.security.Role;
 import pl.dn.service.security.JwtTokenFactory;
 
 @Component
@@ -44,6 +45,11 @@ public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSucc
 		String username = (String) authentication.getPrincipal();
 		List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
 		System.out.println("Username: " + username);
+		
+		System.out.println("Role przed dodaniem do tokenów: ");
+		for (GrantedAuthority authority : authorities) {
+			System.out.println("Rola: "  + authority.getAuthority());
+		}
 		
 		String accessToken = tokenFactory.createAccessJwtToken(username, authorities);
 		String refreshToken = tokenFactory.createRefreshToken(username, authorities);

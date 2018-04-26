@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import pl.dn.exception.JwtException;
 import pl.dn.service.security.common.ErrorCode;
 import pl.dn.service.security.common.ErrorResponse;
 import pl.dn.service.security.exceptions.AuthMethodNotSupportedException;
@@ -37,6 +38,8 @@ public class AjaxAwareAuthenticationFailureHandler implements AuthenticationFail
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
 		
+		System.out.println("AjaxAwareAuthenticationFailureHandler: ");
+		
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 		
@@ -44,9 +47,13 @@ public class AjaxAwareAuthenticationFailureHandler implements AuthenticationFail
 			mapper.writeValue(response.getWriter(), ErrorResponse.of("Invalid username or password", ErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED));
 		}
 		else if (exception instanceof JwtExpiredTokenException) {
+			System.out.println("Instancja JWtExpiredTokenException");
 			mapper.writeValue(response.getWriter(), ErrorResponse.of("Token has expired", ErrorCode.JWT_TOKEN_EXPIRED, HttpStatus.UNAUTHORIZED));
 		}
 		else if (exception instanceof AuthMethodNotSupportedException) {
+			mapper.writeValue(response.getWriter(), ErrorResponse.of(exception.getMessage(), ErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED));
+		}
+		else if (exception instanceof JwtException) {
 			mapper.writeValue(response.getWriter(), ErrorResponse.of(exception.getMessage(), ErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED));
 		}
 		

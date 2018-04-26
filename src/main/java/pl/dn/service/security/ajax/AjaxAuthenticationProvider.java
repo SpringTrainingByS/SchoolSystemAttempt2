@@ -62,7 +62,9 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 		
 		List<Role> roles = new ArrayList<Role>();
 		
+		System.out.println("Role: ");
 		for (UserRole role : userRoles) {
+			System.out.println("Rola: " + role.getRole().getName());
 			roles.add(role.getRole());
 		}
 		

@@ -15,7 +15,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 
 public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
@@ -38,7 +37,6 @@ public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticati
 		
 		String token= request.getHeader(JWT_TOKEN_HEADER_PARAM);
 		System.out.println("tokenPayload: " + token);
-
 
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(token, null);
 		

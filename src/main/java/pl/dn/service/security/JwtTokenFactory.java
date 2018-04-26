@@ -35,7 +35,7 @@ public class JwtTokenFactory {
 		}
 		
 		Claims claims = Jwts.claims().setSubject(username);
-		claims.put("scopes", authorities.stream().map(s -> s.toString()).collect(Collectors.toList()));
+		claims.put("scopes", authorities.stream().map(s -> s.getAuthority()).collect(Collectors.toList()));
 		
 		String token = Jwts.builder()
 				.setClaims(claims)

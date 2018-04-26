@@ -13,9 +13,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import pl.dn.exception.JwtException;
+import pl.dn.model.security.Role;
 import pl.dn.service.security.config.JwtSettings;
 
 @Component
@@ -37,24 +40,31 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 		System.out.println("Token: " + token);
 
 		String username = "";
-		List<GrantedAuthority> authorities = null;
+		List<Role> authorities = null;
 		
 		try {
+			
 			Jws<Claims> jwsClaims = Jwts.parser().setSigningKey(jwtSettings.getTokenSigningKey()).parseClaimsJws(token);
 			username = jwsClaims.getBody().getSubject();
 			System.out.println("Token: " + token); 
 			List<String> scopes = jwsClaims.getBody().get("scopes", List.class); 
 		
+			System.out.println("Scopes: ");
+			for (String scope : scopes) {
+				System.out.println("Scope: " + scope);
+			}
+			
 			authorities = scopes.stream()
-					.map(SimpleGrantedAuthority::new)
+					.map(Role::new)
 					.collect(Collectors.toList());
 			
 			System.out.println("Prawa u¿ytkownika.");
-			for (GrantedAuthority gr : authorities) {
-				System.out.println(gr.getAuthority());
+			for (Role gr : authorities) {
+				System.out.println(gr.getName());
 			}
+			
 		}
-		catch (Exception e) {
+		catch (MalformedJwtException | ExpiredJwtException | IllegalArgumentException e) {
 			throw new JwtException(e.getMessage());
 		}
 		
