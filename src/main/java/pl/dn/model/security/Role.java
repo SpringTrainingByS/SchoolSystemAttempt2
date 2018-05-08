@@ -1,5 +1,6 @@
 package pl.dn.model.security;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,12 +18,13 @@ public class Role implements GrantedAuthority {
 	private String name;
 	
 	public Role() {
+		
 	}
 	
 	public Role(String name) {
 		this.name = name;
 	}
-
+	
 	public long getId() {
 		return id;
 	}

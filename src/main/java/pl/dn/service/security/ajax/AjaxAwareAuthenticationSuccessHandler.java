@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -46,23 +47,28 @@ public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSucc
 		List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
 		System.out.println("Username: " + username);
 		
+		List<String> rolesNames = authorities.stream()
+				.map(x -> x.getAuthority())
+				.collect(Collectors.toList()); 
+		
 		System.out.println("Role przed dodaniem do tokenów: ");
-		for (GrantedAuthority authority : authorities) {
-			System.out.println("Rola: "  + authority.getAuthority());
+		for (String authority : rolesNames) {
+			System.out.println("Rola: "  + authority);
 		}
 		
 		String accessToken = tokenFactory.createAccessJwtToken(username, authorities);
 		String refreshToken = tokenFactory.createRefreshToken(username, authorities);
 		
-		Map<String, String> tokenMap = new HashMap<String, String>();
+		Map<String, Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("token", accessToken);
+		responseMap.put("refreshToken", refreshToken);
+		responseMap.put("roles", rolesNames);
+
 		
-		tokenMap.put("token", accessToken);
-		tokenMap.put("refreshToken", refreshToken);
 		
 		response.setStatus(HttpStatus.OK.value());
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-		mapper.writeValue(response.getWriter(), tokenMap);
-		
+		mapper.writeValue(response.getWriter(), responseMap);
 	}
 	
 	protected final void clearAuthenticationAttributes(HttpServletRequest request) {
