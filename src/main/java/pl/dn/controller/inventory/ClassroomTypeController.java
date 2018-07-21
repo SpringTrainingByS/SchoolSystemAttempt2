@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.dn.exception.ValidationException;
-import pl.dn.model.inventory.ClassroomType;
-import pl.dn.service.inventory.ClassroomTypeService;
+import pl.dn.inventory.classroomType.ClassroomType;
+import pl.dn.inventory.classroomType.ClassroomTypeService;
 	
 @RestController
 @RequestMapping(value = "classroomtypes")

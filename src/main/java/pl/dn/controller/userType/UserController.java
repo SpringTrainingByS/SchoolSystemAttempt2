@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.dn.model.userType.User;
-import pl.dn.service.UserType.UserService;
+import pl.dn.user.User;
+import pl.dn.user.UserService;
 
 @RestController
 @RequestMapping(value = "users")

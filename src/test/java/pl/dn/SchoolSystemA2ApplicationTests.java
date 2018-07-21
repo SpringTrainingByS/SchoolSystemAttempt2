@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import junit.framework.Assert;
-import pl.dn.dao.userType.UserLoginDao;
+import pl.dn.userLogin.UserLoginDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

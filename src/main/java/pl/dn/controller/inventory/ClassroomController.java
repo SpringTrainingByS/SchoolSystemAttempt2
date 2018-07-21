@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.dn.exception.ValidationException;
-import pl.dn.model.inventory.Classroom;
-import pl.dn.service.inventory.ClassroomService;
+import pl.dn.inventory.classroom.Classroom;
+import pl.dn.inventory.classroom.ClassroomService;
 
 @RestController
 @RequestMapping(value = "classrooms")

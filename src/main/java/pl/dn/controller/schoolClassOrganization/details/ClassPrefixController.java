@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.dn.dao.schoolClassOrganization.details.ClassPrefixDao;
+import pl.dn.base.BaseDetail;
+import pl.dn.base.BaseDetailService;
 import pl.dn.exception.ValidationException;
-import pl.dn.model.base.BaseDetail;
-import pl.dn.model.schoolClassOrganization.details.ClassPrefix;
-import pl.dn.service.base.BaseDetailService;
+import pl.dn.schoolClassOrganization.details.prefix.ClassPrefix;
+import pl.dn.schoolClassOrganization.details.prefix.ClassPrefixDao;
 
 @RestController
 @RequestMapping(value = "class-prefixex")

@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.dn.dao.schoolClassOrganization.details.CreditTypeDao;
+import pl.dn.base.BaseDetailService;
 import pl.dn.exception.ValidationException;
-import pl.dn.model.schoolClassOrganization.details.CreditType;
-import pl.dn.service.base.BaseDetailService;
+import pl.dn.schoolClassOrganization.details.creditType.CreditType;
+import pl.dn.schoolClassOrganization.details.creditType.CreditTypeDao;
 
 @RestController
 @RequestMapping(value = "credit-type")

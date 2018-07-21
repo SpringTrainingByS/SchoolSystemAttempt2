@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.dn.dao.schoolClassOrganization.SchoolSubjectDao;
+import pl.dn.base.BaseDetailService;
 import pl.dn.exception.ValidationException;
-import pl.dn.model.schoolClassOrganization.SchoolSubject;
-import pl.dn.service.base.BaseDetailService;
+import pl.dn.schoolClassOrganization.schoolSubject.SchoolSubject;
+import pl.dn.schoolClassOrganization.schoolSubject.SchoolSubjectDao;
 
 @RestController
 @RequestMapping(value = "school-subject")

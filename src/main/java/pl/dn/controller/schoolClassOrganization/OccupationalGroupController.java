@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.dn.dao.schoolClassOrganization.OccupationalGroupDao;
 import pl.dn.exception.ValidationException;
-import pl.dn.model.schoolClassOrganization.OccupationalGroup;
-import pl.dn.service.schoolClassOrganization.OccupationalGroupService;
+import pl.dn.schoolClassOrganization.occupationalGroup.OccupationalGroup;
+import pl.dn.schoolClassOrganization.occupationalGroup.OccupationalGroupDao;
+import pl.dn.schoolClassOrganization.occupationalGroup.OccupationalGroupService;
 
 @RestController
 @RequestMapping(value = "occupational-group")

@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.dn.dao.schoolClassOrganization.details.ClassSpecializationDao;
+import pl.dn.base.BaseDetail;
+import pl.dn.base.BaseDetailService;
 import pl.dn.exception.ValidationException;
-import pl.dn.model.base.BaseDetail;
-import pl.dn.model.schoolClassOrganization.details.ClassSpecialization;
-import pl.dn.service.base.BaseDetailService;
+import pl.dn.schoolClassOrganization.details.specialization.ClassSpecialization;
+import pl.dn.schoolClassOrganization.details.specialization.ClassSpecializationDao;
 
 @RestController
 @RequestMapping(value = "class-spec")
