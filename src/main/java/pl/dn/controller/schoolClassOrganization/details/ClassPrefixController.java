@@ -29,13 +29,14 @@ public class ClassPrefixController {
 	private String[] validationPatterns = {
 	"^[\\p{L}]+$"};
 	
-	@RequestMapping(value = "add", method = RequestMethod.POST)
+	@RequestMapping(value = "add", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	public void add(@RequestBody ClassPrefix classPrefix) throws ValidationException {
 		classDetailService.add(classPrefix, dao, validationPatterns);
 	}
 	
-	@RequestMapping(value = "add-set", method = RequestMethod.POST)
+	@RequestMapping(value = "add-set", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	public void addSet(@RequestBody List<ClassPrefix> classPrefixGroup) throws ValidationException {
+		System.out.println();
 		classDetailService.addSet(classPrefixGroup, dao, validationPatterns);
 	}
 	
@@ -47,6 +48,7 @@ public class ClassPrefixController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
 	public List<ClassPrefix> getAll() {
+		System.out.println("Pobieram wszystkie prefiksy ======================================================================================");
 		return (List<ClassPrefix>) dao.findAll();
 	}
 	
@@ -67,6 +69,4 @@ public class ClassPrefixController {
 		dao.deleteById(id);
 	}
 	
-	
-
 }

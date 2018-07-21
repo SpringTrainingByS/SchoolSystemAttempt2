@@ -19,7 +19,7 @@ public class HandlerException extends ResponseEntityExceptionHandler {
 	@ResponseBody
 	public 	ResponseEntity<String> handleValidationException(ValidationException ex) {
 		
-		ResponseEntity<String> response = new ResponseEntity<String>(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+		ResponseEntity<String> response = new ResponseEntity<String>(ex.getMessage(), HttpStatus.CONFLICT);
 		System.out.println("Przeje³em wyjatêk: " + ex.getMessage());
 		
 		return response;

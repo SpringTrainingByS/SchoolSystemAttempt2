@@ -1,5 +1,6 @@
 package pl.dn.service.base;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -27,6 +28,7 @@ public class BaseDetailService {
 	public void add(BaseDetail classDetail, BaseDetailDao<?> dao, String[] validationPatterns) throws ValidationException{
 		classDetailValidator.validateBeforeAdd(classDetail, dao, validationPatterns);
 		Session session = sessionFactory.getCurrentSession();
+		classDetail.setCreationTime(new Date());
 		session.save(classDetail);
 	}
 	
@@ -37,12 +39,12 @@ public class BaseDetailService {
 		for (BaseDetail classDetail : classDetailGroup ) {
 			try {
 				classDetailValidator.validateBeforeAdd(classDetail, dao, validationPatterns);
+				classDetail.setCreationTime(new Date());
 				session.save(classDetail);
 			}
 			catch (ValidationException e) {
 				message += "Problem dla encji: " + classDetail.getName() + ": ";
 				message += e.getMessage();
-				message += ";";
 			}
 		}
 		

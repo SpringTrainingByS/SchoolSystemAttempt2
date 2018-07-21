@@ -37,6 +37,8 @@ public class Mark {
     @Column(name = "insert_date")
     private Date insertDate;
 
+    private String value;
+    
     public Mark() {
     }
 
@@ -71,6 +73,16 @@ public class Mark {
 	public void setInsertDate(Date insertDate) {
 		this.insertDate = insertDate;
 	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+	
+	
 
    
 }
