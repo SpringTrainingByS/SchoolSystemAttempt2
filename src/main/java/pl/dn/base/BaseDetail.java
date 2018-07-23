@@ -11,6 +11,7 @@ import javax.persistence.TemporalType;
 
 @MappedSuperclass
 public class BaseDetail {
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
