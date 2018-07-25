@@ -29,12 +29,12 @@ public class SchoolSubjectController {
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody SchoolSubject schoolSubject) throws ValidationException {
-		service.add(schoolSubject, dao, validationPatterns);
+		service.add(schoolSubject, validationPatterns);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST)
 	public void addSet(@RequestBody List<SchoolSubject> schoolSubjectGroup) throws ValidationException {
-		service.addSet(schoolSubjectGroup, dao, validationPatterns);
+		service.addSet(schoolSubjectGroup, validationPatterns);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
@@ -56,7 +56,7 @@ public class SchoolSubjectController {
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public void update(@RequestBody SchoolSubject schoolSubject) throws ValidationException{
-		service.update(schoolSubject, dao, validationPatterns);
+		service.update(schoolSubject, validationPatterns);
 	}
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)

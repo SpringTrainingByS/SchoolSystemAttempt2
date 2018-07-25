@@ -29,12 +29,12 @@ public class ClassTypeController {
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody ClassType classType) throws ValidationException {
-		classDetailService.add(classType, dao, validationPatterns);
+		classDetailService.add(classType, validationPatterns);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST)
 	public void addSet(@RequestBody List<ClassType> classTypeGroup) throws ValidationException {
-		classDetailService.addSet(classTypeGroup, dao, validationPatterns);
+		classDetailService.addSet(classTypeGroup, validationPatterns);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
@@ -57,7 +57,7 @@ public class ClassTypeController {
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public void update(@RequestBody ClassType classType) throws ValidationException{
 		System.out.println("Id dla prefiksu: " + classType.getId());
-		classDetailService.update(classType, dao, validationPatterns);
+		classDetailService.update(classType, validationPatterns);
 	}
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)

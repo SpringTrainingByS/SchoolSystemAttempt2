@@ -8,34 +8,46 @@ import javax.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import pl.dn.base.history.BaseDetailHistoryService;
 import pl.dn.exception.ValidationException;
+import pl.dn.schoolClassOrganization.details.classType.ClassType;
+import pl.dn.schoolClassOrganization.details.prefix.ClassPrefix;
 
 @Service
 @Transactional
 public class BaseDetailService {
-	
-	@Autowired
+
 	private SessionFactory sessionFactory;
 	
-	@Autowired
 	private BaseDetailValidator classDetailValidator;
 	
-	public void add(BaseDetail classDetail, BaseDetailDao<?> dao, String[] validationPatterns) throws ValidationException{
-		classDetailValidator.validateBeforeAdd(classDetail, dao, validationPatterns);
+	private BaseDetailHistoryService bdhService;
+	
+	private BaseDetailDao baseDetailDao;
+	
+	@Autowired
+	public BaseDetailService(SessionFactory sessionFactory, BaseDetailValidator classDetailValidator) {
+		this.sessionFactory = sessionFactory;
+		this.classDetailValidator = classDetailValidator;
+	}
+
+	public void add(BaseDetail classDetail, String[] validationPatterns) throws ValidationException {
+		classDetailValidator.validateBeforeAdd(classDetail, baseDetailDao, validationPatterns);
 		Session session = sessionFactory.getCurrentSession();
 		classDetail.setCreationTime(new Date());
 		session.save(classDetail);
 	}
 	
-	public void addSet(List<? extends BaseDetail> classDetailGroup, BaseDetailDao<?> dao, String[] validationPatterns) throws ValidationException {
+	public void addSet(List<? extends BaseDetail> classDetailGroup, String[] validationPatterns) throws ValidationException {
 		String message = "";
 		Session session = sessionFactory.getCurrentSession();
 		
 		for (BaseDetail classDetail : classDetailGroup ) {
 			try {
-				classDetailValidator.validateBeforeAdd(classDetail, dao, validationPatterns);
+				classDetailValidator.validateBeforeAdd(classDetail, baseDetailDao, validationPatterns);
 				classDetail.setCreationTime(new Date());
 				session.save(classDetail);
 			}
@@ -50,10 +62,35 @@ public class BaseDetailService {
 		}
 	}
 	
-	public void update(BaseDetail classDetail, BaseDetailDao<?> dao, String[] validationPatterns) throws ValidationException {
-		classDetailValidator.validateBeforeUpdate(classDetail, dao, validationPatterns);
+	public BaseDetail findById(long id) {
+		return baseDetailDao.findById(id);
+	}
+	
+	public List<? extends BaseDetail> findByPagination(int limit, int offset) {
+		return (List<ClassPrefix>) baseDetailDao.findByPagination(limit, offset);
+	}
+	
+	public void update(BaseDetail classDetail, String[] validationPatterns) throws ValidationException {
+		classDetailValidator.validateBeforeUpdate(classDetail, baseDetailDao, validationPatterns);
 		Session session = sessionFactory.getCurrentSession();
 		session.update(classDetail);
 	}
+	
+	public List<? extends BaseDetail> findAll() {
+		return baseDetailDao.findAll();
+	}
+	
+	public void deleteById(long id) {
+		baseDetailDao.deleteById(id);
+	}
+
+	public void setBaseDetailDao(BaseDetailDao<?> baseDetailDao) {
+		this.baseDetailDao = baseDetailDao;
+	}
+	
+	public void setBdhService(BaseDetailHistoryService bdhService) {
+		this.bdhService = bdhService;
+	}
+
 	
 }

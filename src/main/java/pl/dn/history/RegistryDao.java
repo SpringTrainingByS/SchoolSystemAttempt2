@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface RegistryDao<T extends Registry> extends JpaRepository<T, Long> {
 	
-	
 	public T findByUserId(long userId);
+	public T save(T registry);
 	
 }

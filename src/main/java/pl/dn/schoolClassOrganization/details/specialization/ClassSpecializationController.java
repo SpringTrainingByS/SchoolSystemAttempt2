@@ -30,12 +30,12 @@ public class ClassSpecializationController {
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody ClassSpecialization classSpecialization) throws ValidationException {
-		classDetailService.add(classSpecialization, dao, validationPatterns);
+		classDetailService.add(classSpecialization, validationPatterns);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST)
 	public void addSet(@RequestBody List<ClassSpecialization> classSpecializationGroup) throws ValidationException {
-		classDetailService.addSet(classSpecializationGroup, dao, validationPatterns);
+		classDetailService.addSet(classSpecializationGroup, validationPatterns);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
@@ -57,7 +57,7 @@ public class ClassSpecializationController {
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public void update(@RequestBody ClassSpecialization classSpecialization) throws ValidationException{
-		classDetailService.update(classSpecialization, dao, validationPatterns);
+		classDetailService.update(classSpecialization, validationPatterns);
 	}
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
