@@ -11,6 +11,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import pl.dn.base.BaseDetail;
+import pl.dn.schoolClassOrganization.details.prefix.ClassPrefix;
 import pl.dn.user.User;
 
 @MappedSuperclass
@@ -60,4 +62,13 @@ public class Registry {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	
+	public void setEntity(BaseDetail baseDetail) {
+		
+	}
+	
+	public BaseDetail getEntity() {
+		return null;
+	}
+
 }

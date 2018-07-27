@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pl.dn.security.JwtTokenFactory;
-import pl.dn.security.Role;
+import pl.dn.security.common.UserLoginInfo;
 
 @Component
 public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -43,21 +43,23 @@ public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSucc
 		
 		System.out.println("AjaxAwareAuthenticationSuccessHandler: onAuthenticationSuccess");
 		
-		String username = (String) authentication.getPrincipal();
+		UserLoginInfo userLoginInfo = (UserLoginInfo) authentication.getPrincipal();
+		System.out.println("Pobieram credentiale");
+		System.out.println(authentication.getCredentials());
 		List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
-		System.out.println("Username: " + username);
+		System.out.println("Username: " + userLoginInfo.getUsername());
 		
 		List<String> rolesNames = authorities.stream()
 				.map(x -> x.getAuthority())
-				.collect(Collectors.toList()); 
+				.collect(Collectors.toList());
 		
 		System.out.println("Role przed dodaniem do tokenów: ");
 		for (String authority : rolesNames) {
 			System.out.println("Rola: "  + authority);
 		}
 		
-		String accessToken = tokenFactory.createAccessJwtToken(username, authorities);
-		String refreshToken = tokenFactory.createRefreshToken(username, authorities);
+		String accessToken = tokenFactory.createAccessJwtToken(userLoginInfo.getUsername(), userLoginInfo.getUserId(), authorities);
+		String refreshToken = tokenFactory.createRefreshToken(userLoginInfo.getUsername(), userLoginInfo.getUserId(), authorities);
 		
 		Map<String, String> tokenMap = new HashMap<String, String>();
 		tokenMap.put("token", accessToken);

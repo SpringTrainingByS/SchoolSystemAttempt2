@@ -9,9 +9,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import pl.dn.request.UserContext;
 
 @Configuration
 @SpringBootApplication
@@ -40,5 +45,11 @@ public class SchoolSystemA2Application {
         characterEncodingFilter.setForceEncoding(true);
         return characterEncodingFilter;
     }
+	
+	@Bean(name = "userContextRequest")
+	@Scope("singleton")
+	public UserContext userContext() {
+		return new UserContext();
+	}
 	
 }

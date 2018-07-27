@@ -41,6 +41,8 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 		
 		System.out.println("AjaxAuthenticationProvider: authenticate");
 		
+
+		
 		String username = (String) authentication.getPrincipal();
 		String password = (String) authentication.getCredentials();
 		
@@ -58,8 +60,9 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 			throw new BadCredentialsException("Authentication Failed. Username or password not valid");
 		}
 		
-		List<UserRole> userRoles = userRoleDao.findByUserLoginId(userLoginInfo.getId());
+		System.out.println("userId ===================== " + userLoginInfo.getUserId());
 		
+		List<UserRole> userRoles = userRoleDao.findByUserLoginId(userLoginInfo.getId());
 		List<Role> roles = new ArrayList<Role>();
 		
 		System.out.println("Role: ");
@@ -68,7 +71,10 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 			roles.add(role.getRole());
 		}
 		
-		return new UsernamePasswordAuthenticationToken(username, null, (Collection<? extends GrantedAuthority>) roles);
+		System.out.println("Username: " + username);
+		System.out.println("UserId: " + userLoginInfo.getUserId());
+		
+		return new UsernamePasswordAuthenticationToken(userLoginInfo, null, (Collection<? extends GrantedAuthority>) roles);
 	}
 
 	@Override

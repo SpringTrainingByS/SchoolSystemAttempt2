@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pl.dn.base.BaseDetailService;
 import pl.dn.exception.ValidationException;
+import pl.dn.schoolClassOrganization.details.prefix.history.ClassPrefixRegistry;
 
 @RestController
 @RequestMapping(value = "school-subject")
@@ -29,7 +30,7 @@ public class SchoolSubjectController {
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody SchoolSubject schoolSubject) throws ValidationException {
-		service.add(schoolSubject, validationPatterns);
+		service.add(schoolSubject, new ClassPrefixRegistry(), validationPatterns);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST)

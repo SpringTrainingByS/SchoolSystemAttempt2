@@ -2,6 +2,8 @@ package pl.dn.schoolClassOrganization.details.prefix;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.dn.base.BaseDetailService;
 import pl.dn.base.history.BaseDetailHistoryService;
 import pl.dn.exception.ValidationException;
+import pl.dn.request.UserContext;
+import pl.dn.schoolClassOrganization.details.prefix.history.ClassPrefixRegistry;
 import pl.dn.schoolClassOrganization.details.prefix.history.ClassPrefixRegistryDao;
 
 @RestController
@@ -26,19 +30,18 @@ public class ClassPrefixController {
 
 	@Autowired
 	public ClassPrefixController(BaseDetailService classDetailService, ClassPrefixDao classPrefixDao, 
-			BaseDetailHistoryService bdhService, ClassPrefixRegistryDao cprDao) {
+			BaseDetailHistoryService<ClassPrefix, ClassPrefixRegistry> bdhService, ClassPrefixRegistryDao cprDao) {
 		
 		this.classDetailService = classDetailService;
 		this.classDetailService.setBaseDetailDao(classPrefixDao);
-		
 		bdhService.setRegistryDao(cprDao);
-		
 		this.classDetailService.setBdhService(bdhService);
+		
 	}
 
 	@RequestMapping(value = "add", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
-	public void add(@RequestBody ClassPrefix classPrefix) throws ValidationException {
-		classDetailService.add(classPrefix, validationPatterns);
+	public void add(@RequestBody ClassPrefix classPrefix, HttpServletRequest request) throws ValidationException {
+		classDetailService.add(classPrefix, new ClassPrefixRegistry(), validationPatterns);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST, produces="application/json;charset=UTF-8")

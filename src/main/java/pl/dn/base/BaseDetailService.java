@@ -8,13 +8,14 @@ import javax.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import pl.dn.base.history.BaseDetailHistoryService;
 import pl.dn.exception.ValidationException;
-import pl.dn.schoolClassOrganization.details.classType.ClassType;
+import pl.dn.request.UserContext;
 import pl.dn.schoolClassOrganization.details.prefix.ClassPrefix;
+import pl.dn.schoolClassOrganization.details.prefix.history.ClassPrefixRegistry;
 
 @Service
 @Transactional
@@ -34,11 +35,13 @@ public class BaseDetailService {
 		this.classDetailValidator = classDetailValidator;
 	}
 
-	public void add(BaseDetail classDetail, String[] validationPatterns) throws ValidationException {
+	public void add(BaseDetail classDetail, ClassPrefixRegistry classPrefixRegistry, String[] validationPatterns) throws ValidationException {
 		classDetailValidator.validateBeforeAdd(classDetail, baseDetailDao, validationPatterns);
+		
 		Session session = sessionFactory.getCurrentSession();
 		classDetail.setCreationTime(new Date());
 		session.save(classDetail);
+		bdhService.registerAdd(classDetail, classPrefixRegistry);
 	}
 	
 	public void addSet(List<? extends BaseDetail> classDetailGroup, String[] validationPatterns) throws ValidationException {
@@ -88,7 +91,7 @@ public class BaseDetailService {
 		this.baseDetailDao = baseDetailDao;
 	}
 	
-	public void setBdhService(BaseDetailHistoryService bdhService) {
+	public void setBdhService(BaseDetailHistoryService<?, ?> bdhService) {
 		this.bdhService = bdhService;
 	}
 

@@ -25,7 +25,7 @@ public class JwtTokenFactory {
 		this.settings = settings;
 	}
 
-	public String createAccessJwtToken(String username, List<GrantedAuthority> authorities) {
+	public String createAccessJwtToken(String username, long userId, List<GrantedAuthority> authorities) {
 		if (StringUtils.isBlank(username)) {
 			throw new IllegalArgumentException("Cannot create JWT Token without username");
 		}
@@ -41,7 +41,7 @@ public class JwtTokenFactory {
 		
 		String token = Jwts.builder()
 				.setClaims(claims)
-				.setIssuer(settings.getTokenIssuer())
+				.setIssuer(Long.toString(userId))
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + settings.getTokenExpirationTime() * 1000))
 				.signWith(SignatureAlgorithm.HS512 , settings.getTokenSigningKey())
@@ -50,14 +50,14 @@ public class JwtTokenFactory {
 		return token;
 	}
 	
-	public String createRefreshToken(String username, List<GrantedAuthority> authorities) {
+	public String createRefreshToken(String username, long userId, List<GrantedAuthority> authorities) {
 		
 		Claims claims = Jwts.claims().setSubject(username);
 		claims.put("scopes", "REFRESH_TOKEN");
 		
 		String token = Jwts.builder()
 				.setClaims(claims)
-				.setIssuer(settings.getTokenIssuer())
+				.setIssuer(Long.toString(userId))
 				.setId(UUID.randomUUID().toString())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + settings.getRefreshTokenExpTime() * 1000))

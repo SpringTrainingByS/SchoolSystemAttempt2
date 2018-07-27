@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.dn.base.BaseDetail;
 import pl.dn.base.BaseDetailService;
 import pl.dn.exception.ValidationException;
+import pl.dn.schoolClassOrganization.details.prefix.history.ClassPrefixRegistry;
 
 @RestController
 @RequestMapping(value = "class-spec")
@@ -30,7 +30,7 @@ public class ClassSpecializationController {
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody ClassSpecialization classSpecialization) throws ValidationException {
-		classDetailService.add(classSpecialization, validationPatterns);
+		classDetailService.add(classSpecialization,new ClassPrefixRegistry(), validationPatterns);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST)
