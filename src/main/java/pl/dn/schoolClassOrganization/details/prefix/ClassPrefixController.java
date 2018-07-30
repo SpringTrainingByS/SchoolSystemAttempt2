@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.dn.base.BaseDetailService;
 import pl.dn.base.history.BaseDetailHistoryService;
 import pl.dn.exception.ValidationException;
-import pl.dn.request.UserContext;
 import pl.dn.schoolClassOrganization.details.prefix.history.ClassPrefixRegistry;
 import pl.dn.schoolClassOrganization.details.prefix.history.ClassPrefixRegistryDao;
 

@@ -2,6 +2,8 @@ package pl.dn.base.history;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -9,18 +11,17 @@ import org.springframework.stereotype.Service;
 import pl.dn.base.BaseDetail;
 import pl.dn.history.Registry;
 import pl.dn.history.RegistryDao;
-import pl.dn.request.UserContext;
 
 @Service
 public class BaseDetailHistoryService<G extends BaseDetail, T extends Registry> {
 
 	private RegistryDao registryDao;
 	
-	private UserContext userContext;
+	private HttpServletRequest request;
 	
 	@Autowired
-	public BaseDetailHistoryService(@Qualifier("userContextRequest") UserContext userContext) {
-		this.userContext = userContext;
+	public BaseDetailHistoryService(HttpServletRequest request) {
+		this.request = request;
 	}
 
 	public T prepareChangesForOne(G element, long userId) {
@@ -28,7 +29,7 @@ public class BaseDetailHistoryService<G extends BaseDetail, T extends Registry> 
 	}
 	
 	public void registerAdd(G element,T registry) {
-		System.out.println("BaseDetailHisotryService.registerAdd: userId: " + userContext.getUserId());
+		System.out.println("BaseDetailHisotryService.registerAdd: userId: " + request.getAttribute("userId"));
 	}
 	
 	public void registerAddCollection(List<G> elements) {

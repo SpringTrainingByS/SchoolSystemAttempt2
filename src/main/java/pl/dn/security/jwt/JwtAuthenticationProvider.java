@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,7 +22,6 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import pl.dn.exception.JwtException;
-import pl.dn.request.UserContext;
 import pl.dn.security.Role;
 import pl.dn.security.config.JwtSettings;
 
@@ -30,12 +30,12 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	
 	private final JwtSettings jwtSettings;
 	
-	private UserContext userContext;
+	private HttpServletRequest request;
 	
 	@Autowired
-	public JwtAuthenticationProvider(JwtSettings jwtSettings, @Qualifier("userContextRequest") UserContext userContext) {
+	public JwtAuthenticationProvider(JwtSettings jwtSettings, HttpServletRequest request) {
 		this.jwtSettings = jwtSettings;
-		this.userContext = userContext;
+		this.request = request;
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 				System.out.println(gr.getName());
 			}
 			
-			userContext.setUserId(userId);
+			request.setAttribute("userId", userId);
 		}
 		catch (MalformedJwtException | ExpiredJwtException | IllegalArgumentException e) {
 			throw new JwtException(e.getMessage());

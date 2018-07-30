@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import pl.dn.base.history.BaseDetailHistoryService;
 import pl.dn.exception.ValidationException;
-import pl.dn.request.UserContext;
 import pl.dn.schoolClassOrganization.details.prefix.ClassPrefix;
 import pl.dn.schoolClassOrganization.details.prefix.history.ClassPrefixRegistry;
 
