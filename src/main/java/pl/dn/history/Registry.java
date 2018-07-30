@@ -22,13 +22,13 @@ public class Registry {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	private String description;
+	private String description;	
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 	
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.DATE)
 	private Date date;
 
 	public long getId() {
@@ -37,6 +37,10 @@ public class Registry {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public void setUserId() {
+		
 	}
 
 	public String getDescription() {

@@ -30,12 +30,12 @@ public class CreditTypeController {
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody CreditType creditType) throws ValidationException {
-		service.add(creditType, new ClassPrefixRegistry(), validationPatterns);
+		service.add(creditType, null, validationPatterns);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST)
 	public void addSet(@RequestBody List<CreditType> creditType) throws ValidationException {
-		service.addSet(creditType, validationPatterns);
+		service.addSet(creditType, null, validationPatterns);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
@@ -57,7 +57,7 @@ public class CreditTypeController {
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public void update(@RequestBody CreditType creditType) throws ValidationException{
-		service.update(creditType, validationPatterns);
+		service.update(creditType, null, validationPatterns);
 	}
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)

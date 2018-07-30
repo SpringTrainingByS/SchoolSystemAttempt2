@@ -33,7 +33,7 @@ public class ClassPrefixController {
 		
 		this.classDetailService = classDetailService;
 		this.classDetailService.setBaseDetailDao(classPrefixDao);
-		bdhService.setRegistryDao(cprDao);
+		bdhService.setBaseDetailDao(classPrefixDao);
 		this.classDetailService.setBdhService(bdhService);
 		
 	}
@@ -46,7 +46,7 @@ public class ClassPrefixController {
 	@RequestMapping(value = "add-set", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	public void addSet(@RequestBody List<ClassPrefix> classPrefixGroup) throws ValidationException {
 		System.out.println();
-		classDetailService.addSet(classPrefixGroup, validationPatterns);
+		classDetailService.addSet(classPrefixGroup, new ClassPrefixRegistry(), validationPatterns);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
@@ -70,7 +70,7 @@ public class ClassPrefixController {
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public void update(@RequestBody ClassPrefix classPrefix) throws ValidationException {
 		System.out.println("Id dla prefiksu: " + classPrefix.getId());
-		classDetailService.update(classPrefix, validationPatterns);
+		classDetailService.update(classPrefix, new ClassPrefixRegistry(), validationPatterns);
 	}
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
