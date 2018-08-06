@@ -7,4 +7,6 @@ import pl.dn.history.RegistryDao;
 @Repository
 public interface ClassPrefixRegistryDao extends RegistryDao<ClassPrefixRegistry> {
 
+	public ClassPrefixRegistry findByPrefixId(long id);
+	
 }

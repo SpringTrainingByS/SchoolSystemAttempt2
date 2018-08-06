@@ -1,7 +1,6 @@
 package pl.dn.base.history;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import pl.dn.base.BaseDetail;
 import pl.dn.base.BaseDetailDao;
 import pl.dn.history.Registry;
-import pl.dn.history.RegistryDao;
 import pl.dn.user.User;
 
 @Service
@@ -49,8 +47,8 @@ public class BaseDetailHistoryService<G extends BaseDetail, T extends Registry> 
 
 	public void registerUpdate(G element,T registry) {
 		
-		String oldName = baseDetailDao.findNameById(element.getId());
-		String description = "Nazwa zmieniona z " + oldName + " na " + element.getName() + ".";
+		BaseDetail oldElement = baseDetailDao.findById(element.getId());
+		String description = "Nazwa zmieniona z " + oldElement.getName() + " na " + element.getName() + ".";
 		long userId = (long) request.getAttribute("userId");
 		
 		registry.setAuthor(em.getReference(User.class, userId));
@@ -58,6 +56,10 @@ public class BaseDetailHistoryService<G extends BaseDetail, T extends Registry> 
 		registry.setDate(new Date());
 		registry.setEntity(element);
 		registry.setDescription(description);
+		
+		System.out.println("Próba zapisu registry");
+		em.persist(registry);
+		System.out.println("Zapis registry zakoñczony powodzeniem");
 		
 	}
 

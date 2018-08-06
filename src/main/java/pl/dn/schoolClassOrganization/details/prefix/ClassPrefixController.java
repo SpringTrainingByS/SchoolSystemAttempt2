@@ -67,7 +67,7 @@ public class ClassPrefixController {
 		return (List<ClassPrefix>) classDetailService.findByPagination(limit, offset);
 	}
 	
-	@RequestMapping(value = "update", method = RequestMethod.POST)
+	@RequestMapping(value = "update", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	public void update(@RequestBody ClassPrefix classPrefix) throws ValidationException {
 		System.out.println("Id dla prefiksu: " + classPrefix.getId());
 		classDetailService.update(classPrefix, new ClassPrefixRegistry(), validationPatterns);

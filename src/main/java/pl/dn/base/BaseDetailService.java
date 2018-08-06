@@ -3,6 +3,7 @@ package pl.dn.base;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -14,6 +15,8 @@ import pl.dn.base.history.BaseDetailHistoryService;
 import pl.dn.exception.ValidationException;
 import pl.dn.history.Registry;
 import pl.dn.schoolClassOrganization.details.prefix.ClassPrefix;
+
+
 
 @Service
 @Transactional
@@ -28,6 +31,9 @@ public class BaseDetailService {
 	private BaseDetailDao baseDetailDao;
 	
 	@Autowired
+	private EntityManager em;
+	
+	@Autowired
 	public BaseDetailService(SessionFactory sessionFactory, BaseDetailValidator classDetailValidator) {
 		this.sessionFactory = sessionFactory;
 		this.classDetailValidator = classDetailValidator;
@@ -36,24 +42,21 @@ public class BaseDetailService {
 	public void add(BaseDetail classDetail, Registry registry, String[] validationPatterns) throws ValidationException {
 		
 		classDetailValidator.validateBeforeAdd(classDetail, baseDetailDao, validationPatterns);
-		Session session = sessionFactory.getCurrentSession();
 		classDetail.setCreationTime(new Date());
-		session.save(classDetail);
 		bdhService.registerAdd(classDetail, registry);
-		
+		em.persist(classDetail);
 	}
 	
 	public void addSet(List<? extends BaseDetail> classDetailGroup, Registry registry, String[] validationPatterns) throws ValidationException {
 		
 		String message = "";
-		Session session = sessionFactory.getCurrentSession();
 		
 		for (BaseDetail classDetail : classDetailGroup ) {
 			try {
 				classDetailValidator.validateBeforeAdd(classDetail, baseDetailDao, validationPatterns);
 				classDetail.setCreationTime(new Date());
-				session.save(classDetail);
 				bdhService.registerAdd(classDetail, registry);
+				em.persist(classDetail);
 			}
 			catch (ValidationException e) {
 				message += "Problem dla encji: " + classDetail.getName() + ": ";
@@ -77,9 +80,12 @@ public class BaseDetailService {
 	
 	public void update(BaseDetail classDetail, Registry registry, String[] validationPatterns) throws ValidationException {
 		classDetailValidator.validateBeforeUpdate(classDetail, baseDetailDao, validationPatterns);
-		Session session = sessionFactory.getCurrentSession();
-		session.update(classDetail);
+		System.out.println("Update preiksu klasy");
 		bdhService.registerUpdate(classDetail, registry);
+		em.merge(classDetail);
+		System.out.println("Update prefiksu klasy zakoñczony powodzeniem");
+		
+		System.out.println("Procedura aktualizacji prefiksu zakoñczona powodzeniem");
 	}
 	
 	public List<? extends BaseDetail> findAll() {
