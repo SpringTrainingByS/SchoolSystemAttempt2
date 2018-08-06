@@ -48,7 +48,7 @@ public class BaseDetailHistoryService<G extends BaseDetail, T extends Registry> 
 	public void registerUpdate(G element,T registry) {
 		
 		BaseDetail oldElement = baseDetailDao.findById(element.getId());
-		String description = "Nazwa zmieniona z " + oldElement.getName() + " na " + element.getName() + ".";
+		String description = "Nazwa zmieniona: \"" + oldElement.getName() + "\" na \"" + element.getName() + "\".";
 		long userId = (long) request.getAttribute("userId");
 		
 		registry.setAuthor(em.getReference(User.class, userId));

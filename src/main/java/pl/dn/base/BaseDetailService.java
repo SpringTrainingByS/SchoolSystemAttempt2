@@ -1,12 +1,12 @@
 package pl.dn.base;
 
+import java.lang.reflect.Constructor;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,11 +43,11 @@ public class BaseDetailService {
 		
 		classDetailValidator.validateBeforeAdd(classDetail, baseDetailDao, validationPatterns);
 		classDetail.setCreationTime(new Date());
-		bdhService.registerAdd(classDetail, registry);
 		em.persist(classDetail);
+		bdhService.registerAdd(classDetail, registry);
 	}
 	
-	public void addSet(List<? extends BaseDetail> classDetailGroup, Registry registry, String[] validationPatterns) throws ValidationException {
+	public void addSet(List<? extends BaseDetail> classDetailGroup, Registry registry, String[] validationPatterns) throws ValidationException  {
 		
 		String message = "";
 		
@@ -55,12 +55,25 @@ public class BaseDetailService {
 			try {
 				classDetailValidator.validateBeforeAdd(classDetail, baseDetailDao, validationPatterns);
 				classDetail.setCreationTime(new Date());
-				bdhService.registerAdd(classDetail, registry);
 				em.persist(classDetail);
+				
+				Class c = Class.forName(registry.getClass().getName());
+				Registry obj = (Registry) c.newInstance();
+				
+				bdhService.registerAdd(classDetail, obj);
 			}
 			catch (ValidationException e) {
 				message += "Problem dla encji: " + classDetail.getName() + ": ";
 				message += e.getMessage();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		if (!message.isEmpty()) {

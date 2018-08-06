@@ -46,7 +46,7 @@ public class ClassPrefixController {
 	@RequestMapping(value = "add-set", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	public void addSet(@RequestBody List<ClassPrefix> classPrefixGroup) throws ValidationException {
 		System.out.println();
-		classDetailService.addSet(classPrefixGroup, new ClassPrefixRegistry(), validationPatterns);
+		classDetailService.addSet(classPrefixGroup, new ClassPrefixRegistry() , validationPatterns);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
