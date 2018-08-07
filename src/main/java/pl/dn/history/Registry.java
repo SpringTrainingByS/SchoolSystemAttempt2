@@ -11,8 +11,9 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import pl.dn.base.BaseDetail;
-import pl.dn.schoolClassOrganization.details.prefix.ClassPrefix;
 import pl.dn.user.User;
 
 @MappedSuperclass
@@ -71,6 +72,7 @@ public class Registry {
 		
 	}
 	
+	@JsonIgnore
 	public BaseDetail getEntity() {
 		return null;
 	}
