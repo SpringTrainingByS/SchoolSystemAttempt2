@@ -1,6 +1,8 @@
 package pl.dn.base;
 
-import java.lang.reflect.Constructor;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,8 +17,6 @@ import pl.dn.base.history.BaseDetailHistoryService;
 import pl.dn.exception.ValidationException;
 import pl.dn.history.Registry;
 import pl.dn.schoolClassOrganization.details.prefix.ClassPrefix;
-
-
 
 @Service
 @Transactional
@@ -39,51 +39,53 @@ public class BaseDetailService {
 		this.classDetailValidator = classDetailValidator;
 	}
 
-	public void add(BaseDetail classDetail, Registry registry, String[] validationPatterns) throws ValidationException {
+	public BaseDetail add(BaseDetail classDetail, Registry registry, String[] validationPatterns) throws ValidationException {
 		
 		classDetailValidator.validateBeforeAdd(classDetail, baseDetailDao, validationPatterns);
 		classDetail.setCreationTime(new Date());
 		em.persist(classDetail);
 		bdhService.registerAdd(classDetail, registry);
+		
+		System.out.println("Data dodanego elementu: " + classDetail.getCreationTime());
+		
+		return classDetail;
 	}
 	
-	public void addSet(List<? extends BaseDetail> classDetailGroup, Registry registry, String[] validationPatterns) throws ValidationException  {
+	public List<? extends BaseDetail> addSet(List<? extends BaseDetail> classDetailGroup, Registry registry, String[] validationPatterns) throws ValidationException  {
 		
-		String message = "";
+		String message = ""; 
+		List<Object> detailsToRemove = new ArrayList<Object>();
 		
 		for (BaseDetail classDetail : classDetailGroup ) {
 			try {
-				classDetailValidator.validateBeforeAdd(classDetail, baseDetailDao, validationPatterns);
-				classDetail.setCreationTime(new Date());
-				em.persist(classDetail);
-				
-				Class c = Class.forName(registry.getClass().getName());
-				Registry obj = (Registry) c.newInstance();
-				
-				bdhService.registerAdd(classDetail, obj);
+				add(classDetail, registry.clone(), validationPatterns);
 			}
 			catch (ValidationException e) {
 				message += "Problem dla encji: " + classDetail.getName() + ": ";
 				message += e.getMessage();
-			} catch (ClassNotFoundException e) {
+				detailsToRemove.add(classDetail);
+			} catch (CloneNotSupportedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			} 
+			
 		}
+		
 		if (!message.isEmpty()) {
-			throw new ValidationException(message);
+			
+			for (Object detailToRemove : detailsToRemove) {
+				classDetailGroup.remove(detailToRemove);
+			}
+			
+			throw new ValidationException(message, classDetailGroup);
 		}
 		
-		
+		return classDetailGroup;
 	}
 	
 	public BaseDetail findById(long id) {
+		BaseDetail bd = baseDetailDao.findById(id);
+		System.out.println("Pobrana data elementu: " + bd.getCreationTime());
 		return baseDetailDao.findById(id);
 	}
 	
@@ -117,5 +119,4 @@ public class BaseDetailService {
 		this.bdhService = bdhService;
 	}
 
-	
 }

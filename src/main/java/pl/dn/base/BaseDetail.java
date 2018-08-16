@@ -9,6 +9,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @MappedSuperclass
 public class BaseDetail {
 	
@@ -19,6 +21,8 @@ public class BaseDetail {
     private String name;
     
     @Temporal(TemporalType.DATE)
+    @JsonFormat
+      (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date creationTime;
    
     

@@ -39,14 +39,14 @@ public class ClassPrefixController {
 	}
 
 	@RequestMapping(value = "add", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
-	public void add(@RequestBody ClassPrefix classPrefix, HttpServletRequest request) throws ValidationException {
-		classDetailService.add(classPrefix, new ClassPrefixRegistry(), validationPatterns);
+	public ClassPrefix add(@RequestBody ClassPrefix classPrefix, HttpServletRequest request) throws ValidationException {
+		return (ClassPrefix) classDetailService.add(classPrefix, new ClassPrefixRegistry(), validationPatterns);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
-	public void addSet(@RequestBody List<ClassPrefix> classPrefixGroup) throws ValidationException {
+	public List<ClassPrefix> addSet(@RequestBody List<ClassPrefix> classPrefixGroup) throws ValidationException {
 		System.out.println();
-		classDetailService.addSet(classPrefixGroup, new ClassPrefixRegistry() , validationPatterns);
+		return (List<ClassPrefix>) classDetailService.addSet(classPrefixGroup, new ClassPrefixRegistry() , validationPatterns);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)

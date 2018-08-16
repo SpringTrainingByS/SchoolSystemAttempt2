@@ -17,7 +17,7 @@ import pl.dn.base.BaseDetail;
 import pl.dn.user.User;
 
 @MappedSuperclass
-public class Registry {
+public class Registry implements Cloneable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -75,6 +75,11 @@ public class Registry {
 	@JsonIgnore
 	public BaseDetail getEntity() {
 		return null;
+	}
+	
+	@Override
+	public Registry clone() throws CloneNotSupportedException {
+		return (Registry) super.clone();
 	}
 
 }
