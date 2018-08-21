@@ -77,4 +77,9 @@ public class ClassPrefixController {
 	public void delete(@PathVariable long id) {
 		classDetailService.deleteById(id);
 	}
+	
+	@RequestMapping(value = "count", method = RequestMethod.GET)
+	public long count() {
+		return classDetailService.count();
+	}
 }

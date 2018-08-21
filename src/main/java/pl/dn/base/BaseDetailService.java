@@ -110,6 +110,10 @@ public class BaseDetailService {
 	public void deleteById(long id) {
 		baseDetailDao.deleteById(id);
 	}
+	
+	public long count() {
+		return baseDetailDao.count();
+	}
 
 	public void setBaseDetailDao(BaseDetailDao<?> baseDetailDao) {
 		this.baseDetailDao = baseDetailDao;
