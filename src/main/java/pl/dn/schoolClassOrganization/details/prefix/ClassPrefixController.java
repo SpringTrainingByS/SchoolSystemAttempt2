@@ -57,7 +57,6 @@ public class ClassPrefixController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
 	public List<ClassPrefix> getAll() {
-		System.out.println("Pobieram wszystkie prefiksy ======================================================================================");
 		return (List<ClassPrefix>) classDetailService.findAll();
 	}
 	
@@ -69,7 +68,6 @@ public class ClassPrefixController {
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	public void update(@RequestBody ClassPrefix classPrefix) throws ValidationException {
-		System.out.println("Id dla prefiksu: " + classPrefix.getId());
 		classDetailService.update(classPrefix, new ClassPrefixRegistry(), validationPatterns);
 	}
 	
@@ -81,5 +79,10 @@ public class ClassPrefixController {
 	@RequestMapping(value = "count", method = RequestMethod.GET)
 	public long count() {
 		return classDetailService.count();
+	}
+
+	@RequestMapping(value = "find", method = RequestMethod.POST)
+	public List<ClassPrefix> find(@RequestBody List<String> keyWords) {
+		return  (List<ClassPrefix>) classDetailService.find(keyWords);
 	}
 }

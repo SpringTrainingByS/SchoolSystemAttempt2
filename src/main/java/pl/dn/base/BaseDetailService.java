@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import org.apache.commons.collections4.ListUtils;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -123,4 +124,14 @@ public class BaseDetailService {
 		this.bdhService = bdhService;
 	}
 
+	public List<? extends BaseDetail> find(List<String> keyWords) {
+
+		List<? extends BaseDetail> result = new ArrayList<>();
+
+		for (String keyWord : keyWords) {
+			result = ListUtils.union(result,baseDetailDao.findByNameContaining(keyWord));
+		}
+
+		return result;
+	}
 }

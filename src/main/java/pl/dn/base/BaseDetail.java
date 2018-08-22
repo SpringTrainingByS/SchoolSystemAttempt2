@@ -19,7 +19,7 @@ public class BaseDetail {
     private long id;
 
     private String name;
-    
+
     @Temporal(TemporalType.DATE)
     @JsonFormat
       (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -30,7 +30,12 @@ public class BaseDetail {
 		super();
 	}
 
-	public long getId() {
+    public BaseDetail(String name, Date creationTime) {
+        this.name = name;
+        this.creationTime = creationTime;
+    }
+
+    public long getId() {
         return id;
     }
 
@@ -53,7 +58,14 @@ public class BaseDetail {
 	public void setCreationTime(Date creationTime) {
 		this.creationTime = creationTime;
 	}
-    
-    
 
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", creationTime=" + creationTime +
+                '}';
+    }
 }

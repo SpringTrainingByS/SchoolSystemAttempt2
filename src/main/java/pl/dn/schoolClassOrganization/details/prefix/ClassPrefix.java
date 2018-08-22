@@ -1,5 +1,6 @@
 package pl.dn.schoolClassOrganization.details.prefix;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -31,7 +32,21 @@ public class ClassPrefix extends BaseDetail {
 		return registries;
 	}
 
+	public ClassPrefix() {
+	}
+
+	public ClassPrefix(String name, Date creationTime) {
+		super(name, creationTime);
+	}
+
 	public void setRegistries(Set<ClassPrefixRegistry> registries) {
 		this.registries = registries;
+	}
+
+	@Override
+	public String toString() {
+		return  "ClassPrefix{" +
+
+				'}' + super.toString();
 	}
 }
