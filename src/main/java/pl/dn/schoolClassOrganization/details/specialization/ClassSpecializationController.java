@@ -11,58 +11,72 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.dn.base.BaseDetailService;
+import pl.dn.base.history.BaseDetailHistoryService;
 import pl.dn.exception.ValidationException;
 import pl.dn.schoolClassOrganization.details.prefix.history.ClassPrefixRegistry;
+import pl.dn.schoolClassOrganization.details.specialization.history.ClassSpecializationRegistry;
 
 @RestController
 @RequestMapping(value = "class-spec")
 public class ClassSpecializationController {
-	
-	@Autowired
-	private BaseDetailService classDetailService;
-	
-	@Autowired
-	private ClassSpecializationDao dao;
+
+	private BaseDetailService detailService;
 	
 	private String[] validationPatterns = {
 			"^[\\p{L}]+$", 
 			"^[\\p{L}]+[\\s]{1}[\\p{L}]+$"};
-	
+
+	@Autowired
+	public ClassSpecializationController(BaseDetailService detailService, ClassSpecializationDao sDao,
+								 BaseDetailHistoryService<ClassSpecialization, ClassSpecializationRegistry> bdhService) {
+
+		this.detailService = detailService;
+		this.detailService.setBaseDetailDao(sDao);
+		bdhService.setBaseDetailDao(sDao);
+		this.detailService.setBdhService(bdhService);
+
+	}
+
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody ClassSpecialization classSpecialization) throws ValidationException {
-		classDetailService.add(classSpecialization,new ClassPrefixRegistry(), validationPatterns);
+		detailService.add(classSpecialization, new ClassSpecializationRegistry(), validationPatterns);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST)
 	public void addSet(@RequestBody List<ClassSpecialization> classSpecializationGroup) throws ValidationException {
-		classDetailService.addSet(classSpecializationGroup, null, validationPatterns);
+		detailService.addSet(classSpecializationGroup, new ClassSpecializationRegistry(), validationPatterns);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
 	public ClassSpecialization get(@PathVariable long id) {
-		return (ClassSpecialization) dao.findById(id);
+		return (ClassSpecialization) detailService.findById(id);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
 	public List<ClassSpecialization> getAll() {
-		return (List<ClassSpecialization>) dao.findAll();
+		return (List<ClassSpecialization>) detailService.findAll();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get", params = {"limit", "offset"}, method = RequestMethod.GET)
 	public List<ClassSpecialization> getByPagination(@RequestParam("limit") int limit, @RequestParam("offset") int offset) {
-		return (List<ClassSpecialization>) dao.findByPagination(limit, offset);
+		return (List<ClassSpecialization>) detailService.findByPagination(limit, offset);
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public void update(@RequestBody ClassSpecialization classSpecialization) throws ValidationException{
-		classDetailService.update(classSpecialization, null, validationPatterns);
+		detailService.update(classSpecialization, new ClassSpecializationRegistry(), validationPatterns);
 	}
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable long id) {
-		dao.deleteById(id);
+		detailService.deleteById(id);
 	}
+
+    @RequestMapping(value = "find", method = RequestMethod.POST)
+    public List<ClassSpecialization> find(@RequestBody List<String> keyWords) {
+        return  (List<ClassSpecialization>) detailService.find(keyWords);
+    }
 
 }

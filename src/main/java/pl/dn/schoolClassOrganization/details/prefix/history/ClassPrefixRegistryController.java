@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.dn.schoolClassOrganization.details.prefix.history.customModels.CustomPrefixRegistryResponse;
+import pl.dn.base.customModels.BaseDetailRegistryResponse;
 
 @RestController
 @RequestMapping(value = "class-prefix-registry")
@@ -22,7 +22,7 @@ public class ClassPrefixRegistryController {
 	}
 
 	@RequestMapping(value = "get/{prefixId}", method = RequestMethod.GET)
-	public List<CustomPrefixRegistryResponse> get(@PathVariable long prefixId) {
+	public List<BaseDetailRegistryResponse> get(@PathVariable long prefixId) {
 		return dao.findByPrefixId(prefixId);
 	}
 	

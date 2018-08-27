@@ -29,7 +29,7 @@ public class ClassPrefixController {
 
 	@Autowired
 	public ClassPrefixController(BaseDetailService classDetailService, ClassPrefixDao classPrefixDao, 
-			BaseDetailHistoryService<ClassPrefix, ClassPrefixRegistry> bdhService, ClassPrefixRegistryDao cprDao) {
+			BaseDetailHistoryService<ClassPrefix, ClassPrefixRegistry> bdhService) {
 		
 		this.classDetailService = classDetailService;
 		this.classDetailService.setBaseDetailDao(classPrefixDao);

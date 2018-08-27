@@ -28,7 +28,7 @@ public class ClassPrefixDaoTest {
 	@Autowired
 	private ClassPrefixDao cpDao;
 
-	@Test
+
 	public void TestFind() {
 		List<String> keyWords = new ArrayList<String>() {{
 			add("a");
@@ -47,5 +47,25 @@ public class ClassPrefixDaoTest {
         }
 
 	}
+
+	@Test
+	public void TestFindByName() {
+		System.out.println("Pobrane informacje");
+		System.out.println(cpDao.findByName("z"));
+	}
+
+	@Test
+	public void TestFindByNameContaining() {
+		System.out.println("TestFindByNameContaining");
+		List<ClassPrefix> list = cpDao.findByNameContaining("a");
+
+		System.out.println("Pobrane Informacje");
+
+		for (ClassPrefix cp : list) {
+			System.out.println(cp.toString());
+		}
+
+	}
+
 	
 }

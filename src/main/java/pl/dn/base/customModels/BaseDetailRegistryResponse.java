@@ -1,8 +1,8 @@
-package pl.dn.schoolClassOrganization.details.prefix.history.customModels;
+package pl.dn.base.customModels;
 
 import java.util.Date;
 
-public interface CustomPrefixRegistryResponse {
+public interface BaseDetailRegistryResponse {
 	
 	public String getDescription();
 	public Date getDate();
