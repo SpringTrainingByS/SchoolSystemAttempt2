@@ -12,6 +12,8 @@ import javax.transaction.Transactional;
 import org.apache.commons.collections4.ListUtils;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
 import pl.dn.base.history.BaseDetailHistoryService;
@@ -21,6 +23,7 @@ import pl.dn.schoolClassOrganization.details.prefix.ClassPrefix;
 
 @Service
 @Transactional
+@Scope("prototype")
 public class BaseDetailService {
 
 	private SessionFactory sessionFactory;
@@ -30,14 +33,14 @@ public class BaseDetailService {
 	private BaseDetailHistoryService bdhService;
 	
 	private BaseDetailDao baseDetailDao;
-	
-	@Autowired
+
 	private EntityManager em;
 	
 	@Autowired
-	public BaseDetailService(SessionFactory sessionFactory, BaseDetailValidator classDetailValidator) {
+	public BaseDetailService(SessionFactory sessionFactory, BaseDetailValidator classDetailValidator, EntityManager em) {
 		this.sessionFactory = sessionFactory;
 		this.classDetailValidator = classDetailValidator;
+		this.em = em;
 	}
 
 	public BaseDetail add(BaseDetail classDetail, Registry registry, String[] validationPatterns) throws ValidationException {

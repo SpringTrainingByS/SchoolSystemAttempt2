@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
 import pl.dn.base.BaseDetail;
@@ -14,6 +16,7 @@ import pl.dn.history.Registry;
 import pl.dn.user.User;
 
 @Service
+@Scope("prototype")
 public class BaseDetailHistoryService<G extends BaseDetail, T extends Registry> {
 
 	private BaseDetailDao baseDetailDao;

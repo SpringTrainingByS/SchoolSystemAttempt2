@@ -38,13 +38,13 @@ public class ClassSpecializationController {
 	}
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public void add(@RequestBody ClassSpecialization classSpecialization) throws ValidationException {
-		detailService.add(classSpecialization, new ClassSpecializationRegistry(), validationPatterns);
+	public ClassSpecialization add(@RequestBody ClassSpecialization classSpecialization) throws ValidationException {
+		return (ClassSpecialization) detailService.add(classSpecialization, new ClassSpecializationRegistry(), validationPatterns);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST)
-	public void addSet(@RequestBody List<ClassSpecialization> classSpecializationGroup) throws ValidationException {
-		detailService.addSet(classSpecializationGroup, new ClassSpecializationRegistry(), validationPatterns);
+	public List<ClassSpecialization> addSet(@RequestBody List<ClassSpecialization> classSpecializationGroup) throws ValidationException {
+		return (List<ClassSpecialization>) detailService.addSet(classSpecializationGroup, new ClassSpecializationRegistry(), validationPatterns);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)

@@ -38,13 +38,13 @@ public class CreditTypeController {
 	}
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public void add(@RequestBody CreditType creditType) throws ValidationException {
-		service.add(creditType,  new CreditTypeRegistry(), validationPatterns);
+	public CreditType add(@RequestBody CreditType creditType) throws ValidationException {
+		return (CreditType) service.add(creditType,  new CreditTypeRegistry(), validationPatterns);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST)
-	public void addSet(@RequestBody List<CreditType> creditType) throws ValidationException {
-		service.addSet(creditType, new CreditTypeRegistry(), validationPatterns);
+	public List<CreditType> addSet(@RequestBody List<CreditType> creditType) throws ValidationException {
+		return (List<CreditType>) service.addSet(creditType, new CreditTypeRegistry(), validationPatterns);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)

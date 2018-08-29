@@ -38,13 +38,13 @@ public class ClassTypeController {
 	}
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public void add(@RequestBody ClassType classType) throws ValidationException {
-		detailService.add(classType, new ClassTypeRegistry(), validationPatterns);
+	public ClassType add(@RequestBody ClassType classType) throws ValidationException {
+		return (ClassType) detailService.add(classType, new ClassTypeRegistry(), validationPatterns);
 	}
 	
 	@RequestMapping(value = "add-set", method = RequestMethod.POST)
-	public void addSet(@RequestBody List<ClassType> classTypeGroup) throws ValidationException {
-		detailService.addSet(classTypeGroup, new ClassTypeRegistry(), validationPatterns);
+	public List<ClassType> addSet(@RequestBody List<ClassType> classTypeGroup) throws ValidationException {
+		return (List<ClassType>) detailService.addSet(classTypeGroup, new ClassTypeRegistry(), validationPatterns);
 	}
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
