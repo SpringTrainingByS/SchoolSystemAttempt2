@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pl.dn.base.BaseDetailService;
 import pl.dn.exception.ValidationException;
-import pl.dn.schoolClassOrganization.details.prefix.history.ClassPrefixRegistry;
 
 @RestController
 @RequestMapping(value = "school-subject")
@@ -52,7 +51,7 @@ public class SchoolSubjectController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get", params = {"limit", "offset"}, method = RequestMethod.GET)
 	public List<SchoolSubject> getByPagination(@RequestParam("limit") int limit, @RequestParam("offset") int offset) {
-		return (List<SchoolSubject>) dao.findByPagination(limit, offset);
+		return (List<SchoolSubject>) dao.findUsePagination(limit, offset);
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)

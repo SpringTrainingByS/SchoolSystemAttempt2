@@ -1,4 +1,4 @@
-package pl.dn.user;
+package pl.dn.user.complementService;
 
 import javax.transaction.Transactional;
 
@@ -6,16 +6,23 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.dn.user.User;
+import pl.dn.user.UserComplementService;
+import pl.dn.user.UserDao;
 
 @Service
 public class UserService {
-	
-	@Autowired
+
 	private UserDao userDao;
-	
-	@Autowired
-    private SessionFactory sessionFactory;
-	
+	private SessionFactory sessionFactory;
+	private UserComplementService userCompService;
+
+    @Autowired
+	public UserService(UserDao userDao, SessionFactory sessionFactory) {
+		this.userDao = userDao;
+		this.sessionFactory = sessionFactory;
+	}
+
 	@Transactional
 	public User add(User user) {
 		Session session = sessionFactory.getCurrentSession();
@@ -23,6 +30,8 @@ public class UserService {
         
 		return user;
 	}
+
+
 	
 	public User getById(long id) {
 		return userDao.findById(id);

@@ -12,6 +12,6 @@ import pl.dn.base.BaseDetailDao;
 public interface ClassPrefixDao extends BaseDetailDao<ClassPrefix> {
 	
 	@Query(value = "SELECT * FROM class_prefix LIMIT :limitValue OFFSET :offsetValue", nativeQuery = true)
-	public List<ClassPrefix> findByPagination
+	public List<ClassPrefix> findUsePagination
 	(@Param("limitValue") int limit, @Param("offsetValue") int offset);
 }

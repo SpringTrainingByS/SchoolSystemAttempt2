@@ -1,16 +1,16 @@
 package pl.dn.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import pl.dn.user.complementService.UserService;
 
 @RestController
 @RequestMapping(value = "users")
-@PreAuthorize("hasAuthority('ADMIN')")
+//@PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
 	
 	@Autowired
@@ -18,6 +18,7 @@ public class UserController {
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public void add(@RequestBody User user) {
+		System.out.println("add Dosz³o");
 		userService.add(user);
 	}
 	

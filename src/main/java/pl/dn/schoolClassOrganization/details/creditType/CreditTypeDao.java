@@ -10,7 +10,7 @@ import pl.dn.base.BaseDetailDao;
 public interface CreditTypeDao extends BaseDetailDao<CreditType> {
 
 	@Query(value = "SELECT * FROM credit_type LIMIT :limitValue OFFSET :offsetValue", nativeQuery = true)
-	public List<CreditType> findByPagination
+	public List<CreditType> findUsePagination
 	(@Param("limitValue") int limit, @Param("offsetValue") int offset);
 	
 }

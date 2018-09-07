@@ -16,8 +16,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.DynamicUpdate;
 
-import pl.dn.placeInfo.City;
-import pl.dn.placeInfo.Voivodeship;
+import pl.dn.placeInfo.city.City;
+import pl.dn.placeInfo.voivodeship.Voivodeship;
 
 @Entity
 @Table(name = "user_born_info")
@@ -76,4 +76,13 @@ public class UserBornInfo {
 		this.voivodeship = voivodeship;
 	}
 
+    @Override
+    public String toString() {
+        return "UserBornInfo{" +
+                "id=" + id +
+                ", bornDate=" + bornDate +
+                ", voivodeship=" + voivodeship.toString() +
+                ", city=" + city.toString() +
+                '}';
+    }
 }

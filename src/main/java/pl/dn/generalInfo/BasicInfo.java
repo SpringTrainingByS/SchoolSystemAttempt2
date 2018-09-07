@@ -62,32 +62,13 @@ public class BasicInfo {
         this.startDate = startDate;
     }
 
-    @JsonIgnore
-    public boolean isFirstNameEmpty() {
-        if (firstName == null || firstName.isEmpty()) {
-            return true;
-        }
-
-        return false;
+    @Override
+    public String toString() {
+        return "BasicInfo{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", pesel='" + pesel + '\'' +
+                ", startDate=" + startDate +
+                '}';
     }
-
-    @JsonIgnore
-    public boolean isLastNameEmpty() {
-        if (lastName == null || lastName.isEmpty()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    @JsonIgnore
-    public boolean isPeselEmpty() {
-        if (pesel == null || pesel.isEmpty()) {
-            return true;
-        }
-
-        return false;
-    }
-
-
 }

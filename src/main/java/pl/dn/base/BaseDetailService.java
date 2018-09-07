@@ -1,7 +1,5 @@
 package pl.dn.base;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,10 +8,8 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.apache.commons.collections4.ListUtils;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
 import pl.dn.base.history.BaseDetailHistoryService;
@@ -25,8 +21,6 @@ import pl.dn.schoolClassOrganization.details.prefix.ClassPrefix;
 @Transactional
 @Scope("prototype")
 public class BaseDetailService {
-
-	private SessionFactory sessionFactory;
 	
 	private BaseDetailValidator classDetailValidator;
 	
@@ -37,8 +31,7 @@ public class BaseDetailService {
 	private EntityManager em;
 	
 	@Autowired
-	public BaseDetailService(SessionFactory sessionFactory, BaseDetailValidator classDetailValidator, EntityManager em) {
-		this.sessionFactory = sessionFactory;
+	public BaseDetailService(BaseDetailValidator classDetailValidator, EntityManager em) {
 		this.classDetailValidator = classDetailValidator;
 		this.em = em;
 	}
@@ -94,7 +87,7 @@ public class BaseDetailService {
 	}
 	
 	public List<? extends BaseDetail> findByPagination(int limit, int offset) {
-		return (List<ClassPrefix>) baseDetailDao.findByPagination(limit, offset);
+		return (List<ClassPrefix>) baseDetailDao.findUsePagination(limit, offset);
 	}
 	
 	public void update(BaseDetail classDetail, Registry registry, String[] validationPatterns) throws ValidationException {

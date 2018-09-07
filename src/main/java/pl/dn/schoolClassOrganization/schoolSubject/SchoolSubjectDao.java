@@ -11,6 +11,6 @@ import pl.dn.schoolClassOrganization.schoolClass.SchoolClass;
 public interface SchoolSubjectDao extends BaseDetailDao<SchoolSubject> {
 	
 	@Query(value = "SELECT * FROM school_subject LIMIT :limit OFFSET :offset", nativeQuery = true) 
-	public List<SchoolSubject> findByPagination(@Param("limit") int limit, @Param("offset") int offset);
+	public List<SchoolSubject> findUsePagination(@Param("limit") int limit, @Param("offset") int offset);
 
 }

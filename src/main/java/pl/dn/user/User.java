@@ -72,7 +72,14 @@ public class User {
 	public void setBornInfo(UserBornInfo bornInfo) {
 		this.bornInfo = bornInfo;
 	}
-    
-    
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", basicInfo=" + basicInfo.toString() +
+                ", contactInfo=" + contactInfo.toString() +
+                ", bornInfo=" + bornInfo.toString() +
+                '}';
+    }
 }

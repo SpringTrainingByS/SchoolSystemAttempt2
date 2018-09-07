@@ -64,4 +64,14 @@ public class UserContactInfo {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+    @Override
+    public String toString() {
+        return "UserContactInfo{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address=" + address.toString() +
+                '}';
+    }
 }

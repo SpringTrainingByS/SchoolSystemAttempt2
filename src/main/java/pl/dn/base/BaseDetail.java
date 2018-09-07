@@ -35,6 +35,10 @@ public class BaseDetail {
         this.creationTime = creationTime;
     }
 
+    public BaseDetail(String name) {
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }

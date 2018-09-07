@@ -12,7 +12,7 @@ import pl.dn.base.BaseDetailDao;
 public interface ClassSpecializationDao extends BaseDetailDao<ClassSpecialization>{
 	
 	@Query(value = "SELECT * FROM class_specialization LIMIT :limit OFFSET :offset", nativeQuery = true)
-	public List<ClassSpecialization> findByPagination
+	public List<ClassSpecialization> findUsePagination
 		(@Param("limit") int limit, @Param("offset") int offset);
 	
 }

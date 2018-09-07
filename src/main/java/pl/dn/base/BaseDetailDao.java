@@ -16,7 +16,7 @@ public interface BaseDetailDao<T extends BaseDetail> extends CrudRepository<T, L
 	public T findById(Long id);
 	public void deleteById(Long id);
 	public List<T> findAll();
-	public List<T> findByPagination(int limit, int offset);
+	public List<T> findUsePagination(int limit, int offset);
 	public long count();
 	public List<T> findByNameContaining(String keyWord);
 }
