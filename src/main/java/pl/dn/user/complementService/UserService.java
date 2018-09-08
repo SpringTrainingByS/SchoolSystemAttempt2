@@ -1,5 +1,6 @@
 package pl.dn.user.complementService;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -14,20 +15,21 @@ import pl.dn.user.UserDao;
 public class UserService {
 
 	private UserDao userDao;
-	private SessionFactory sessionFactory;
+//	private SessionFactory sessionFactory;
+	private EntityManager em;
 	private UserComplementService userCompService;
 
     @Autowired
-	public UserService(UserDao userDao, SessionFactory sessionFactory) {
+	public UserService(UserDao userDao, EntityManager em, UserComplementService userCompService) {
 		this.userDao = userDao;
-		this.sessionFactory = sessionFactory;
+		this.em = em;
+		this.userCompService = userCompService;
 	}
 
 	@Transactional
 	public User add(User user) {
-		Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(user);
-        
+		user = userCompService.fetchPlaceInfo(user);
+        em.persist(user);
 		return user;
 	}
 
@@ -39,8 +41,7 @@ public class UserService {
 	
 	@Transactional
 	public void update(User user) {
-		Session session = sessionFactory.getCurrentSession();
-        session.update(user);
+
 	}
 	
 	public void delete(long id) {

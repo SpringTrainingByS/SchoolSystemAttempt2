@@ -1,9 +1,8 @@
-package pl.dn.user.complementService.placeDataInDB;
+package pl.dn.user.complementService.placeDataNoDB;
 
 
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,29 +18,22 @@ import pl.dn.user.UserAndPlacePreparations;
 @SpringBootTest
 @ComponentScan("pl.dn.user.complementService")
 @TestPropertySource(locations="classpath:test.properties")
-public class UserComplementServiceTest {
+public class UserComplementServiceTestWithNoDataInDB {
 
     @Autowired
     private UserComplementService complementService;
 
     @Autowired
-    private PlaceInfo placeInfo;
-
-    @Autowired
     private UserAndPlacePreparations preparations;
 
-    @Before
-    public void insertPlacesToDB() {
-        preparations.insertPlacesToDB();
-    }
-    
     @Test
-    public void testFetchPlaceInfoToUser() {
+    public void completeUserReturnUserContainPlacesInfoFromDBIfExsists() {
         User user = preparations.prepareUser();
         user = complementService.fetchPlaceInfo(user);
-        System.out.println(user.toString());
+        preparations.retrievePlaceInfo(user);
+        System.out.println("User Result ===============================================");
+        System.out.println(user);
     }
-
 
     @After
     public void removeDataFromDb() {

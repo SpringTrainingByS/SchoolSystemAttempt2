@@ -12,6 +12,8 @@ import pl.dn.placeInfo.street.Street;
 import pl.dn.placeInfo.voivodeship.Voivodeship;
 import pl.dn.placeInfo.zipCode.ZipCode;
 
+import java.util.Date;
+
 @Service
 public class UserComplementService {
 
@@ -51,12 +53,17 @@ public class UserComplementService {
         return user;
     }
 
-    private BaseDetail findPlaceInDB(BaseDetail place, BaseDetailDao dao) {
-        BaseDetail placeFromDb = dao.findByName(place.getName());
+    private <T extends BaseDetail> T findPlaceInDB(T place, BaseDetailDao<T> dao) {
+        T placeFromDb = dao.findByName(place.getName());
 
         if (placeFromDb != null) {
             place = placeFromDb;
         }
+        else {
+            place.setCreationTime(new Date());
+            place = dao.save(place);
+        }
+
         return place;
     }
 }
