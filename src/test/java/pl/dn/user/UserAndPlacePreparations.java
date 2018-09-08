@@ -24,6 +24,9 @@ public class UserAndPlacePreparations {
     @Autowired
     private PlaceDaoSet placeDaoSet;
 
+    @Autowired
+    private UserDao userDao;
+
     public User prepareUser() {
         User user = new User();
 
@@ -99,6 +102,10 @@ public class UserAndPlacePreparations {
         placeDaoSet.getVoivodeshipDao().deleteAll();
         placeDaoSet.getStreetDao().deleteAll();
         placeDaoSet.getCityDao().deleteAll();
+    }
+
+    public void clearUserInformationInDB(User user) {
+        userDao.delete(user);
     }
 
 }

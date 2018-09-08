@@ -22,21 +22,24 @@ public class AddWithDetachedEntity {
     @Autowired
     private UserAndPlacePreparations preparations;
 
+    private User user;
+
     @Before
     public void prepareDB() {
-        preparations.clearPlacesTablesInDB();
+
     }
 
     @Test
     public void addUserWithDetachedPlacesInfoEntityShouldReturnResultOk() {
-        User user = preparations.prepareUser();
+        user = preparations.prepareUser();
         user = userService.add(user);
         System.out.println(user);
     }
 
     @After
     public void clearAllPulledDataIntoDB() {
-        //preparations.clearPlacesTablesInDB();
+        preparations.clearUserInformationInDB(user);
+        preparations.clearPlacesTablesInDB();
     }
 
 
