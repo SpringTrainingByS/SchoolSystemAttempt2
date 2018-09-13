@@ -1,12 +1,8 @@
-package pl.dn.user.service.valid;
+package pl.dn.user.validation;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import pl.dn.user.validation.ValidationPatterns;
-import pl.dn.user.validation.ValidationService;
+import pl.dn.user.validation.base.ValidationPatterns;
 
 import static org.junit.Assert.assertEquals;
 
@@ -69,12 +65,33 @@ public class ValidNamePosibilities {
         assertEquals("\" \" should return false",false, result);
     }
 
+
     @Test
-    public void testNormalNameShouldReturnFalse() {
+    public void testValidNameSecondPartStartGreaterShouldReturnFalse() {
+        String name = "rolna-Rolna";
+        boolean result = validService.validName(name);
+        assertEquals("\"rolna-Rolna\" should return false",false, result);
+    }
+
+    @Test
+    public void testNormalNameShouldReturnTrue() {
         String name = "rolna";
         boolean result = validService.validName(name);
         assertEquals("\"rolna\" should return true",true, result);
     }
 
+    @Test
+    public void testNormalNameWithSepartorShouldReturnTrue() {
+        String name = "rolna-rolna";
+        boolean result = validService.validName(name);
+        assertEquals("\"rolna-rolna\" should return true",true, result);
+    }
+
+    @Test
+    public void testTwoPartedNameSepartedByWhiteSpaceWithShouldReturnTrue() {
+        String name = "rolna rolna";
+        boolean result = validService.validName(name);
+        assertEquals("\"rolna rolna\" should return true",true, result);
+    }
 
 }

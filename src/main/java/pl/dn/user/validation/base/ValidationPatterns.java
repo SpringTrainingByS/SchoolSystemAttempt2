@@ -1,12 +1,12 @@
-package pl.dn.user.validation;
+package pl.dn.user.validation.base;
 
 import org.springframework.stereotype.Component;
 
 @Component
 public class ValidationPatterns {
 
-    private String name = "^[^[A-Z]|\\s][\\p{L}]+[-]*[^[A-Z]][\\p{L}]+$";
-    private String nameStartGreat = "^[^{null}|\\s]+[\\p{L}]+([-|\\s]+[A-Z]+)*[\\p{L}]+$";
+    private String name = "^[^[A-Z]|\\s][\\p{L}]+([-]|\\s)*[a-z]+[\\p{L}]+$";
+    private String nameStartGreat = "^[A-Z]+[\\p{L}]+([-|\\s]+[A-Z]+)*[\\p{L}]+$";
     private String zipCode = "^[0-9]{2}-[0-9]{3}$";
     private String number = "^[0-9]{1,3}[a-zA-Z]{0,2}$";
     private String phoneNumber = "^[0-9]+$";

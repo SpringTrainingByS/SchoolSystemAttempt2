@@ -1,4 +1,4 @@
-package pl.dn.user;
+package pl.dn.user.complementService;
 
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import pl.dn.placeInfo.dao.PlaceDaoSet;
 import pl.dn.placeInfo.street.Street;
 import pl.dn.placeInfo.voivodeship.Voivodeship;
 import pl.dn.placeInfo.zipCode.ZipCode;
+import pl.dn.user.User;
 
 import java.util.Date;
 

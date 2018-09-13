@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.dn.user.User;
-import pl.dn.user.UserComplementService;
+import pl.dn.user.complementService.UserComplementService;
 import pl.dn.user.UserAndPlacePreparations;
 
 @RunWith(SpringRunner.class)

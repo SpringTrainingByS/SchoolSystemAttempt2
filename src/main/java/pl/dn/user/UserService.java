@@ -1,30 +1,28 @@
-package pl.dn.user.complementService;
+package pl.dn.user;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.dn.user.User;
-import pl.dn.user.UserComplementService;
-import pl.dn.user.UserDao;
+import pl.dn.user.complementService.UserComplementService;
+import pl.dn.user.validation.base.UserValidService;
 
 @Service
 public class UserService {
 
 	private UserDao userDao;
-//	private SessionFactory sessionFactory;
 	private EntityManager em;
 	private UserComplementService userCompService;
+	private UserValidService userValidService;
 
     @Autowired
-	public UserService(UserDao userDao, EntityManager em, UserComplementService userCompService) {
+	public UserService(UserDao userDao, EntityManager em, UserComplementService userCompService, UserValidService userValidService) {
 		this.userDao = userDao;
 		this.em = em;
 		this.userCompService = userCompService;
-	}
+        this.userValidService = userValidService;
+    }
 
 	@Transactional
 	public User add(User user) {

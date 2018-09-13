@@ -2,6 +2,7 @@ package pl.dn.user.validation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.dn.user.validation.base.ValidationPatterns;
 
 @Service
 public class ValidationService {
