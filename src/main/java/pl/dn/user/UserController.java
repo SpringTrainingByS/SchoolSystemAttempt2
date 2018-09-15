@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import pl.dn.exception.ValidationException;
 
 @RestController
 @RequestMapping(value = "users")
@@ -16,7 +17,7 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public void add(@RequestBody User user) {
+	public void add(@RequestBody User user) throws ValidationException {
 		System.out.println("add Dosz³o");
 		userService.add(user);
 	}

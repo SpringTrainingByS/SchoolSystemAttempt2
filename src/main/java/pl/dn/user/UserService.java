@@ -5,8 +5,10 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.dn.exception.ValidationException;
 import pl.dn.user.complementService.UserComplementService;
-import pl.dn.user.validation.base.UserValidService;
+import pl.dn.user.dataCorrectness.UserChecker;
+import pl.dn.user.dataCorrectness.validation.base.UserValidService;
 
 @Service
 public class UserService {
@@ -14,18 +16,19 @@ public class UserService {
 	private UserDao userDao;
 	private EntityManager em;
 	private UserComplementService userCompService;
-	private UserValidService userValidService;
+	private UserChecker userChecker;
 
     @Autowired
-	public UserService(UserDao userDao, EntityManager em, UserComplementService userCompService, UserValidService userValidService) {
+	public UserService(UserDao userDao, EntityManager em, UserComplementService userCompService, UserChecker userChecker) {
 		this.userDao = userDao;
 		this.em = em;
 		this.userCompService = userCompService;
-        this.userValidService = userValidService;
+        this.userChecker = userChecker;
     }
 
 	@Transactional
-	public User add(User user) {
+	public User add(User user) throws ValidationException {
+    	userChecker.checkUser(user);
 		user = userCompService.fetchPlaceInfo(user);
         em.persist(user);
 		return user;
