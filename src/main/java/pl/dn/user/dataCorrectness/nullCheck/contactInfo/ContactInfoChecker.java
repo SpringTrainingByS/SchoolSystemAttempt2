@@ -61,6 +61,8 @@ public class ContactInfoChecker {
 
     private void checkAddressAndInsideIsNull(Address address) {
 
+        System.out.println("Numer domu: " + address.getHouseNamber());
+        System.out.println("Numer ap:" + address.getApartmentNumber());
         if (address.getHouseNamber() == 0) {
             message.append(nullMessages.getHouseNumber());
         }

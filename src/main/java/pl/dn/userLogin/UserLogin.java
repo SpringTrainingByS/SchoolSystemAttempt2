@@ -27,6 +27,9 @@ public class UserLogin {
     @JoinColumn(name = "user_id")
     private User user;
 
+	public UserLogin() {
+	}
+
 	public long getId() {
 		return id;
 	}

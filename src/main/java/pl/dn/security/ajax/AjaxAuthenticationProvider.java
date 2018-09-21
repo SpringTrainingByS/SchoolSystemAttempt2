@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import pl.dn.security.Role;
+import pl.dn.security.role.Role;
 import pl.dn.security.common.UserLoginInfo;
 import pl.dn.security.userRole.UserRole;
 import pl.dn.security.userRole.UserRoleDao;

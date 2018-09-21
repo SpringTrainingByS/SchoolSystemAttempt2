@@ -17,7 +17,7 @@ public class BasicInfoCheckerCorrect {
     @Before
     public void prepareTest() {
         nullMessages = new NullMessages();
-        checker = new BasicInfoChecker();
+        checker = new BasicInfoChecker(new NullMessages());
     }
 
     @Test

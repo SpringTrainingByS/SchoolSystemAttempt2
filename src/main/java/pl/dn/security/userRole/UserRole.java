@@ -8,8 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import pl.dn.security.Role;
-import pl.dn.user.User;
+import pl.dn.security.role.Role;
 import pl.dn.userLogin.UserLogin;
 
 @Entity

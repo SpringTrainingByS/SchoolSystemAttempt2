@@ -10,7 +10,11 @@ import pl.dn.user.complementService.UserComplementService;
 import pl.dn.user.dataCorrectness.UserChecker;
 import pl.dn.user.dataCorrectness.validation.base.UserValidService;
 
+import java.util.Date;
+import java.util.List;
+
 @Service
+@Transactional
 public class UserService {
 
 	private UserDao userDao;
@@ -26,24 +30,37 @@ public class UserService {
         this.userChecker = userChecker;
     }
 
-	@Transactional
 	public User add(User user) throws ValidationException {
     	userChecker.checkUser(user);
 		user = userCompService.fetchPlaceInfo(user);
+		user.getBasicInfo().setStartDate(new Date());
         em.persist(user);
 		return user;
 	}
 
-
-	
 	public User getById(long id) {
 		return userDao.findById(id);
 	}
-	
-	@Transactional
-	public void update(User user) {
 
+	public List<User> getByPagination(int limit, int offset) {
+        System.out.println("User.Service");
+        System.out.println("Offset: " + offset);
+        System.out.println("Limit: " + limit);
+        return userDao.findByPagination(limit, offset);
+    }
+
+	public User update(User user) throws ValidationException {
+		userChecker.checkUser(user);
+		user = userCompService.fetchPlaceInfo(user);
+		user.getBasicInfo().setStartDate(new Date());
+		em.merge(user);
+
+		return user;
 	}
+
+	public List<User> getAll() {
+        return userDao.findAll();
+    }
 	
 	public void delete(long id) {
 		
@@ -55,6 +72,7 @@ public class UserService {
         user.getContactInfo().getAddress().setZipCode(null);
 
         user.getBornInfo().setCity(null);
+
         user.getBornInfo().setVoivodeship(null);
 		
 		userDao.delete(user);

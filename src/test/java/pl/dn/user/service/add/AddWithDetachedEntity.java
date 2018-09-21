@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import pl.dn.exception.ValidationException;
 import pl.dn.user.User;
 import pl.dn.user.UserAndPlacePreparations;
 import pl.dn.user.UserService;
@@ -31,7 +32,14 @@ public class AddWithDetachedEntity {
     @Test
     public void addUserWithDetachedPlacesInfoEntityShouldReturnResultOk() {
         user = preparations.prepareUser();
-        user = userService.add(user);
+
+        try {
+            user = userService.add(user);
+        }
+        catch (ValidationException e) {
+            System.out.println(e.getMessage());
+        }
+
         System.out.println(user);
     }
 

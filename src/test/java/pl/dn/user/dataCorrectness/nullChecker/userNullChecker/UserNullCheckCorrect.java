@@ -6,6 +6,7 @@ import pl.dn.exception.ValidationException;
 import pl.dn.user.User;
 import pl.dn.user.dataCorrectness.nullCheck.NullChecker;
 import pl.dn.user.dataCorrectness.nullCheck.basicInfo.BasicInfoChecker;
+import pl.dn.user.dataCorrectness.nullCheck.basicInfo.NullMessages;
 import pl.dn.user.dataCorrectness.nullCheck.bornInfo.BornInfoChecker;
 import pl.dn.user.dataCorrectness.nullCheck.contactInfo.ContactInfoChecker;
 
@@ -19,7 +20,10 @@ public class UserNullCheckCorrect {
 
     @Before()
     public void prepareTest() {
-        checker = new NullChecker(new BasicInfoChecker(), new BornInfoChecker(), new ContactInfoChecker());
+        checker = new NullChecker(new BasicInfoChecker(new NullMessages()),
+                new BornInfoChecker(new pl.dn.user.dataCorrectness.nullCheck.bornInfo.NullMessages()),
+                new ContactInfoChecker(new pl.dn.user.dataCorrectness.nullCheck.contactInfo.NullMessages()));
+
         preparation = new UserCheckerTestPreparationCorrectData();
     }
 

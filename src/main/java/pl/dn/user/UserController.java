@@ -1,12 +1,10 @@
 package pl.dn.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.dn.exception.ValidationException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "users")
@@ -26,6 +24,18 @@ public class UserController {
 	public User get(@PathVariable long id) {
 		return userService.getById(id);
 	}
+
+	@RequestMapping(value = "get/all", method = RequestMethod.GET)
+	public List<User> getAll() {
+		return userService.getAll();
+	}
+
+	@RequestMapping(value = "get", params = {"limit", "offset"}, method = RequestMethod.GET)
+	public List<User> getByPagination(@RequestParam("limit") int limit, @RequestParam("offset") int offset) {
+		System.out.println("Limit: " + limit);
+		System.out.println("offset: " + offset);
+		return userService.getByPagination(limit, offset);
+	}
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable long id) {
@@ -33,7 +43,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public void update(@RequestBody User user) {
+	public void update(@RequestBody User user) throws ValidationException {
 		userService.update(user);
 	}
 

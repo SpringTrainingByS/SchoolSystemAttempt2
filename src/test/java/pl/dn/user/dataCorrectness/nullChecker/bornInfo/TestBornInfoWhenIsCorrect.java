@@ -6,6 +6,7 @@ import pl.dn.bornInfo.UserBornInfo;
 import pl.dn.placeInfo.city.City;
 import pl.dn.placeInfo.voivodeship.Voivodeship;
 import pl.dn.user.dataCorrectness.nullCheck.bornInfo.BornInfoChecker;
+import pl.dn.user.dataCorrectness.nullCheck.bornInfo.NullMessages;
 
 import java.util.Date;
 
@@ -17,7 +18,7 @@ public class TestBornInfoWhenIsCorrect {
 
     @Before()
     public void prepareTest() {
-        checker = new BornInfoChecker();
+        checker = new BornInfoChecker(new NullMessages());
     }
 
     @Test

@@ -17,7 +17,7 @@ public class TestBornInfoWhenIsIncorect {
 
     @Before()
     public void prepareTest() {
-        checker = new BornInfoChecker();
+        checker = new BornInfoChecker(new NullMessages());
 
         nullMsgs = new NullMessages();
     }
