@@ -3,6 +3,7 @@ package pl.dn.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.dn.exception.ValidationException;
+import pl.dn.user.model.UserParams;
 
 import java.util.List;
 
@@ -45,6 +46,11 @@ public class UserController {
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public void update(@RequestBody User user) throws ValidationException {
 		userService.update(user);
+	}
+
+	@RequestMapping(value = "find", params = {"role"}, method = RequestMethod.POST)
+	public List<User> find(@RequestBody UserParams userParams, @RequestParam("role") String role) {
+		return userService.findByBasicInfo(userParams, role);
 	}
 
 }

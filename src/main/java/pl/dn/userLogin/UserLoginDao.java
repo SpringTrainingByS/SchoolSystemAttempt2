@@ -9,11 +9,10 @@ import pl.dn.security.common.UserLoginInfo;
 import javax.transaction.Transactional;
 
 @Transactional
-public interface UserLoginDao extends CrudRepository<UserLogin, Long> {
+public interface UserLoginDao extends CrudRepository<LoginInfo, Long> {
 
-	public UserLogin findById(long id);
-	public UserLoginInfo findByUsername(String username);
-	public UserLogin findByUserId(Long id);
+	public LoginInfo findById(long id);
+	public LoginInfo findByUsername(String username);
 	
 	@Query(value = "SELECT id FROM user_login WHERE usernmae = :username", nativeQuery = true)
 	public Long findIdByUsername(@Param("username") String username);

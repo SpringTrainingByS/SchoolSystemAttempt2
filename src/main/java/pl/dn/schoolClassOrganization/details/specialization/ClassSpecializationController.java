@@ -17,7 +17,7 @@ import pl.dn.schoolClassOrganization.details.prefix.history.ClassPrefixRegistry;
 import pl.dn.schoolClassOrganization.details.specialization.history.ClassSpecializationRegistry;
 
 @RestController
-@RequestMapping(value = "class-spec")
+@RequestMapping(value = "class-specialization")
 public class ClassSpecializationController {
 
 	private BaseDetailService detailService;

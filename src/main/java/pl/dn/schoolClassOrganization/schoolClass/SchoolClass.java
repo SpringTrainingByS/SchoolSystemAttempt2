@@ -3,24 +3,15 @@ package pl.dn.schoolClassOrganization.schoolClass;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import org.hibernate.annotations.JoinColumnOrFormula;
 import pl.dn.schoolClassOrganization.details.classType.ClassType;
 import pl.dn.schoolClassOrganization.details.prefix.ClassPrefix;
 import pl.dn.schoolClassOrganization.details.specialization.ClassSpecialization;
+import pl.dn.user.User;
 
 /**
  * Created by User on 14.08.2017.
@@ -58,6 +49,20 @@ public class SchoolClass {
     @ManyToOne
     @JoinColumn(name = "prefix_id")
     private ClassPrefix prefix;
+
+    @OneToMany
+    @JoinTable(name = "student_school_class",
+            joinColumns = @JoinColumn(name = "school_class_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private List<User> students;
+
+    @OneToOne
+    @JoinTable(name = "form_tutor_shool_class",
+        joinColumns = @JoinColumn(name = "class_id"),
+        inverseJoinColumns = @JoinColumn(name = "teacher_id")
+    )
+    private User tutor;
 
     public SchoolClass() {
     }
@@ -102,5 +107,19 @@ public class SchoolClass {
 		this.prefix = prefix;
 	}
 
-    
+    public List<User> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<User> students) {
+        this.students = students;
+    }
+
+    public User getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(User tutor) {
+        this.tutor = tutor;
+    }
 }

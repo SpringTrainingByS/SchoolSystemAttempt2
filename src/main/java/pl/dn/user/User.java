@@ -9,11 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.DynamicUpdate;
 
 import pl.dn.bornInfo.UserBornInfo;
 import pl.dn.contactInfo.UserContactInfo;
 import pl.dn.generalInfo.BasicInfo;
+import pl.dn.userLogin.LoginInfo;
 
 /**
  * Created by User on 10.08.2017.
@@ -37,6 +39,9 @@ public class User {
     @JoinColumn(name = "born_info_id")
     private UserBornInfo bornInfo;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "login_info_id")
+    private LoginInfo loginInfo;
 
     public User() {
     }
@@ -72,6 +77,14 @@ public class User {
 	public void setBornInfo(UserBornInfo bornInfo) {
 		this.bornInfo = bornInfo;
 	}
+
+    public LoginInfo getLoginInfo() {
+        return loginInfo;
+    }
+
+    public void setLoginInfo(LoginInfo loginInfo) {
+        this.loginInfo = loginInfo;
+    }
 
     @Override
     public String toString() {

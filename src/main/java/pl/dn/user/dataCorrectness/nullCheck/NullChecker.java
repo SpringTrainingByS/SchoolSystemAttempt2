@@ -9,6 +9,7 @@ import pl.dn.user.User;
 import pl.dn.user.dataCorrectness.nullCheck.basicInfo.BasicInfoChecker;
 import pl.dn.user.dataCorrectness.nullCheck.bornInfo.BornInfoChecker;
 import pl.dn.user.dataCorrectness.nullCheck.contactInfo.ContactInfoChecker;
+import pl.dn.user.dataCorrectness.nullCheck.loginInfo.LoginInfoChecker;
 
 @Service
 public class NullChecker {
@@ -16,12 +17,16 @@ public class NullChecker {
     private BasicInfoChecker basicInfoChecker;
     private BornInfoChecker bornInfoChecker;
     private ContactInfoChecker contactInfoChecker;
+    private LoginInfoChecker loginInfoChecker;
 
     @Autowired
-    public NullChecker(BasicInfoChecker basicInfoChecker, BornInfoChecker bornInfoChecker, ContactInfoChecker contactInfoChecker) {
+    public NullChecker(BasicInfoChecker basicInfoChecker, BornInfoChecker bornInfoChecker, ContactInfoChecker contactInfoChecker,
+                       LoginInfoChecker loginInfoChecker) {
+
         this.basicInfoChecker = basicInfoChecker;
         this.bornInfoChecker = bornInfoChecker;
         this.contactInfoChecker = contactInfoChecker;
+        this.loginInfoChecker = loginInfoChecker;
     }
 
     public void checkNulls(User user) throws ValidationException {
@@ -43,8 +48,10 @@ public class NullChecker {
     }
 
     private StringBuilder checkInside(User user, StringBuilder message) {
+
         message = basicInfoChecker.checkNulls(user.getBasicInfo(), message);
         message = contactInfoChecker.checkContactInfo(user.getContactInfo(), message);
+        message = bornInfoChecker.checkNulls(user.getBornInfo(), message);
         message = bornInfoChecker.checkNulls(user.getBornInfo(), message);
 
         return message;

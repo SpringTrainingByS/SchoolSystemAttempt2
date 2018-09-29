@@ -16,9 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import pl.dn.security.role.Role;
-import pl.dn.security.common.UserLoginInfo;
-import pl.dn.security.userRole.UserRole;
-import pl.dn.security.userRole.UserRoleDao;
+import pl.dn.userLogin.LoginInfo;
 import pl.dn.userLogin.UserLoginDao;
 
 
@@ -27,54 +25,35 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 	
 	private final BCryptPasswordEncoder encoder;
 	private final UserLoginDao userLoginDao;
-	private final UserRoleDao userRoleDao;
 	
 	@Autowired
-	public AjaxAuthenticationProvider(final BCryptPasswordEncoder encoder, final UserLoginDao userLoginDao, final UserRoleDao userRoleDao) {
+	public AjaxAuthenticationProvider(final BCryptPasswordEncoder encoder, final UserLoginDao userLoginDao) {
 		this.encoder = encoder;
 		this.userLoginDao = userLoginDao;
-		this.userRoleDao = userRoleDao;
 	}
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		
 		System.out.println("AjaxAuthenticationProvider: authenticate");
-		
 
-		
 		String username = (String) authentication.getPrincipal();
 		String password = (String) authentication.getCredentials();
 		
-		UserLoginInfo userLoginInfo = userLoginDao.findByUsername(username);
+		LoginInfo loginInfo = userLoginDao.findByUsername(username);
 		
-		if (userLoginInfo == null) {
+		if (loginInfo == null) {
 			throw new UsernameNotFoundException("User not found: " + username);
 		}
 		
-//		if (!encoder.matches(password, userLoginInfo.getPassword())) {
-//			throw new BadCredentialsException("Authentication Failed. Username or password not valid");
-//		}
-		
-		if (!password.equals(userLoginInfo.getPassword())) {
+		if (!password.equals(loginInfo.getPassword())) {
 			throw new BadCredentialsException("Authentication Failed. Username or password not valid");
 		}
-		
-		System.out.println("userId ===================== " + userLoginInfo.getUserId());
-		
-		List<UserRole> userRoles = userRoleDao.findByUserLoginId(userLoginInfo.getId());
+
 		List<Role> roles = new ArrayList<Role>();
-		
-		System.out.println("Role: ");
-		for (UserRole role : userRoles) {
-			System.out.println("Rola: " + role.getRole().getName());
-			roles.add(role.getRole());
-		}
-		
-		System.out.println("Username: " + username);
-		System.out.println("UserId: " + userLoginInfo.getUserId());
-		
-		return new UsernamePasswordAuthenticationToken(userLoginInfo, null, (Collection<? extends GrantedAuthority>) roles);
+		roles.add(loginInfo.getRole());
+
+		return new UsernamePasswordAuthenticationToken(loginInfo, null, (Collection<? extends GrantedAuthority>) roles);
 	}
 
 	@Override

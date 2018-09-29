@@ -10,7 +10,7 @@ import pl.dn.base.customModels.BaseDetailRegistryResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "class-prefix-registry")
+@RequestMapping(value = "class-specialization-registry")
 public class ClassSpecializationRegistryController {
 
     private ClassSpecializationRegistryDao dao;

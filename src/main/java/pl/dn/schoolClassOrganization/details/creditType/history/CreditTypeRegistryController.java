@@ -11,7 +11,7 @@ import pl.dn.schoolClassOrganization.details.classType.history.ClassTypeRegistry
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "class-prefix-registry")
+@RequestMapping(value = "credit-type-registry")
 public class CreditTypeRegistryController {
 
     private ClassTypeRegistryDao dao;

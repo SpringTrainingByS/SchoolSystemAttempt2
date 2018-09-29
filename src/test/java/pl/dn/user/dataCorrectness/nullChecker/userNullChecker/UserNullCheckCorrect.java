@@ -9,6 +9,7 @@ import pl.dn.user.dataCorrectness.nullCheck.basicInfo.BasicInfoChecker;
 import pl.dn.user.dataCorrectness.nullCheck.basicInfo.NullMessages;
 import pl.dn.user.dataCorrectness.nullCheck.bornInfo.BornInfoChecker;
 import pl.dn.user.dataCorrectness.nullCheck.contactInfo.ContactInfoChecker;
+import pl.dn.user.dataCorrectness.nullCheck.loginInfo.LoginInfoChecker;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,7 +23,8 @@ public class UserNullCheckCorrect {
     public void prepareTest() {
         checker = new NullChecker(new BasicInfoChecker(new NullMessages()),
                 new BornInfoChecker(new pl.dn.user.dataCorrectness.nullCheck.bornInfo.NullMessages()),
-                new ContactInfoChecker(new pl.dn.user.dataCorrectness.nullCheck.contactInfo.NullMessages()));
+                new ContactInfoChecker(new pl.dn.user.dataCorrectness.nullCheck.contactInfo.NullMessages()),
+                new LoginInfoChecker(new pl.dn.user.dataCorrectness.nullCheck.loginInfo.NullMessages()));
 
         preparation = new UserCheckerTestPreparationCorrectData();
     }

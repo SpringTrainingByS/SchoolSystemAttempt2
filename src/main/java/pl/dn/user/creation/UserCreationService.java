@@ -3,10 +3,9 @@ package pl.dn.user.creation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.dn.exception.ValidationException;
-import pl.dn.security.userRole.UserRole;
 import pl.dn.user.User;
 import pl.dn.user.UserService;
-import pl.dn.userLogin.UserLogin;
+import pl.dn.userLogin.LoginInfo;
 import pl.dn.userLogin.UserLoginService;
 
 import javax.persistence.EntityManager;
@@ -30,17 +29,11 @@ public class UserCreationService {
     public UserWithRole addUser(UserWithRole userWithRole) throws ValidationException {
         User user = userService.add(userWithRole.getUser());
 
-        UserLogin userLogin = userLoginService.createLoginInfo(user);
+        LoginInfo loginInfo = userLoginService.createLoginInfo(user);
         System.out.println("Id u¿ytkownika: " + user.getId());
 
-        UserRole userRole = new UserRole();
-        userRole.setRole(userWithRole.getRole());
-        userRole.setUserLogin(userLogin);
+        em.persist(loginInfo);
 
-        userLogin.setUser(user);
-        em.persist(userLogin);
-
-        em.persist(userRole);
         userWithRole.setUser(user);
 
         return userWithRole;
@@ -50,8 +43,6 @@ public class UserCreationService {
         User user = userService.update(userWithRole.getUser());
         userWithRole.setUser(user);
 
-        UserRole userRole = userLoginService.linkLoginInfoWithRole(userWithRole.getUser().getId(), userWithRole.getRole());
-        em.merge(userRole);
 
         return userWithRole;
     }
