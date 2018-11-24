@@ -8,7 +8,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import pl.dn.emailRecipients.EmailRecipientDao;
 import pl.dn.emailRecipients.EmailRecipients;
-import pl.dn.emailShorter.EmailShorter;
 import pl.dn.notification.EmailRead.EmailReadDao;
 
 import javax.mail.MessagingException;
@@ -71,23 +70,20 @@ public class EmailService {
         return emailToReadNumber;
     }
 
-    public List<Object> getReceivedEmailBasicsByPagination(int limit, int offset, long userId) {
+    public List<EmailShort> getReceivedEmailBasicsByPagination(int limit, int offset, long userId) {
         List<EmailRecipients> emailRecipients = emailRecipientDao.findByUserIdUsePagination(limit, offset, userId);
 
-        System.out.println("Próba pobrania z bazy");
-
         List<Long> list = emailRecipients.stream().map(u -> u.getEmail().getId()).collect(Collectors.toList());
-        List<Object> emails = new ArrayList<>();
+        List<EmailShort> emails = new ArrayList<>();
 
         for(long id : list) {
-            Object email = emailDao.findByIdWithShortSenderInfo(id);
+            System.out.println("Próba pobrania z bazy =============================================================== ");
+            EmailShort email = emailDao.findById(id);
 
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            System.out.println(gson.toJson(email));
-            System.out.println(email);
             emails.add(email);
         }
 
+        System.out.println("Zwracam z bazy");
         return emails;
     }
 

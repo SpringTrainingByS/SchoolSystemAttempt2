@@ -2,7 +2,6 @@ package pl.dn.email;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.dn.emailShorter.EmailShorter;
 
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class EmailController {
     }
 
     @RequestMapping(value = "get-received", params = {"userId", "limit", "offset"}, method = RequestMethod.GET)
-    public List<Object> getReceivedEmails(@RequestParam("userId") long userId, @RequestParam("limit") int limit, @RequestParam("offset") int offset) {
+    public List<EmailShort> getReceivedEmails(@RequestParam("userId") long userId, @RequestParam("limit") int limit, @RequestParam("offset") int offset) {
         return emailService.getReceivedEmailBasicsByPagination(limit, offset, userId);
     }
 
