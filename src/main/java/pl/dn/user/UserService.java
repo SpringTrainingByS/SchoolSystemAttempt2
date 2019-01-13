@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import pl.dn.exception.ValidationException;
 import pl.dn.user.complementService.UserComplementService;
 import pl.dn.user.dataCorrectness.UserChecker;
-import pl.dn.user.dataCorrectness.validation.base.UserValidService;
 import pl.dn.user.model.UserParams;
 import pl.dn.userLogin.LoginInfo;
 
@@ -44,7 +43,9 @@ public class UserService {
 	}
 
 	public User getById(long id) {
-		return userDao.findById(id);
+    	User user = userDao.findById(id);
+		System.out.println(user.toString());
+		return user;
 	}
 
 	public List<User> getByPagination(int limit, int offset) {
@@ -65,7 +66,7 @@ public class UserService {
 	}
 
 	public List<User> getAll() {
-        return userDao.findAll();
+        return userDao.findAllUsers();
     }
 	
 	public void delete(long id) {

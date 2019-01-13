@@ -10,18 +10,20 @@ import java.util.List;
 
 @Repository
 public interface UserDao extends CrudRepository<User, Long> {
-	public User save(User user);
-	public void delete(User user);
-	public User findById(Long id);
-	public List<User> findAll();
+	User save(User user);
+	void delete(User user);
+	User findById(Long id);
+
+	@Query(value = "SELECT * FROM user", nativeQuery = true)
+	List<User> findAllUsers();
 
 	@Query(value = "SELECT * FROM user LIMIT :limitValue OFFSET :offsetValue", nativeQuery = true)
-	public List<User> findByPagination(@Param("limitValue") int limit,@Param("offsetValue") int offset);
+	List<User> findByPagination(@Param("limitValue") int limit,@Param("offsetValue") int offset);
 
 	@Query(value = "SELECT * FROM user WHERE first_name = :firstName" +
 			" AND last_name = :lastName " +
 			"OR pesel = :pesel ", nativeQuery =  true)
-	public List<User> findByBasicInfo(@Param("firstName") String firstName,
+	List<User> findByBasicInfo(@Param("firstName") String firstName,
 									  @Param("lastName") String secondName,
 									  @Param("pesel") String pesel);
 

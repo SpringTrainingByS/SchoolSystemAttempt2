@@ -32,12 +32,9 @@ public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticati
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
-		
-		System.out.println("JwtTokenAuthenticationProcessingFilter: attemptAuthentication");
-		
-		String token= request.getHeader(JWT_TOKEN_HEADER_PARAM);
-		System.out.println("tokenPayload: " + token);
 
+		System.out.println("JwtTokenAuthenticationProcessingFilter.attemptAuthentication");
+		String token= request.getHeader(JWT_TOKEN_HEADER_PARAM);
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(token, null);
 		
 		return getAuthenticationManager().authenticate(authToken);
@@ -46,22 +43,18 @@ public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticati
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
-		
-		System.out.println("JwtTokenAuthenticationProcessingFilter: successfulAuthentication");
-		
+
 		SecurityContext context = SecurityContextHolder.createEmptyContext();
 		context.setAuthentication(authResult);
 		SecurityContextHolder.setContext(context);
-		
+
 		chain.doFilter(request, response);
 	}
 
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws IOException, ServletException {
-		
-		System.out.println("JwtTokenAuthenticationProcessingFilter: unsuccessfulAuthentication");
-		
+
 		SecurityContextHolder.clearContext();
 		failureHandler.onAuthenticationFailure(request, response, failed);
 	}

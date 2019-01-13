@@ -40,26 +40,21 @@ public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSucc
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		
-		System.out.println("AjaxAwareAuthenticationSuccessHandler: onAuthenticationSuccess");
-		
+
 		LoginInfo userLoginInfo = (LoginInfo) authentication.getPrincipal();
-		System.out.println("Pobieram credentiale");
-		System.out.println(authentication.getCredentials());
 		List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
-		System.out.println("Username: " + userLoginInfo.getUsername());
+		Long userId = userLoginInfo.getUser().getId();
 		
 		List<String> rolesNames = authorities.stream()
 				.map(x -> x.getAuthority())
 				.collect(Collectors.toList());
-		
-		System.out.println("Role przed dodaniem do tokenów: ");
+
 		for (String authority : rolesNames) {
 			System.out.println("Rola: "  + authority);
 		}
 		
-		String accessToken = tokenFactory.createAccessJwtToken(userLoginInfo.getUsername(), userLoginInfo.getId(), authorities);
-		String refreshToken = tokenFactory.createRefreshToken(userLoginInfo.getUsername(), userLoginInfo.getId(), authorities);
+		String accessToken = tokenFactory.createAccessJwtToken(userLoginInfo.getUsername(), userId, authorities);
+		String refreshToken = tokenFactory.createRefreshToken(userLoginInfo.getUsername(), userId, authorities);
 		
 		Map<String, String> tokenMap = new HashMap<String, String>();
 		tokenMap.put("token", accessToken);

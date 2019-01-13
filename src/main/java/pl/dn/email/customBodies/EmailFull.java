@@ -1,19 +1,20 @@
-package pl.dn.email;
+package pl.dn.email.customBodies;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import pl.dn.user.UserShort;
 
 import java.util.Date;
 
-public interface EmailShort {
+public interface EmailFull extends EmailCustom {
     Long getId();
 
     UserShort getSender();
-//    String getSenderContactInfoEmail();
     String getContent();
     String getTopic();
+    String getShortContent();
 
     @JsonFormat
-            (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+            (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     Date getCreationTime();
 }
 

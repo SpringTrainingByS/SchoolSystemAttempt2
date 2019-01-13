@@ -1,6 +1,7 @@
 package pl.dn.email;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import pl.dn.user.User;
 
@@ -18,9 +19,12 @@ public class Email {
     @JsonInclude()
     @Transient
     private List<User> recipients;
+
     @ManyToOne
     private User sender;
+
     private String content;
+
     private String topic;
 
     @JsonInclude()
@@ -32,6 +36,7 @@ public class Email {
     @JsonFormat
             (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date creationTime;
+
 
     public long getId() {
         return id;
@@ -89,5 +94,15 @@ public class Email {
 
     public void setRead(boolean read) {
         isRead = read;
+    }
+
+    @JsonIgnore
+    public String getShortContent() {
+        if (content.length() < 30) {
+            return content;
+        }
+        else {
+            return content.substring(0, 1);
+        }
     }
 }

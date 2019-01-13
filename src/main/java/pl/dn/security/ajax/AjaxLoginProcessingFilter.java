@@ -43,10 +43,10 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
 			throws AuthenticationException, IOException, ServletException {
 		
 		System.out.println("AjaxLoginProcessingFilter: attemptAuthentication()");
-		
+
+		System.out.println("This is not ajax Requests");
 		
 		if (!HttpMethod.POST.name().equals(request.getMethod()) || !WebUtil.isContentTypeJson(request)) {
-			System.out.println("This is not ajax Requests");
 			throw new AuthenticationServiceException("Authentication method not supported");
 		}
 		

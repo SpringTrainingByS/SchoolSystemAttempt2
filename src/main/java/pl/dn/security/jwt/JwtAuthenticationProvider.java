@@ -36,11 +36,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		
-		System.out.println("JwtAuthenticationProvider: authenticate");
-		
+
 		String token = (String) authentication.getPrincipal();
-		System.out.println("Token: " + token);
 
 		String username = "";
 		List<Role> authorities = null;
@@ -51,22 +48,12 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 			Jws<Claims> jwsClaims = Jwts.parser().setSigningKey(jwtSettings.getTokenSigningKey()).parseClaimsJws(token);
 			username = jwsClaims.getBody().getSubject();
 			userId = Long.parseLong(jwsClaims.getBody().getIssuer());
-			System.out.println("Token: " + token); 
-			List<String> scopes = jwsClaims.getBody().get("scopes", List.class); 
-		
-			System.out.println("Scopes: ");
-			for (String scope : scopes) {
-				System.out.println("Scope: " + scope);
-			}
+			List<String> scopes = jwsClaims.getBody().get("scopes", List.class);
+
 			
 			authorities = scopes.stream()
 					.map(Role::new)
 					.collect(Collectors.toList());
-			
-			System.out.println("Prawa u¿ytkownika.");
-			for (Role gr : authorities) {
-				System.out.println(gr.getName());
-			}
 			
 			request.setAttribute("userId", userId);
 		}
@@ -81,8 +68,4 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 	public boolean supports(Class<?> authentication) {
 		return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
 	}
-	
-	
-	
-	
 }

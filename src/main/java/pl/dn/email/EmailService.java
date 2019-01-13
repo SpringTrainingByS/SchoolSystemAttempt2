@@ -1,13 +1,14 @@
 package pl.dn.email;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import pl.dn.email.customBodies.EmailFull;
+import pl.dn.email.customBodies.EmailShort;
 import pl.dn.emailRecipients.EmailRecipientDao;
 import pl.dn.emailRecipients.EmailRecipients;
+import pl.dn.notification.EmailRead.EmailReadBool;
 import pl.dn.notification.EmailRead.EmailReadDao;
 
 import javax.mail.MessagingException;
@@ -35,6 +36,21 @@ public class EmailService {
         this.emailDao = emailDao;
         this.emailRecipientDao = emailRecipientDao;
     }
+
+    public boolean checkUnread(long userId) {
+        EmailReadBool emailReadBool = emailReadDao.findByUserId(userId);
+        boolean isUnreadEmail = false;
+
+        if (emailReadBool != null) {
+            isUnreadEmail = emailReadBool.getIsToRead();
+        }
+
+        return isUnreadEmail;
+    }
+
+//    public EmailFull findFullById(long emailId) {
+//        return emailDao.findFullById(emailId);
+//    }
 
     public void send(Email email) {
         MimeMessage mail = javaMailSender.createMimeMessage();
@@ -73,21 +89,24 @@ public class EmailService {
     public List<EmailShort> getReceivedEmailBasicsByPagination(int limit, int offset, long userId) {
         List<EmailRecipients> emailRecipients = emailRecipientDao.findByUserIdUsePagination(limit, offset, userId);
 
-        List<Long> list = emailRecipients.stream().map(u -> u.getEmail().getId()).collect(Collectors.toList());
-        List<EmailShort> emails = new ArrayList<>();
+        List<Long> emailsIds = emailRecipients.stream().map(u -> u.getEmail().getId()).collect(Collectors.toList());
+        List<EmailShort> emailsShort = new ArrayList<>();
 
-        for(long id : list) {
-            System.out.println("Próba pobrania z bazy =============================================================== ");
-            EmailShort email = emailDao.findById(id);
-
-            emails.add(email);
+        for (long emailId : emailsIds) {
+            boolean isRead = emailRecipientDao.checkEmailIsRead(emailId, userId);
+            EmailShort email = emailDao.findById(emailId);
+            email.setRead(isRead);
+            emailsShort.add(email);
         }
 
-        System.out.println("Zwracam z bazy");
-        return emails;
+        return emailsShort;
     }
 
-    public Email getFullEmail(long id) {
-        return emailDao.findFullById(id);
+//    public EmailFull getFullEmail(long id) {
+//        return emailDao.findFullById(id);
+//    }
+
+    public int getEmailNumberForUser(long userId) {
+        return emailRecipientDao.countByRecipientId(userId);
     }
 }

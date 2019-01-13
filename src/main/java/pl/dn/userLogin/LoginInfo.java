@@ -24,6 +24,10 @@ public class LoginInfo {
 	@JoinColumn(name = "role_id")
 	private Role role;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "loginInfo", fetch = FetchType.LAZY)
+	private User user;
+
     private boolean enabled = true;
 
 	public LoginInfo() {
@@ -67,5 +71,13 @@ public class LoginInfo {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

@@ -1,5 +1,7 @@
 package pl.dn.user;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.dn.exception.ValidationException;
@@ -23,12 +25,16 @@ public class UserController {
 	
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
 	public User get(@PathVariable long id) {
-		return userService.getById(id);
+		System.out.println("Get user by id");
+		User user = userService.getById(id);
+		return user;
 	}
 
 	@RequestMapping(value = "get/all", method = RequestMethod.GET)
 	public List<User> getAll() {
-		return userService.getAll();
+		List<User> users = userService.getAll();
+		System.out.println("User counts: " + users.size());
+		return users;
 	}
 
 	@RequestMapping(value = "get", params = {"limit", "offset"}, method = RequestMethod.GET)
