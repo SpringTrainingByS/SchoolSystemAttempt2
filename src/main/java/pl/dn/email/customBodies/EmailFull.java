@@ -1,6 +1,7 @@
 package pl.dn.email.customBodies;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import pl.dn.email.Email;
 import pl.dn.user.UserShort;
 
 import java.util.Date;

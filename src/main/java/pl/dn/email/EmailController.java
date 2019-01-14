@@ -18,10 +18,10 @@ public class EmailController {
         this.emailService = emailService;
     }
 
-//    @RequestMapping(value = "get/{emailId}", method = RequestMethod.GET)
-//    public EmailFull getById(@PathVariable long emailId) {
-//        return emailService.findFullById(emailId);
-//    }
+    @RequestMapping(value = "get/{emailId}", method = RequestMethod.GET)
+    public EmailFull getById(@PathVariable long emailId) {
+        return emailService.getFullEmail(emailId);
+    }
 
     @RequestMapping(value = "send", method = RequestMethod.POST)
     public void send(@RequestBody Email email) {

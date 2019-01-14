@@ -48,10 +48,6 @@ public class EmailService {
         return isUnreadEmail;
     }
 
-//    public EmailFull findFullById(long emailId) {
-//        return emailDao.findFullById(emailId);
-//    }
-
     public void send(Email email) {
         MimeMessage mail = javaMailSender.createMimeMessage();
         try {
@@ -94,7 +90,7 @@ public class EmailService {
 
         for (long emailId : emailsIds) {
             boolean isRead = emailRecipientDao.checkEmailIsRead(emailId, userId);
-            EmailShort email = emailDao.findById(emailId);
+            EmailShort email = emailDao.findById(emailId, EmailShort.class);
             email.setRead(isRead);
             emailsShort.add(email);
         }
@@ -102,9 +98,9 @@ public class EmailService {
         return emailsShort;
     }
 
-//    public EmailFull getFullEmail(long id) {
-//        return emailDao.findFullById(id);
-//    }
+    public EmailFull getFullEmail(long id) {
+        return emailDao.findById(id, EmailFull.class);
+    }
 
     public int getEmailNumberForUser(long userId) {
         return emailRecipientDao.countByRecipientId(userId);
