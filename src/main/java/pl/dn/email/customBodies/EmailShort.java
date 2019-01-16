@@ -1,10 +1,10 @@
 package pl.dn.email.customBodies;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import pl.dn.user.UserShort;
+import pl.dn.user.model.UserShort;
 
 import java.util.Date;
 
-public interface EmailShort extends EmailCustom {
+public interface EmailShort {
     Long getId();
 
     UserShort getSender();

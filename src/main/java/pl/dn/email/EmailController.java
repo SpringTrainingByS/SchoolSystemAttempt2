@@ -2,7 +2,6 @@ package pl.dn.email;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.dn.email.customBodies.EmailFull;
 import pl.dn.email.customBodies.EmailShort;
 
 import java.util.List;
@@ -18,9 +17,9 @@ public class EmailController {
         this.emailService = emailService;
     }
 
-    @RequestMapping(value = "get/{emailId}", method = RequestMethod.GET)
-    public EmailFull getById(@PathVariable long emailId) {
-        return emailService.getFullEmail(emailId);
+    @RequestMapping(value = "get/{emailId}/content", method = RequestMethod.GET)
+    String getContentOnly(@PathVariable long emailId) {
+        return emailService.getContentOnly(emailId);
     }
 
     @RequestMapping(value = "send", method = RequestMethod.POST)

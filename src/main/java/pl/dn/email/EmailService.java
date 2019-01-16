@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import pl.dn.email.customBodies.EmailFull;
 import pl.dn.email.customBodies.EmailShort;
 import pl.dn.emailRecipients.EmailRecipientDao;
 import pl.dn.emailRecipients.EmailRecipients;
@@ -29,7 +28,7 @@ public class EmailService {
     private EmailRecipientDao emailRecipientDao;
 
     @Autowired
-    public EmailService(JavaMailSender javaMailSender, EmailReadDao emailReadDao, EmailDao emailDao,
+    EmailService(JavaMailSender javaMailSender, EmailReadDao emailReadDao, EmailDao emailDao,
                         EmailRecipientDao emailRecipientDao) {
         this.javaMailSender = javaMailSender;
         this.emailReadDao = emailReadDao;
@@ -37,7 +36,7 @@ public class EmailService {
         this.emailRecipientDao = emailRecipientDao;
     }
 
-    public boolean checkUnread(long userId) {
+    boolean checkUnread(long userId) {
         EmailReadBool emailReadBool = emailReadDao.findByUserId(userId);
         boolean isUnreadEmail = false;
 
@@ -48,7 +47,7 @@ public class EmailService {
         return isUnreadEmail;
     }
 
-    public void send(Email email) {
+    void send(Email email) {
         MimeMessage mail = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mail, true);
@@ -70,7 +69,7 @@ public class EmailService {
         javaMailSender.send(mail);
     }
 
-    public int getUnreadNumber(long userId) {
+    int getUnreadNumber(long userId) {
 
         boolean isEmailsToRead = emailReadDao.findByUserId(userId).getIsToRead();
         int emailToReadNumber = 0;
@@ -82,7 +81,7 @@ public class EmailService {
         return emailToReadNumber;
     }
 
-    public List<EmailShort> getReceivedEmailBasicsByPagination(int limit, int offset, long userId) {
+    List<EmailShort> getReceivedEmailBasicsByPagination(int limit, int offset, long userId) {
         List<EmailRecipients> emailRecipients = emailRecipientDao.findByUserIdUsePagination(limit, offset, userId);
 
         List<Long> emailsIds = emailRecipients.stream().map(u -> u.getEmail().getId()).collect(Collectors.toList());
@@ -90,7 +89,7 @@ public class EmailService {
 
         for (long emailId : emailsIds) {
             boolean isRead = emailRecipientDao.checkEmailIsRead(emailId, userId);
-            EmailShort email = emailDao.findById(emailId, EmailShort.class);
+            EmailShort email = emailDao.findById(emailId);
             email.setRead(isRead);
             emailsShort.add(email);
         }
@@ -98,11 +97,11 @@ public class EmailService {
         return emailsShort;
     }
 
-    public EmailFull getFullEmail(long id) {
-        return emailDao.findById(id, EmailFull.class);
+    String getContentOnly(Long emailId) {
+        return emailDao.getContentOnly(emailId);
     }
 
-    public int getEmailNumberForUser(long userId) {
+    int getEmailNumberForUser(long userId) {
         return emailRecipientDao.countByRecipientId(userId);
     }
 }

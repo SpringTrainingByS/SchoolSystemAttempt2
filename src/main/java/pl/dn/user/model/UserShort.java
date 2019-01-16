@@ -1,9 +1,9 @@
-package pl.dn.user;
+package pl.dn.user.model;
 
-import pl.dn.contactInfo.UserContactShort;
+import pl.dn.contactInfo.ContactInfoShort;
 import pl.dn.generalInfo.BasicInfoShort;
 
 public interface UserShort {
+    ContactInfoShort getContactInfo();
     BasicInfoShort getBasicInfo();
-    UserContactShort getContactInfo();
 }

@@ -1,5 +1,5 @@
 package pl.dn.contactInfo;
 
-public interface UserContactShort {
+public interface ContactInfoShort {
     String getEmail();
 }
