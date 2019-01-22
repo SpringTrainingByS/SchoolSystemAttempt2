@@ -13,6 +13,7 @@ public interface UserDao extends CrudRepository<User, Long> {
 	User save(User user);
 	void delete(User user);
 	User findById(Long id);
+	long count();
 
 	@Query(value = "SELECT * FROM user", nativeQuery = true)
 	List<User> findAllUsers();

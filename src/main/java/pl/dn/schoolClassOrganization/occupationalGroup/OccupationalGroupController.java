@@ -57,10 +57,4 @@ public class OccupationalGroupController {
 	public void update(@RequestBody OccupationalGroup occupationalGroup) throws ValidationException {
 		service.update(occupationalGroup);
 	}
-	
-	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
-	public void deleteById(@PathVariable long id) {
-		dao.deleteById(id);
-	}
-	
 }

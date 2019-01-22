@@ -29,15 +29,15 @@ public class OccupationalGroup {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "teacher_id")
     private User teacher;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "school_class_id")
     private SchoolClass schoolClass;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "school_subject_id")
     private SchoolSubject schoolSubject;
 

@@ -6,13 +6,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
+
+@Transactional
 public interface SchoolClassDao extends CrudRepository<SchoolClass, Long> {
 	
-	public SchoolClass findById(long id);
-	public List<SchoolClass> findByPrefixId(long id);
-	public List<SchoolClass> findAll();
-	public void deleteById(long id);
-	
-	@Query(value = "SELECT * FROM school_class LIMIT :limit OFFSET :offset", nativeQuery = true) 
-	public List<SchoolClass> findByPagination(@Param("limit") int limit, @Param("offset") int offset);
+	SchoolClass findById(long id);
+	List<SchoolClass> findByPrefixId(long id);
+	List<SchoolClass> findAll();
+	void deleteById(long id);
+	SchoolClass save(SchoolClass schoolClass);
+
+	@Query(value = "SELECT * FROM school_class LIMIT :limit OFFSET :offset", nativeQuery = true)
+	List<SchoolClass> findByPagination(@Param("limit") int limit, @Param("offset") int offset);
+
+	List<SchoolClass> findByPrefixNameAndTypeName(String prefix, String type);
 }

@@ -48,6 +48,11 @@ public class UserService {
 		return user;
 	}
 
+	public long getNumber() {
+		long userNumber = userDao.count();
+		return userNumber;
+	}
+
 	public List<User> getByPagination(int limit, int offset) {
         System.out.println("User.Service");
         System.out.println("Offset: " + offset);
@@ -73,15 +78,18 @@ public class UserService {
 		
 		User user = userDao.findById(id);
 
-        user.getContactInfo().getAddress().setVoivodeship(null);
-        user.getContactInfo().getAddress().setCity(null);
-        user.getContactInfo().getAddress().setStreet(null);
-        user.getContactInfo().getAddress().setZipCode(null);
+		if (user.getContactInfo() != null) {
+			user.getContactInfo().getAddress().setVoivodeship(null);
+			user.getContactInfo().getAddress().setCity(null);
+			user.getContactInfo().getAddress().setStreet(null);
+			user.getContactInfo().getAddress().setZipCode(null);
+		}
 
-        user.getBornInfo().setCity(null);
+		if (user.getBornInfo() != null) {
+			user.getBornInfo().setCity(null);
+			user.getBornInfo().setVoivodeship(null);
+		}
 
-        user.getBornInfo().setVoivodeship(null);
-		
 		userDao.delete(user);
 	}
 

@@ -14,8 +14,8 @@ import pl.dn.user.User;
 /**
  * Created by User on 14.08.2017.
  */
-@Entity
-@Table(name = "form_tutor_shool_class")
+//@Entity
+//@Table(name = "form_tutor_shool_class")
 public class FormTutorSchoolClass {
 
 	@Id

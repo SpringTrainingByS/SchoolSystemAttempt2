@@ -23,6 +23,12 @@ public class UserController {
 		userService.add(user);
 	}
 	
+	@RequestMapping(value = "/number", method = RequestMethod.GET)
+	public long getNumber() {
+		long userNumber = userService.getNumber();
+		return userNumber;
+	}
+
 	@RequestMapping(value = "get/{id}", method = RequestMethod.GET)
 	public User get(@PathVariable long id) {
 		System.out.println("Get user by id");

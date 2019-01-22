@@ -45,12 +45,14 @@ public class BornInfoValid {
 
     private StringBuilder validBornDate(Date bornDate) {
         StringBuilder message = new StringBuilder();
+        int month = bornDate.getMonth() + 1;
 
-
-        if (bornDate.getMonth() < 1 || bornDate.getMonth() > 12) {
+        if (month < 1 || month > 12) {
+            System.out.println(bornDate.getMonth());
+            System.out.println("Nieprawidłowy zakres dla dnia miesiąca");
             message.append(invalidMessages.getBornMonth());
         }
-        else if (bornDate.getMonth() == 2) {
+        else if (month == 2) {
             int maxDay = 30;
 
             if ((bornDate.getYear() % 4 == 0 && bornDate.getYear() % 100 != 0) ||
@@ -63,12 +65,12 @@ public class BornInfoValid {
                 message.append(invalidMessages.getBornDay());
             }
         }
-        else if (bornDate.getMonth() % 2 == 0) {
+        else if (month % 2 == 0) {
             if (bornDate.getDate() > 30 || bornDate.getDate() < 0) {
                 message.append(invalidMessages.getBornDay());
             }
         }
-        else if (bornDate.getMonth() % 2 != 0) {
+        else if (month % 2 != 0) {
             if (bornDate.getDate() > 31 || bornDate.getDate() < 0) {
                 message.append(invalidMessages.getBornDay());
             }

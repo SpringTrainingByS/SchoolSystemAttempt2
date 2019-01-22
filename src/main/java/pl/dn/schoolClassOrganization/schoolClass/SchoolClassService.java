@@ -20,16 +20,19 @@ public class SchoolClassService {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	@Autowired
+	private SchoolClassDao dao;
+
 	
 	@Autowired
 	private SchoolClassValidator validator;
 	
 	public void add(SchoolClass schoolClass) throws ValidationException {
+		System.out.println("");
 		validator.validateBeforeAdd(schoolClass);
-		Session session = sessionFactory.getCurrentSession();
-		Calendar calendar = Calendar.getInstance();
-		schoolClass.setStartDate(calendar);
-		session.save(schoolClass);
+//		Session session = sessionFactory.getCurrentSession();
+		System.out.println("Próba zapisu do bazy");
+		dao.save(schoolClass);
 	}
 	
 	
@@ -37,6 +40,10 @@ public class SchoolClassService {
 		validator.validateBeforeUpdate(schoolClass);
 		Session session = sessionFactory.getCurrentSession();
 		session.update(schoolClass);
+	}
+
+	public List<SchoolClass> findByPrefixAndType(String prefix, String type) {
+		return dao.findByPrefixNameAndTypeName(prefix, type);
 	}
 	
 }

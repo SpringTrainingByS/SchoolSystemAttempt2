@@ -1,5 +1,6 @@
 package pl.dn.schoolClassOrganization.schoolClass;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,12 @@ public class SchoolClassController {
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
 	public void deleteById(@PathVariable long id) {
-		dao.findById(id);
+		dao.deleteById(id);
 	}
-	
-	
+
+	@RequestMapping(value = "get", params = {"prefix", "type"}, method = RequestMethod.GET)
+	public List<SchoolClass> findByPrefixAndType(@RequestParam("prefix") String prefix, @RequestParam("type") String type) {
+//		return dao.findByPagination(limit, offset);
+		return service.findByPrefixAndType(prefix, type);
+	}
 }

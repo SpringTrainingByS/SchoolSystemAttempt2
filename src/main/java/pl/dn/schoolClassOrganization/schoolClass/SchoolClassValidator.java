@@ -37,7 +37,7 @@ public class SchoolClassValidator {
 		String message = "";
 		
 		if (schoolClass == null) {
-			message = "Jednostka nie mo¿e byæ pusta.";
+			message = "Jednostka nie moï¿½e byï¿½ pusta.";
 		}
 		else {
 			
@@ -73,7 +73,7 @@ public class SchoolClassValidator {
 		String message = "";
 		
 		if (schoolClass == null) {
-			message = "Jednostka nie mo¿e byæ pusta.";
+			message = "Jednostka nie moï¿½e byï¿½ pusta.";
 		}
 		else {
 			
@@ -104,15 +104,15 @@ public class SchoolClassValidator {
 		String message = "";
 		
 		if (schoolClass.getPrefix() == null) {
-			message += "Klasa powinna posiadaæ prefiks."; 
+			message += "Klasa powinna posiadaï¿½ prefiks."; 
 		}
 		
 		if (schoolClass.getClassSpecializationList() == null) {
-			message += "Klasa powinna posiadaæ jedn¹ specjalizacjê.";
+			message += "Klasa powinna posiadaï¿½ jednï¿½ specjalizacjï¿½.";
 		}
 		
 		if (schoolClass.getType() == null) {
-			message += "Klasa powinna posiadaæ typ.";
+			message += "Klasa powinna posiadaï¿½ typ.";
 		}
 		
 		return message;
@@ -122,18 +122,18 @@ public class SchoolClassValidator {
 		String message = "";
 		
 		if (schoolClass.getId() != 0) {
-			message += "Nieprawid³owe id dla klasy.";
+			message += "Nieprawidï¿½owe id dla klasy.";
 		}
 		if (schoolClass.getPrefix().getId() == 0) {
-			message += "Nieprawid³owe id dla prefiksu.";
+			message += "Nieprawidï¿½owe id dla prefiksu.";
 		}
 		if (schoolClass.getType().getId() == 0) {
-			message += "Nieprawid³owe id dla typu klasy.";
+			message += "Nieprawidï¿½owe id dla typu klasy.";
 		}
 		
 		for (ClassSpecialization specialization : schoolClass.getClassSpecializationList()) {
 			if (specialization.getId() == 0) {
-				message += "Nieprawid³owe id dla specjalizacji: " + specialization.getName() + ".";
+				message += "Nieprawidï¿½owe id dla specjalizacji: " + specialization.getName() + ".";
 			}
 		}
 		
@@ -144,18 +144,18 @@ public class SchoolClassValidator {
 		String message = "";
 		
 		if (schoolClass.getId() == 0) {
-			message += "Nieprawid³owe id dla klasy.";
+			message += "Nieprawidï¿½owe id dla klasy.";
 		}
 		if (schoolClass.getPrefix().getId() == 0) {
-			message += "Nieprawid³owe id dla prefiksu.";
+			message += "Nieprawidï¿½owe id dla prefiksu.";
 		}
 		if (schoolClass.getType().getId() == 0) {
-			message += "Nieprawid³owe id dla typu klasy.";
+			message += "Nieprawidï¿½owe id dla typu klasy.";
 		}
 		
 		for (ClassSpecialization specialization : schoolClass.getClassSpecializationList()) {
 			if (specialization.getId() == 0) {
-				message += "Nieprawid³owe id dla specjalizacji: " + specialization.getName() + ".";
+				message += "Nieprawidï¿½owe id dla specjalizacji: " + specialization.getName() + ".";
 			}
 		}
 		
@@ -166,16 +166,16 @@ public class SchoolClassValidator {
 		String message = "";
 		
 		if (!checkValueByRegex(schoolClass.getPrefix().getName(), namePatterns)) {
-			message += "Nieprawdi³owa nazwa dla prefiksu.";
+			message += "Nieprawdiï¿½owa nazwa dla prefiksu.";
 		}
 		
 		if (!checkValueByRegex(schoolClass.getType().getName(), namePatterns)) {
-			message += "Nieprawdi³owa nazwa dla typu klasy.";
+			message += "Nieprawdiï¿½owa nazwa dla typu klasy.";
 		}
 		
 		for (ClassSpecialization specialization : schoolClass.getClassSpecializationList()) {
 			if (!checkValueByRegex(specialization.getName(), namePatterns)) {
-				message += "Nieprawid³owe nazwa dla specjalizacji: " + specialization.getName() + ".";
+				message += "Nieprawidï¿½owe nazwa dla specjalizacji: " + specialization.getName() + ".";
 			}
 		}
 		
@@ -224,20 +224,21 @@ public class SchoolClassValidator {
 	}
 	
 	public String checkDuplicateEntityByPrefix(SchoolClass schoolClass) {
-		//System.out.println("Sprawdzam duplikaty");
 		String message = "";
 		
 		long prefixId = schoolClass.getPrefix().getId();
 		List<SchoolClass> schoolClassDbGroup = schoolClassDao.findByPrefixId(prefixId);
-		
-		int year = Calendar.getInstance().get(Calendar.YEAR);
+
+		int year = schoolClass.getStartDate().get(Calendar.YEAR);
+		System.out.println("Aktual new school class year: " + year);
 		int schoolClassYear = 0;
 		
 		for (SchoolClass schoolClassDb : schoolClassDbGroup) {
 			
-			schoolClassYear = schoolClassDb.getStartDate().get(Calendar.YEAR); 
+			schoolClassYear = schoolClassDb.getStartDate().get(Calendar.YEAR);
+			System.out.println("Old class start year: " + schoolClassYear);
 			if (schoolClassYear == year) {
-				message += "Wykryto istniej¹c¹ klasê o takim samym roku rozpoczêcia i prefiksie";
+				message += "Wykryto istniejï¿½cï¿½ klasï¿½ o takim samym roku rozpoczï¿½cia i prefiksie";
 				break;
 			}
 			
